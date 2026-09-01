@@ -1,0 +1,34 @@
+---
+description: SOD+A CHALLENGE animated hero — design spec and implementation rules
+globs: ["**/hero/**", "**/Hero*", "**/*soda*"]
+alwaysApply: false
+---
+
+# SOD+A CHALLENGE hero
+
+The full design spec lives in `design/SPEC.md`. Read it before touching hero code.
+The reference animation is `design/SODA Logo Reveal.dc.html` — open it in a browser to
+see the intended result. It is a **reference prototype, not production code**: reimplement
+it in this codebase's framework and conventions, do not paste it in.
+
+## Non-negotiables
+- **String-in technique**: every stroke gets `pathLength="1"` + `stroke-dasharray:1;
+  stroke-dashoffset:1`, animated to `stroke-dashoffset:0`. Normalising pathLength makes
+  long and short strokes draw in equal time — never measure `getTotalLength()`.
+- **One SVG, one viewBox** (`300 110 1330 870`) for the whole lockup so it scales as a unit.
+- **Colour flows through `currentColor`** — set `color` on the SVG root and on the chrome;
+  never hardcode the line colour per shape.
+- **No float before its element finishes drawing.** All float loops start at 5.6s+.
+- Timeline, geometry, easings and tokens in SPEC.md are final — match them.
+- Type is `ui-monospace, SFMono-Regular, Menlo, monospace` throughout.
+
+## Shipping defaults
+line `#0e0d0c` · background `#dfe9e6` · strokeWeight 5 · speed 0.7 · glow 0 · float on ·
+press-fit mark hidden · CAD construction layer on.
+
+## Still open
+- Page below the hero does not exist; DISCOVER scrolls one viewport (falls back to
+  scroll-to-top when the document is not taller than the viewport).
+- `prefers-reduced-motion` is unhandled — render the final assembled state, no draw-on,
+  no float.
+- A WebAudio cue engine remains in the reference logic class but is not exposed in the UI.
