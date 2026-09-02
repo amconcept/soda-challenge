@@ -135,13 +135,14 @@ export default function Bubbles({
 
   useEffect(() => {
     if (!bandEl || !spots) return;
+    const band = bandEl;
 
     let current = 0;
     let target = 0;
     let frame = 0;
 
     function measure() {
-      const box = bandEl.getBoundingClientRect();
+      const box = band.getBoundingClientRect();
       const mid = box.top + box.height / 2;
       target = Math.max(
         -0.7,
@@ -153,7 +154,7 @@ export default function Bubbles({
       frame = 0;
       measure();
       current += (target - current) * 0.12;
-      bandEl.style.setProperty("--shift", current.toFixed(4));
+      band.style.setProperty("--shift", current.toFixed(4));
       if (Math.abs(target - current) > 0.002) {
         frame = requestAnimationFrame(tick);
       }
