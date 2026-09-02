@@ -21,6 +21,44 @@
   gap: 10px;
 }
 
+.site-nav-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0e0d0c;
+}
+
+.lang-switch button {
+  background: transparent;
+  border: 0;
+  padding: 4px 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.38;
+}
+
+.lang-switch button[aria-pressed="true"] {
+  opacity: 1;
+}
+
+.lang-switch button:hover,
+.lang-switch button:focus-visible {
+  outline: none;
+  opacity: 1;
+}
+
 .site-nav-bubble {
   width: 46px;
   height: 46px;

@@ -1,18 +1,49 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "./LanguageProvider";
+import type { Locale } from "@/lib/copy";
 import "./site-actions.css";
 
 function ActionLinks() {
+  const { t } = useLanguage();
   return (
     <>
       <button type="button" className="site-btn site-btn--fill">
-        Join the challenge
+        {t.join}
       </button>
       <button type="button" className="site-btn">
-        Partner
+        {t.partner}
       </button>
     </>
+  );
+}
+
+function LanguageSwitch() {
+  const { locale, setLocale, t } = useLanguage();
+
+  function select(next: Locale) {
+    setLocale(next);
+  }
+
+  return (
+    <div className="lang-switch" role="group" aria-label={t.language}>
+      <button
+        type="button"
+        aria-pressed={locale === "en"}
+        onClick={() => select("en")}
+      >
+        EN
+      </button>
+      <span aria-hidden="true">|</span>
+      <button
+        type="button"
+        aria-pressed={locale === "es"}
+        onClick={() => select("es")}
+      >
+        ES
+      </button>
+    </div>
   );
 }
 
@@ -21,9 +52,11 @@ export default function SiteActions({
 }: {
   placement: "nav" | "footer";
 }) {
+  const { t } = useLanguage();
+
   if (placement === "footer") {
     return (
-      <nav className="site-actions site-actions--footer" aria-label="Get involved">
+      <nav className="site-actions site-actions--footer" aria-label={t.involved}>
         <ActionLinks />
       </nav>
     );
@@ -33,6 +66,7 @@ export default function SiteActions({
 }
 
 function SiteNav() {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
 
@@ -56,21 +90,24 @@ function SiteNav() {
   }, [open]);
 
   return (
-    <nav ref={rootRef} className={`site-nav${open ? " site-nav--open" : ""}`} aria-label="Menu">
-      <button
-        type="button"
-        className="site-nav-bubble"
-        aria-expanded={open}
-        aria-controls="site-nav-panel"
-        onClick={() => setOpen((value) => !value)}
-      >
-        <span className="site-nav-lines" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
-        <span className="site-nav-label">{open ? "Close menu" : "Open menu"}</span>
-      </button>
+    <nav ref={rootRef} className={`site-nav${open ? " site-nav--open" : ""}`} aria-label={t.menu}>
+      <div className="site-nav-top">
+        <LanguageSwitch />
+        <button
+          type="button"
+          className="site-nav-bubble"
+          aria-expanded={open}
+          aria-controls="site-nav-panel"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span className="site-nav-lines" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <span className="site-nav-label">{open ? t.closeMenu : t.openMenu}</span>
+        </button>
+      </div>
       <div id="site-nav-panel" className="site-nav-panel" hidden={!open}>
         <ActionLinks />
       </div>
