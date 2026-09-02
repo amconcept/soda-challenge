@@ -5,7 +5,9 @@
   --hero-bg: #dfe9e6;
   --hero-line: #0e0d0c;
   --stroke-weight: 5;
-  --hero-speed: 0.7;
+  --hero-speed: 1;
+  /* SOD+A / CHALLENGE wait until the CAD axes have drawn. */
+  --hero-guide: 0.8s;
 
   width: 100%;
   height: 92vh;
@@ -76,17 +78,17 @@
 }
 
 @keyframes floatB {
-  0%, 100% { transform: translateY(-6px) rotate(-0.5deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(14px) rotate(0.4deg); }
 }
 
 @keyframes floatC {
-  0%, 100% { transform: translateY(4px); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-16px); }
 }
 
 @keyframes floatD {
-  0%, 100% { transform: translateY(-10px) rotate(0.6deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(8px) rotate(-0.3deg); }
 }
 
@@ -123,19 +125,51 @@
 }
 
 @keyframes hover3d {
-  0%, 100% { transform: translateY(-9px) rotate(-1.1deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(11px) rotate(1.1deg); }
 }
 
-/* String-in: pathLength="1" + dashoffset 1 → 0. Duration/delay scale with --hero-speed. */
+/* String-in: pathLength="1" + dashoffset 1 → 0. Duration/delay scale with --hero-speed.
+   Letter strokes add --hero-guide so construction lines draw first. */
 .stroke-draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: draw
     calc(var(--d, 0.85s) / var(--hero-speed))
     var(--ease, ease-in-out)
-    calc(var(--delay) / var(--hero-speed))
+    calc((var(--delay) + var(--shift, 0s)) / var(--hero-speed))
     both;
+}
+
+.float-box .stroke-draw {
+  --shift: var(--hero-guide);
+}
+
+@keyframes guideWipeX {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes guideWipeY {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.guide-draw-x,
+.guide-draw-y {
+  animation-duration: calc(var(--d, 0.7s) / var(--hero-speed));
+  animation-timing-function: ease-out;
+  animation-delay: calc(var(--delay) / var(--hero-speed));
+  animation-fill-mode: both;
+}
+
+.guide-draw-x { animation-name: guideWipeX; }
+.guide-draw-y { animation-name: guideWipeY; }
+
+/* Clip helper only — must not inherit the lockup stroke. */
+.guide-bounds {
+  fill: none;
+  stroke: none;
 }
 
 .fade-in {
@@ -211,8 +245,8 @@
     var(--float-dur);
   animation-timing-function: ease-in-out, ease-out, ease-in-out;
   animation-delay:
-    calc(var(--delay) / var(--hero-speed)),
-    calc(var(--fill-delay) / var(--hero-speed)),
+    calc((var(--delay) + var(--hero-guide)) / var(--hero-speed)),
+    calc((var(--fill-delay) + var(--hero-guide)) / var(--hero-speed)),
     calc(var(--float-delay) / var(--hero-speed));
   animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
@@ -235,8 +269,8 @@
     var(--float-dur);
   animation-timing-function: ease-out, ease-out, ease-in-out;
   animation-delay:
-    calc(var(--delay) / var(--hero-speed)),
-    calc(var(--fill-delay) / var(--hero-speed)),
+    calc((var(--delay) + var(--hero-guide)) / var(--hero-speed)),
+    calc((var(--fill-delay) + var(--hero-guide)) / var(--hero-speed)),
     calc(var(--float-delay) / var(--hero-speed));
   animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
@@ -246,7 +280,22 @@
 .dot.float-c { animation-name: draw, fillIn, floatC; }
 .dot.float-d { animation-name: draw, fillIn, floatD; }
 
+.hero-season {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  z-index: 5;
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0;
+  /* Same beat as Discover. */
+  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(7.4s / var(--hero-speed)) both;
+}
+
 .hero-partners {
+  --sticker-size: clamp(68px, 12.5vh, 104px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -261,7 +310,7 @@
   align-items: center;
   gap: 14px;
   opacity: 0;
-  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc(7s / var(--hero-speed)) both;
+  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc(5.85s / var(--hero-speed)) both;
 }
 
 .hero-rule {
@@ -284,14 +333,58 @@
   justify-content: center;
   gap: clamp(24px, 4vw, 52px);
   flex-wrap: wrap;
-  min-height: clamp(84px, 16vh, 132px);
+  min-height: var(--sticker-size);
 }
 
 .sticker {
-  height: clamp(84px, 16vh, 132px);
+  height: var(--sticker-size);
   width: auto;
   opacity: 0;
   transform-origin: center;
+  position: relative;
+  z-index: 2;
+}
+
+.sticker-link {
+  display: inline-flex;
+  text-decoration: none;
+  cursor: default;
+}
+
+.sticker-link img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.sticker-invite {
+  width: var(--sticker-size);
+  height: var(--sticker-size);
+  border-radius: 50%;
+  background: #f7f2ea;
+  box-shadow: inset 0 0 0 3px #111;
+  color: #111;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.15em;
+  font-size: clamp(8px, 1.2vh, 11px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  padding: 10px;
+  cursor: default;
+}
+
+.sticker-link:hover,
+.sticker-link:focus-visible,
+.sticker-invite:hover,
+.sticker-invite:focus-visible {
+  outline: none;
+  filter: brightness(1.04);
 }
 
 .sticker.float-a,
@@ -313,7 +406,7 @@
 .sticker.float-c { animation-name: stickerIn, floatC; }
 
 .hero-discover {
-  margin-top: 3.4vh;
+  margin-top: 7.5vh;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -328,7 +421,8 @@
   border-radius: 999px;
   cursor: pointer;
   opacity: 0;
-  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(5.4s / var(--hero-speed)) both;
+  /* After last partner sticker (delay 6.45s + stickerIn 0.8s). */
+  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(7.4s / var(--hero-speed)) both;
 }
 
 .hero-discover:hover,
@@ -338,39 +432,17 @@
 }
 
 .hero-discover svg {
-  animation: nudge 1.9s ease-in-out calc(6s / var(--hero-speed)) infinite;
-}
-
-.hero-replay {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 5;
-  background: transparent;
-  border: 1px solid currentColor;
-  color: var(--hero-line);
-  opacity: 0.55;
-  font: inherit;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 9px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.hero-replay:hover,
-.hero-replay:focus-visible {
-  opacity: 0.95;
-  outline: none;
+  animation: nudge 1.9s ease-in-out calc(8s / var(--hero-speed)) infinite;
 }
 
 /* Hold the first frame until after mount so the sequence does not start
-   during SSR and then restart on hydration (Replay does not have this). */
+   during SSR and then restart on hydration. */
 .hero:not(.hero--ready) .stroke-draw,
 .hero:not(.hero--ready) .glyph,
 .hero:not(.hero--ready) .dot,
 .hero:not(.hero--ready) .fade-in,
+.hero:not(.hero--ready) .guide-draw-x,
+.hero:not(.hero--ready) .guide-draw-y,
 .hero:not(.hero--ready) .float-box,
 .hero:not(.hero--ready) .hover-3d,
 .hero:not(.hero--ready) .fit-base,
@@ -378,6 +450,7 @@
 .hero:not(.hero--ready) .seat,
 .hero:not(.hero--ready) .sticker,
 .hero:not(.hero--ready) .hero-partners-label,
+.hero:not(.hero--ready) .hero-season,
 .hero:not(.hero--ready) .hero-discover,
 .hero:not(.hero--ready) .hero-discover svg {
   animation: none !important;
@@ -405,9 +478,15 @@
 
   .hero .fade-in,
   .hero .hero-partners-label,
+  .hero .hero-season,
   .hero .sticker,
   .hero .hero-discover {
     opacity: 1;
+  }
+
+  .hero .guide-draw-x,
+  .hero .guide-draw-y {
+    clip-path: none;
   }
 
   .hero .fit-base,
@@ -426,5 +505,12 @@
 @media (max-width: 640px) {
   .hero {
     padding-top: 2vh;
+  }
+
+  .hero-season {
+    top: 16px;
+    left: 16px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
   }
 }

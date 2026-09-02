@@ -3,19 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import "./site-actions.css";
 
-/** Swap these when a form or partner page exists. */
-const JOIN_HREF = "mailto:hello@sodachallenge.org?subject=Join%20the%20SOD%2BA%20Challenge";
-const PARTNER_HREF = "mailto:hello@sodachallenge.org?subject=SOD%2BA%20Partnership";
-
 function ActionLinks() {
   return (
     <>
-      <a className="site-btn site-btn--fill" href={JOIN_HREF}>
+      <button type="button" className="site-btn site-btn--fill">
         Join the challenge
-      </a>
-      <a className="site-btn" href={PARTNER_HREF}>
+      </button>
+      <button type="button" className="site-btn">
         Partner
-      </a>
+      </button>
     </>
   );
 }

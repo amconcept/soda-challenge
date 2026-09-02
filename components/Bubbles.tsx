@@ -4,14 +4,13 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
 
 type Size = "lg" | "md" | "sm";
 
-const ORDER: Size[] = ["lg", "md", "sm"];
+const ORDER: Size[] = ["lg", "md", "sm", "md", "sm"];
 
 type Float = "a" | "b" | "c" | "d";
 
@@ -28,7 +27,7 @@ type Spot = {
   src: string;
 };
 
-const DeckContext = createContext<string[] | null>(null);
+const DeckContext = createContext<string[]>([]);
 
 function shuffle<T>(items: T[]): T[] {
   const next = [...items];
@@ -47,12 +46,8 @@ export function BubbleDeckProvider({
   images: string[];
   children: ReactNode;
 }) {
-  const [deck, setDeck] = useState<string[] | null>(null);
-
-  useEffect(() => {
-    setDeck(images.length ? shuffle(images) : []);
-  }, [images]);
-
+  // Shuffle on first render so child bands can place photos in their mount effect.
+  const [deck] = useState(() => (images.length ? shuffle(images) : []));
   return <DeckContext.Provider value={deck}>{children}</DeckContext.Provider>;
 }
 
@@ -72,14 +67,14 @@ function overlaps(placed: Spot[], x: number, y: number, s: number) {
   const cy = y + s / 2;
   return placed.some((p) => {
     const d = Math.hypot(p.x + p.s / 2 - cx, p.y + p.s / 2 - cy);
-    return d < (p.s + s) * 0.46;
+    return d < (p.s + s) * 0.4;
   });
 }
 
 function scatter(width: number, height: number, photos: string[]): Spot[] {
   const pad = 12;
   const placed: Spot[] = [];
-  const sizes = height < 400 ? (["md", "sm"] as Size[]) : ORDER;
+  const sizes = height < 400 ? (["md", "sm", "sm"] as Size[]) : ORDER;
   const floats: Float[] = ["a", "b", "c", "d"];
 
   for (const size of sizes) {
@@ -122,33 +117,31 @@ export default function Bubbles({
   variant: "a" | "b" | "c";
   slot: number;
 }) {
-  const bandRef = useRef<HTMLDivElement>(null);
+  const [bandEl, setBandEl] = useState<HTMLDivElement | null>(null);
   const deck = useContext(DeckContext);
   const [spots, setSpots] = useState<Spot[] | null>(null);
 
   useEffect(() => {
-    const band = bandRef.current;
-    if (!band || !deck?.length) return;
-    const { width, height } = band.getBoundingClientRect();
-    const count = height < 400 ? 2 : 3;
-    const start = slot * 3;
+    if (!bandEl || !deck.length) return;
+    const { width, height } = bandEl.getBoundingClientRect();
+    const count = height < 400 ? 3 : 5;
+    const start = slot * 5;
     const photos = Array.from(
       { length: count },
       (_, i) => deck[(start + i) % deck.length],
     );
     setSpots(scatter(width, height, photos));
-  }, [variant, slot, deck]);
+  }, [variant, slot, deck, bandEl]);
 
   useEffect(() => {
-    const band = bandRef.current;
-    if (!band || !spots) return;
+    if (!bandEl || !spots) return;
 
     let current = 0;
     let target = 0;
     let frame = 0;
 
     function measure() {
-      const box = band!.getBoundingClientRect();
+      const box = bandEl.getBoundingClientRect();
       const mid = box.top + box.height / 2;
       target = Math.max(
         -0.7,
@@ -160,7 +153,7 @@ export default function Bubbles({
       frame = 0;
       measure();
       current += (target - current) * 0.12;
-      band!.style.setProperty("--shift", current.toFixed(4));
+      bandEl.style.setProperty("--shift", current.toFixed(4));
       if (Math.abs(target - current) > 0.002) {
         frame = requestAnimationFrame(tick);
       }
@@ -178,13 +171,13 @@ export default function Bubbles({
       window.removeEventListener("resize", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [spots]);
+  }, [spots, bandEl]);
 
   return (
-    <div ref={bandRef} className={`bubbles bubbles--${variant}`} aria-hidden="true">
-      {spots?.map((spot) => (
+    <div ref={setBandEl} className={`bubbles bubbles--${variant}`} aria-hidden="true">
+      {spots?.map((spot, index) => (
         <div
-          key={spot.size}
+          key={`${spot.size}-${index}`}
           className={`bubble bubble--${spot.size}`}
           style={{
             left: spot.x,

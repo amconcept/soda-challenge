@@ -2,10 +2,13 @@ import Bubbles from "./Bubbles";
 import SiteActions from "./SiteActions";
 import "./brief.css";
 
+const partnerAsset = (file: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
+
 export default function Brief() {
   return (
     <article className="brief">
-      <section id="intro" className="brief-section">
+      <section id="intro" className="brief-section brief-section--intro">
         <p className="brief-kicker">What is SOD+A?</p>
         <h2>Schools of Discovery + Action</h2>
         <p>
@@ -15,12 +18,31 @@ export default function Brief() {
           communities, then bring their different skills and discoveries together
           to co-design a project that makes a lasting contribution locally.
         </p>
-        <p className="brief-quote">You may be local, but knowledge is global.</p>
+        <p className="brief-quote">You may be working locally, but knowledge is global.</p>
+
+        <div className="schools" id="schools">
+          <p className="brief-kicker">Participating schools</p>
+          <div className="schools-row">
+            <span className="school-sticker">
+              <img src={partnerAsset("soda-18.svg")} alt="LCC Fab Lab" />
+            </span>
+            <span className="school-invite" aria-label="Join the challenge">
+              <span>Join the</span>
+              <span>challenge</span>
+            </span>
+          </div>
+        </div>
+
+        <a href="#challenge" className="scroll-cue" aria-label="Scroll for more">
+          <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+            <polyline points="2 2 11 12 20 2" />
+          </svg>
+        </a>
       </section>
 
       <Bubbles variant="b" slot={0} />
 
-      <section className="brief-section">
+      <section id="challenge" className="brief-section">
         <p className="brief-kicker">What is the challenge?</p>
         <h2>See how far you can take an idea</h2>
         <p>
