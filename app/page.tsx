@@ -1,17 +1,21 @@
 import Hero from "@/components/hero/Hero";
+import Brief from "@/components/Brief";
+import ScrollHue from "@/components/ScrollHue";
+import SiteActions from "@/components/SiteActions";
+import { BubbleDeckProvider } from "@/components/Bubbles";
+import { listBubbleImages } from "@/lib/bubbleImages";
 
 export default function HomePage() {
+  const bubbleImages = listBubbleImages();
+
   return (
     <main>
+      <ScrollHue />
+      <SiteActions placement="nav" />
       <Hero />
-      <section id="intro" className="intro">
-        <p className="intro-kicker">The brief</p>
-        <h1>A design challenge is taking shape.</h1>
-        <p>
-          This section is a placeholder so Discover has somewhere to land.
-          Challenge copy, timeline, and how to enter come next.
-        </p>
-      </section>
+      <BubbleDeckProvider images={bubbleImages}>
+        <Brief />
+      </BubbleDeckProvider>
     </main>
   );
 }

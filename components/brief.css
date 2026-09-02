@@ -1,0 +1,145 @@
+.brief {
+  color: #0e0d0c;
+}
+
+.brief-section {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12vh 8vw 14vh;
+}
+
+/* Photo slots between copy. Scattered on load; they bob like the lockup and drift on scroll. */
+.bubbles {
+  position: relative;
+  height: min(78vh, 720px);
+  padding: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  will-change: transform;
+  transform: translate3d(
+    calc(var(--shift, 0) * var(--dx, 0) * 1px),
+    calc(var(--shift, 0) * var(--dy, 0) * 1px),
+    0
+  );
+}
+
+/* Inner disc: same ease-in-out bob as the SOD+A letters (hero.css floatA–D). */
+.bubble-float {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(14 13 12 / 8%);
+  transform-origin: center;
+}
+
+.bubble-float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.bubble-float--a {
+  animation: floatA var(--float-dur, 6.4s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+.bubble-float--b {
+  animation: floatB var(--float-dur, 7.6s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+.bubble-float--c {
+  animation: floatC var(--float-dur, 6.9s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+.bubble-float--d {
+  animation: floatD var(--float-dur, 5.8s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+@keyframes floatA {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(-6px) rotate(-0.5deg); }
+  50% { transform: translateY(14px) rotate(0.4deg); }
+}
+
+@keyframes floatC {
+  0%, 100% { transform: translateY(4px); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes floatD {
+  0%, 100% { transform: translateY(-10px) rotate(0.6deg); }
+  50% { transform: translateY(8px) rotate(-0.3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble-float {
+    animation: none !important;
+  }
+}
+
+.brief-kicker {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 1.4rem;
+}
+
+.brief-section h2 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  margin: 0 0 1.6rem;
+  max-width: 16em;
+}
+
+.brief-section p {
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 38em;
+  margin: 0 0 1.25rem;
+  opacity: 0.86;
+}
+
+.brief-section p:last-child {
+  margin-bottom: 0;
+}
+
+.brief-quote {
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  max-width: 18em;
+  margin-top: 2.4rem !important;
+  opacity: 0.95 !important;
+}
+
+.bubble--lg {
+  width: min(42vw, 480px);
+  height: min(42vw, 480px);
+}
+
+.bubble--md {
+  width: min(26vw, 280px);
+  height: min(26vw, 280px);
+}
+
+.bubble--sm {
+  width: min(16vw, 180px);
+  height: min(16vw, 180px);
+}

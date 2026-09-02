@@ -16,39 +16,3 @@ body {
 a {
   color: inherit;
 }
-
-/* Placeholder for the scrolling brief — copy and structure come next. */
-.intro {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 12vh 8vw;
-  background: #dfe9e6;
-  color: #0e0d0c;
-}
-
-.intro-kicker {
-  font-size: 11px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  opacity: 0.7;
-  margin: 0 0 1.4rem;
-}
-
-.intro h1 {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 1.35;
-  margin: 0 0 1.6rem;
-  max-width: 18em;
-}
-
-.intro p {
-  font-size: 14px;
-  line-height: 1.7;
-  max-width: 36em;
-  margin: 0;
-  opacity: 0.82;
-}

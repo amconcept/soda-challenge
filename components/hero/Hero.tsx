@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import HeroLockup from "./HeroLockup";
 import { cssVars } from "./cssVars";
 import "./hero.css";
@@ -10,6 +10,12 @@ const asset = (file: string) =>
 
 export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);
+  // Wait until after hydration so the sequence starts once, like Replay —
+  // not during SSR paint and again when React attaches.
+  const [ready, setReady] = useState(false);
+  useLayoutEffect(() => {
+    setReady(true);
+  }, []);
 
   // Reset intro animations via the Web Animations API; float loops keep running.
   function replay() {
@@ -31,7 +37,7 @@ export default function Hero() {
   return (
     <section
       ref={rootRef}
-      className="hero"
+      className={ready ? "hero hero--ready" : "hero"}
       data-show-mark="false"
       data-show-schematic="true"
       data-show-partners="true"
@@ -40,7 +46,7 @@ export default function Hero() {
       <HeroLockup />
 
       <div className="hero-partners">
-        <div className="hero-partners-label">
+        <div className="hero-partners-label" style={{ opacity: 0 }}>
           <div className="hero-rule" />
           <span>Co-created by</span>
           <div className="hero-rule" />
@@ -50,36 +56,51 @@ export default function Hero() {
             src={asset("soda-16.svg")}
             alt="OCAD University"
             className="sticker float-a"
-            style={cssVars({
-              "--delay": "7.3s",
-              "--float-dur": "7.2s",
-              "--float-delay": "8.3s",
-            })}
+            style={{
+              opacity: 0,
+              height: "clamp(84px, 16vh, 132px)",
+              width: "auto",
+              ...cssVars({
+                "--delay": "7.3s",
+                "--float-dur": "7.2s",
+                "--float-delay": "8.3s",
+              }),
+            }}
           />
           <img
             src={asset("soda-17.svg")}
             alt="Fab Lab BCN"
             className="sticker float-c"
-            style={cssVars({
-              "--delay": "7.5s",
-              "--float-dur": "6.4s",
-              "--float-delay": "8.5s",
-            })}
+            style={{
+              opacity: 0,
+              height: "clamp(84px, 16vh, 132px)",
+              width: "auto",
+              ...cssVars({
+                "--delay": "7.5s",
+                "--float-dur": "6.4s",
+                "--float-delay": "8.5s",
+              }),
+            }}
           />
           <img
             src={asset("soda-18.svg")}
             alt="LCC Fab Lab"
             className="sticker float-b"
-            style={cssVars({
-              "--delay": "7.7s",
-              "--float-dur": "7.8s",
-              "--float-delay": "8.7s",
-            })}
+            style={{
+              opacity: 0,
+              height: "clamp(84px, 16vh, 132px)",
+              width: "auto",
+              ...cssVars({
+                "--delay": "7.7s",
+                "--float-dur": "7.8s",
+                "--float-delay": "8.7s",
+              }),
+            }}
           />
         </div>
       </div>
 
-      <button type="button" className="hero-discover" onClick={discover}>
+      <button type="button" className="hero-discover" style={{ opacity: 0 }} onClick={discover}>
         Discover
         <svg width="13" height="17" viewBox="0 0 13 17" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
           <line x1="6.5" y1="1" x2="6.5" y2="14" />

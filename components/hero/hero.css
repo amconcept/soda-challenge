@@ -8,9 +8,10 @@
   --hero-speed: 0.7;
 
   width: 100%;
-  height: 100vh;
+  height: 92vh;
   min-height: 420px;
-  background: var(--hero-bg);
+  /* Page wash (sage → yellow → orange → pink) lives on html/body. */
+  background: transparent;
   color: var(--hero-line);
   display: flex;
   flex-direction: column;
@@ -134,7 +135,7 @@
     calc(var(--d, 0.85s) / var(--hero-speed))
     var(--ease, ease-in-out)
     calc(var(--delay) / var(--hero-speed))
-    forwards;
+    both;
 }
 
 .fade-in {
@@ -143,7 +144,7 @@
     calc(var(--d, 0.7s) / var(--hero-speed))
     ease-out
     calc(var(--delay) / var(--hero-speed))
-    forwards;
+    both;
 }
 
 .float-box {
@@ -213,7 +214,7 @@
     calc(var(--delay) / var(--hero-speed)),
     calc(var(--fill-delay) / var(--hero-speed)),
     calc(var(--float-delay) / var(--hero-speed));
-  animation-fill-mode: forwards, forwards, none;
+  animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
 }
 
@@ -237,7 +238,7 @@
     calc(var(--delay) / var(--hero-speed)),
     calc(var(--fill-delay) / var(--hero-speed)),
     calc(var(--float-delay) / var(--hero-speed));
-  animation-fill-mode: forwards, forwards, none;
+  animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
 }
 
@@ -260,7 +261,7 @@
   align-items: center;
   gap: 14px;
   opacity: 0;
-  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc(7s / var(--hero-speed)) forwards;
+  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc(7s / var(--hero-speed)) both;
 }
 
 .hero-rule {
@@ -283,6 +284,7 @@
   justify-content: center;
   gap: clamp(24px, 4vw, 52px);
   flex-wrap: wrap;
+  min-height: clamp(84px, 16vh, 132px);
 }
 
 .sticker {
@@ -326,7 +328,7 @@
   border-radius: 999px;
   cursor: pointer;
   opacity: 0;
-  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(8.4s / var(--hero-speed)) forwards;
+  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(5.4s / var(--hero-speed)) both;
 }
 
 .hero-discover:hover,
@@ -336,7 +338,7 @@
 }
 
 .hero-discover svg {
-  animation: nudge 1.9s ease-in-out calc(9.2s / var(--hero-speed)) infinite;
+  animation: nudge 1.9s ease-in-out calc(6s / var(--hero-speed)) infinite;
 }
 
 .hero-replay {
@@ -361,6 +363,29 @@
 .hero-replay:focus-visible {
   opacity: 0.95;
   outline: none;
+}
+
+/* Hold the first frame until after mount so the sequence does not start
+   during SSR and then restart on hydration (Replay does not have this). */
+.hero:not(.hero--ready) .stroke-draw,
+.hero:not(.hero--ready) .glyph,
+.hero:not(.hero--ready) .dot,
+.hero:not(.hero--ready) .fade-in,
+.hero:not(.hero--ready) .float-box,
+.hero:not(.hero--ready) .hover-3d,
+.hero:not(.hero--ready) .fit-base,
+.hero:not(.hero--ready) .fit-tab,
+.hero:not(.hero--ready) .seat,
+.hero:not(.hero--ready) .sticker,
+.hero:not(.hero--ready) .hero-partners-label,
+.hero:not(.hero--ready) .hero-discover,
+.hero:not(.hero--ready) .hero-discover svg {
+  animation: none !important;
+}
+
+.hero:not(.hero--ready) .hero-lockup,
+.hero:not(.hero--ready) [data-schematic] {
+  opacity: 0;
 }
 
 /* Assembled lockup, no draw-on, no float. */
@@ -395,5 +420,11 @@
   .hero .sticker,
   .hero .hero-discover svg {
     transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 2vh;
   }
 }

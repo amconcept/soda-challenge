@@ -196,7 +196,7 @@ export default function HeroLockup() {
         </g>
 
         {/* Separator dots */}
-        <g fill="currentColor" strokeWidth="2">
+        <g fill="currentColor" strokeWidth="2" fillOpacity={0}>
           <circle
             pathLength="1"
             cx="614.55"
@@ -357,7 +357,7 @@ export default function HeroLockup() {
         </g>
 
         {/* CHALLENGE wordmark — 9 glyphs, 0.6s draw + 0.45s fill, 0.07s stagger from t=3.50 */}
-        <g fill="currentColor" strokeWidth="1.6">
+        <g fill="currentColor" strokeWidth="1.6" fillOpacity={0}>
           <path
             pathLength="1"
             className="glyph float-a"
