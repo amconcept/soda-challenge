@@ -1,39 +1,38 @@
+"use client";
+
 import Bubbles from "./Bubbles";
 import SiteActions from "./SiteActions";
+import { useLanguage } from "./LanguageProvider";
 import "./brief.css";
 
 const partnerAsset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
 export default function Brief() {
+  const { t } = useLanguage();
+
   return (
     <article className="brief">
       <section id="intro" className="brief-section brief-section--intro">
-        <p className="brief-kicker">What is SOD+A?</p>
-        <h2>Schools of Discovery + Action</h2>
-        <p>
-          SOD+A stands for Schools of Discovery + Action. It is an international
-          design challenge where students explore ideas through creative uses of
-          technology, share knowledge and collaborate with students in other
-          communities, then bring their different skills and discoveries together
-          to co-design a project that makes a lasting contribution locally.
-        </p>
-        <p className="brief-quote">You may be working locally, but knowledge is global.</p>
+        <p className="brief-kicker">{t.soda.kicker}</p>
+        <h2>{t.soda.title}</h2>
+        <p>{t.soda.body}</p>
+        <p className="brief-quote">{t.soda.quote}</p>
 
         <div className="schools" id="schools">
-          <p className="brief-kicker">Participating schools</p>
+          <p className="brief-kicker">{t.schools.kicker}</p>
           <div className="schools-row">
             <span className="school-sticker">
               <img src={partnerAsset("soda-18.svg")} alt="LCC Fab Lab" />
             </span>
-            <span className="school-invite" aria-label="Join the challenge">
-              <span>Join the</span>
-              <span>challenge</span>
+            <span className="school-invite" aria-label={t.join}>
+              <span>{t.joinLine1}</span>
+              <span>{t.joinLine2}</span>
             </span>
           </div>
         </div>
 
-        <a href="#challenge" className="scroll-cue" aria-label="Scroll for more">
+        <a href="#challenge" className="scroll-cue" aria-label={t.scrollMore}>
           <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             <polyline points="2 2 11 12 20 2" />
           </svg>
@@ -43,76 +42,37 @@ export default function Brief() {
       <Bubbles variant="b" slot={0} />
 
       <section id="challenge" className="brief-section">
-        <p className="brief-kicker">What is the challenge?</p>
-        <h2>See how far you can take an idea</h2>
-        <p>
-          The challenge is to see how far you can take an idea: experiment, learn
-          new skills, get feedback, make changes, share what you discover, put it
-          into action, and meet criteria set by partner institutions. Along the
-          way, you build a portfolio and develop the creative, technical, and
-          human skills universities and innovative organizations are looking for.
-        </p>
+        <p className="brief-kicker">{t.challenge.kicker}</p>
+        <h2>{t.challenge.title}</h2>
+        <p>{t.challenge.body}</p>
       </section>
 
       <Bubbles variant="c" slot={1} />
 
       <section className="brief-section">
-        <p className="brief-kicker">Who is it for?</p>
-        <h2>Students who want to make things with others</h2>
-        <p>
-          SOD+A is for students in schools, makerspaces, or Fab Labs interested in
-          engineering, entrepreneurship, digital and product design, creative
-          direction, project management, art and technology, or any field where
-          ideas, initiative, collaboration, and community engagement matter.
-        </p>
+        <p className="brief-kicker">{t.who.kicker}</p>
+        <h2>{t.who.title}</h2>
+        <p>{t.who.body}</p>
       </section>
 
       <Bubbles variant="a" slot={2} />
 
       <section className="brief-section">
-        <p className="brief-kicker">Why?</p>
-        <h2>The hidden side of innovation</h2>
-        <p>
-          School gives you knowledge, skills, and structure. The SOD+A Challenge
-          asks you to experience the hidden side of innovation: creativity,
-          resilience, judgement, collaboration, and the ability to dive deeply
-          into interests, technologies, and ideas that can have a positive impact.
-        </p>
-        <p>
-          You build a portfolio that makes your process, decisions, and growth
-          visible, while receiving feedback and recognition from partner schools
-          and organizations that value these skills. It is a chance to get noticed
-          while having fun, discovering what you can do, and learning what it
-          means to bring your talents into the world.
-        </p>
+        <p className="brief-kicker">{t.why.kicker}</p>
+        <h2>{t.why.title}</h2>
+        <p>{t.why.p1}</p>
+        <p>{t.why.p2}</p>
       </section>
 
       <Bubbles variant="b" slot={3} />
 
       <section className="brief-section">
-        <p className="brief-kicker">How does it work?</p>
-        <h2>Join a local group. Share a global process.</h2>
-        <p>
-          You join a local group and identify a project you can co-design in your
-          community. Then you head into a studio, lab, classroom, makerspace, or
-          other creative space to experiment with ideas, materials, and
-          technologies.
-        </p>
-        <p>
-          Curated random prompts and creative constraints push you toward
-          unexpected combinations, new skills, and ideas you may not have explored
-          on your own.
-        </p>
-        <p>
-          Along the way, you document and share what you learn, see what students
-          in other communities are discovering, receive feedback, make changes,
-          and bring your discoveries back into the collective project.
-        </p>
-        <p>
-          The challenge is to keep developing your ideas, share what you know,
-          respond to feedback, put your learning into action, and meet the
-          criteria set by partner institutions.
-        </p>
+        <p className="brief-kicker">{t.how.kicker}</p>
+        <h2>{t.how.title}</h2>
+        <p>{t.how.p1}</p>
+        <p>{t.how.p2}</p>
+        <p>{t.how.p3}</p>
+        <p>{t.how.p4}</p>
       </section>
 
       <Bubbles variant="c" slot={4} />
