@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import HeroLockup from "./HeroLockup";
 import { cssVars } from "./cssVars";
 import "./hero.css";
@@ -9,26 +9,12 @@ const asset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
 export default function Hero() {
-  const rootRef = useRef<HTMLElement>(null);
-  // Wait until after hydration so the sequence starts once, like Replay —
+  // Wait until after hydration so the sequence starts once —
   // not during SSR paint and again when React attaches.
   const [ready, setReady] = useState(false);
   useLayoutEffect(() => {
     setReady(true);
   }, []);
-
-  // Reset intro animations via the Web Animations API; float loops keep running.
-  function replay() {
-    const root = rootRef.current;
-    if (!root) return;
-    for (const anim of root.getAnimations({ subtree: true })) {
-      const name =
-        "animationName" in anim ? String((anim as CSSAnimation).animationName) : "";
-      if (name.startsWith("float") || name === "hover3d" || name === "nudge") continue;
-      anim.currentTime = 0;
-      anim.play();
-    }
-  }
 
   function discover() {
     document.getElementById("intro")?.scrollIntoView({ behavior: "smooth" });
@@ -36,7 +22,6 @@ export default function Hero() {
 
   return (
     <section
-      ref={rootRef}
       className={ready ? "hero hero--ready" : "hero"}
       data-show-mark="false"
       data-show-schematic="true"
@@ -45,71 +30,66 @@ export default function Hero() {
     >
       <HeroLockup />
 
+      <p className="hero-season" style={{ opacity: 0 }}>
+        2026 – 2027 (pilot)
+      </p>
+
       <div className="hero-partners">
         <div className="hero-partners-label" style={{ opacity: 0 }}>
           <div className="hero-rule" />
-          <span>Co-created by</span>
+          <span>In collaboration with</span>
           <div className="hero-rule" />
         </div>
         <div className="hero-stickers">
-          <img
-            src={asset("soda-16.svg")}
-            alt="OCAD University"
-            className="sticker float-a"
+          <span
+            className="sticker sticker-link float-a"
             style={{
               opacity: 0,
-              height: "clamp(84px, 16vh, 132px)",
-              width: "auto",
               ...cssVars({
-                "--delay": "7.3s",
+                "--delay": "6.05s",
                 "--float-dur": "7.2s",
-                "--float-delay": "8.3s",
+                "--float-delay": "6.85s",
               }),
             }}
-          />
-          <img
-            src={asset("soda-17.svg")}
-            alt="Fab Lab BCN"
-            className="sticker float-c"
+          >
+            <img src={asset("soda-16.svg")} alt="OCAD University" />
+          </span>
+          <span
+            className="sticker sticker-link float-c"
             style={{
               opacity: 0,
-              height: "clamp(84px, 16vh, 132px)",
-              width: "auto",
               ...cssVars({
-                "--delay": "7.5s",
+                "--delay": "6.25s",
                 "--float-dur": "6.4s",
-                "--float-delay": "8.5s",
+                "--float-delay": "7.05s",
               }),
             }}
-          />
-          <img
-            src={asset("soda-18.svg")}
-            alt="LCC Fab Lab"
-            className="sticker float-b"
+          >
+            <img src={asset("soda-17.svg")} alt="Fab Lab BCN" />
+          </span>
+          <span
+            className="sticker sticker-invite float-b"
+            aria-label="Become a partner"
             style={{
               opacity: 0,
-              height: "clamp(84px, 16vh, 132px)",
-              width: "auto",
               ...cssVars({
-                "--delay": "7.7s",
+                "--delay": "6.45s",
                 "--float-dur": "7.8s",
-                "--float-delay": "8.7s",
+                "--float-delay": "7.25s",
               }),
             }}
-          />
+          >
+            <span>Become a</span>
+            <span>partner</span>
+          </span>
         </div>
       </div>
 
       <button type="button" className="hero-discover" style={{ opacity: 0 }} onClick={discover}>
         Discover
-        <svg width="13" height="17" viewBox="0 0 13 17" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-          <line x1="6.5" y1="1" x2="6.5" y2="14" />
-          <polyline points="1.5 9.5 6.5 15 11.5 9.5" />
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+          <polyline points="1 1 9 11 17 1" />
         </svg>
-      </button>
-
-      <button type="button" className="hero-replay" onClick={replay}>
-        Replay
       </button>
     </section>
   );

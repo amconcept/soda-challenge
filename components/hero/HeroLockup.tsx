@@ -459,7 +459,9 @@ export default function HeroLockup() {
           />
         </g>
 
-        {/* CAD construction layer — dashed radii, dash-dot axes, 29px centre marks */}
+        {/* CAD construction layer — dashed radii, dash-dot axes, 29px centre marks.
+            Axes wipe on first; SOD+A strokes follow (--hero-guide). Invisible
+            rects give each clip group a real bounding box (bare lines have none). */}
         <g
           data-schematic="1"
           strokeWidth="1.3"
@@ -467,99 +469,109 @@ export default function HeroLockup() {
           style={{ opacity: 0.5 }}
         >
           <circle
-            pathLength="1"
             cx="489.35"
             cy="264.15"
             r="145"
             fill="none"
             strokeDasharray="9 7"
             className="fade-in"
-            style={cssVars({ "--delay": "0.25s" })}
+            style={cssVars({ "--d": "0.55s", "--delay": "0.08s" })}
           />
           <circle
-            pathLength="1"
             cx="489.35"
             cy="459.52"
             r="145"
             fill="none"
             strokeDasharray="9 7"
             className="fade-in"
-            style={cssVars({ "--delay": "0.4s" })}
+            style={cssVars({ "--d": "0.55s", "--delay": "0.14s" })}
           />
           <circle
-            pathLength="1"
             cx="743.66"
             cy="459.52"
             r="145"
             fill="none"
             strokeDasharray="9 7"
             className="fade-in"
-            style={cssVars({ "--delay": "0.85s" })}
+            style={cssVars({ "--d": "0.55s", "--delay": "0.2s" })}
           />
           <circle
-            pathLength="1"
             cx="998.30"
             cy="459.52"
             r="145"
             fill="none"
             strokeDasharray="9 7"
             className="fade-in"
-            style={cssVars({ "--delay": "1.45s" })}
+            style={cssVars({ "--d": "0.55s", "--delay": "0.26s" })}
           />
           <circle
-            pathLength="1"
             cx="1344.50"
             cy="465.70"
             r="145"
             fill="none"
             strokeDasharray="9 7"
             className="fade-in"
-            style={cssVars({ "--delay": "2.35s" })}
+            style={cssVars({ "--d": "0.55s", "--delay": "0.32s" })}
           />
-          <line
-            x1="330"
-            y1="459.52"
-            x2="1500"
-            y2="459.52"
-            strokeDasharray="26 8 6 8"
-            className="fade-in"
-            style={cssVars({ "--d": "0.9s", "--delay": "0.15s" })}
-          />
-          <line
-            x1="489.35"
-            y1="96"
-            x2="489.35"
-            y2="640"
-            strokeDasharray="26 8 6 8"
-            className="fade-in"
-            style={cssVars({ "--d": "0.9s", "--delay": "0.45s" })}
-          />
-          <line
-            x1="1344.5"
-            y1="290"
-            x2="1344.5"
-            y2="660"
-            strokeDasharray="26 8 6 8"
-            className="fade-in"
-            style={cssVars({ "--d": "0.9s", "--delay": "2.4s" })}
-          />
-          <line
-            x1="998.30"
-            y1="140"
-            x2="998.30"
-            y2="640"
-            strokeDasharray="26 8 6 8"
-            className="fade-in"
-            style={cssVars({ "--d": "0.9s", "--delay": "1.5s" })}
-          />
-          <g className="fade-in" style={cssVars({ "--d": "0.6s", "--delay": "1.0s" })}>
-            <line pathLength="1" x1="475" y1="264.15" x2="504" y2="264.15" />
-            <line pathLength="1" x1="489.35" y1="249.8" x2="489.35" y2="278.5" />
-            <line pathLength="1" x1="984" y1="459.52" x2="1013" y2="459.52" />
-            <line pathLength="1" x1="998.3" y1="445.2" x2="998.3" y2="473.9" />
-            <line pathLength="1" x1="1330" y1="465.7" x2="1359" y2="465.7" />
-            <line pathLength="1" x1="1344.5" y1="451.4" x2="1344.5" y2="480" />
+          <g className="guide-draw-x" style={cssVars({ "--d": "0.7s", "--delay": "0s" })}>
+            <rect className="guide-bounds" x="330" y="449" width="1170" height="21" />
+            <line
+              x1="330"
+              y1="459.52"
+              x2="1500"
+              y2="459.52"
+              strokeDasharray="26 8 6 8"
+            />
           </g>
+          <g className="guide-draw-y" style={cssVars({ "--d": "0.6s", "--delay": "0.08s" })}>
+            <rect className="guide-bounds" x="479" y="96" width="21" height="544" />
+            <line
+              x1="489.35"
+              y1="96"
+              x2="489.35"
+              y2="640"
+              strokeDasharray="26 8 6 8"
+            />
+          </g>
+          <g className="guide-draw-y" style={cssVars({ "--d": "0.6s", "--delay": "0.16s" })}>
+            <rect className="guide-bounds" x="988" y="140" width="21" height="500" />
+            <line
+              x1="998.30"
+              y1="140"
+              x2="998.30"
+              y2="640"
+              strokeDasharray="26 8 6 8"
+            />
+          </g>
+          <g className="guide-draw-y" style={cssVars({ "--d": "0.6s", "--delay": "0.24s" })}>
+            <rect className="guide-bounds" x="1334" y="290" width="21" height="370" />
+            <line
+              x1="1344.5"
+              y1="290"
+              x2="1344.5"
+              y2="660"
+              strokeDasharray="26 8 6 8"
+            />
+          </g>
+          {/* Centre crosses sit on the shared axis (y=459.52), not the A-bowl offset. */}
+          <line
+            pathLength="1"
+            x1="475"
+            y1="264.15"
+            x2="504"
+            y2="264.15"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.45s" })}
+          />
+          <line
+            pathLength="1"
+            x1="489.35"
+            y1="249.8"
+            x2="489.35"
+            y2="278.5"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.48s" })}
+          />
           <line
             pathLength="1"
             x1="727"
@@ -567,7 +579,7 @@ export default function HeroLockup() {
             x2="760"
             y2="459.52"
             className="stroke-draw"
-            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.95s" })}
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.5s" })}
           />
           <line
             pathLength="1"
@@ -576,7 +588,43 @@ export default function HeroLockup() {
             x2="743.66"
             y2="476"
             className="stroke-draw"
-            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "1.0s" })}
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.52s" })}
+          />
+          <line
+            pathLength="1"
+            x1="984"
+            y1="459.52"
+            x2="1013"
+            y2="459.52"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.54s" })}
+          />
+          <line
+            pathLength="1"
+            x1="998.3"
+            y1="445.2"
+            x2="998.3"
+            y2="473.9"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.56s" })}
+          />
+          <line
+            pathLength="1"
+            x1="1330"
+            y1="459.52"
+            x2="1359"
+            y2="459.52"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.58s" })}
+          />
+          <line
+            pathLength="1"
+            x1="1344.5"
+            y1="445.2"
+            x2="1344.5"
+            y2="473.9"
+            className="stroke-draw"
+            style={cssVars({ "--d": "0.3s", "--ease": "ease-out", "--delay": "0.6s" })}
           />
         </g>
       </g>

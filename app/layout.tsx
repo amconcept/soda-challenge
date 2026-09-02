@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SOD+A CHALLENGE",
-  description: "A design challenge co-created by OCAD University, Fab Lab BCN, and LCC Fab Lab.",
+  description: "A design challenge in collaboration with OCAD University and Fab Lab BCN.",
   metadataBase: new URL("https://sodachallenge.org"),
 };
 
