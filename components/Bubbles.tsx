@@ -20,15 +20,17 @@ export default function Bubbles({
   const bandRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const band = bandRef.current;
-    if (!band) return;
+    const root = bandRef.current;
+    if (!root) return;
 
     let current = 0;
     let target = 0;
     let frame = 0;
 
     function measure() {
-      const box = band.getBoundingClientRect();
+      const node = bandRef.current;
+      if (!node) return;
+      const box = node.getBoundingClientRect();
       const mid = box.top + box.height / 2;
       target = Math.max(
         -0.7,
@@ -37,10 +39,12 @@ export default function Bubbles({
     }
 
     function tick() {
+      const node = bandRef.current;
+      if (!node) return;
       frame = 0;
       measure();
       current += (target - current) * 0.12;
-      band.style.setProperty("--shift", current.toFixed(4));
+      node.style.setProperty("--shift", current.toFixed(4));
       if (Math.abs(target - current) > 0.002) {
         frame = requestAnimationFrame(tick);
       }
