@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
 import type { Locale } from "@/lib/copy";
+import { JOIN_PATH, PARTNER_PATH } from "@/lib/contact";
 import "./site-actions.css";
 
 function ActionLinks() {
   const { t } = useLanguage();
   return (
     <>
-      <button type="button" className="site-btn site-btn--fill">
+      <Link href={JOIN_PATH} className="site-btn site-btn--fill">
         {t.join}
-      </button>
-      <button type="button" className="site-btn">
+      </Link>
+      <Link href={PARTNER_PATH} className="site-btn">
         {t.partner}
-      </button>
+      </Link>
     </>
   );
 }

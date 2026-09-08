@@ -2,20 +2,17 @@ import Hero from "@/components/hero/Hero";
 import Brief from "@/components/Brief";
 import ScrollHue from "@/components/ScrollHue";
 import SiteActions from "@/components/SiteActions";
-import { BubbleDeckProvider } from "@/components/Bubbles";
-import { listBubbleImages } from "@/lib/bubbleImages";
+import { listBubbleImages, shuffleBubbleImages } from "@/lib/bubbleImages";
 
 export default function HomePage() {
-  const bubbleImages = listBubbleImages();
+  const bubbleImages = shuffleBubbleImages(listBubbleImages());
 
   return (
     <main>
       <ScrollHue />
       <SiteActions placement="nav" />
       <Hero />
-      <BubbleDeckProvider images={bubbleImages}>
-        <Brief />
-      </BubbleDeckProvider>
+      <Brief images={bubbleImages} />
     </main>
   );
 }

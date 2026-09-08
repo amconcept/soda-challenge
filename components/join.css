@@ -1,0 +1,142 @@
+.join-page {
+  color: #0e0d0c;
+  min-height: 100vh;
+}
+
+.join-sheet {
+  padding: 12vh 8vw 18vh;
+  max-width: 40em;
+}
+
+.join-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2.4rem;
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 26px 13px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.join-back:hover,
+.join-back:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, #0e0d0c 6%, transparent);
+}
+
+.join-kicker {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 1.4rem;
+}
+
+.join-sheet h1 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  margin: 0 0 2rem;
+  max-width: 18em;
+}
+
+.join-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 2.2rem;
+}
+
+.join-role {
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid #0e0d0c;
+  background: transparent;
+  color: #0e0d0c;
+  cursor: pointer;
+}
+
+.join-role:hover,
+.join-role:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, #0e0d0c 6%, transparent);
+}
+
+.join-role--on {
+  background: #0e0d0c;
+  color: #f7f2ea;
+}
+
+.join-note {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 1.6rem;
+  opacity: 0.86;
+}
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  max-width: 32em;
+}
+
+.join-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.join-field input,
+.join-field textarea {
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #0e0d0c;
+  background: #fff;
+  border: 1px solid rgb(14 13 12 / 28%);
+  border-radius: 2px;
+  padding: 10px 12px;
+}
+
+.join-field input:focus-visible,
+.join-field textarea:focus-visible {
+  outline: none;
+  border-color: #0e0d0c;
+}
+
+.join-form .site-btn {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  cursor: pointer;
+}
+
+.join-thanks {
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  line-height: 1.45;
+  max-width: 16em;
+  margin: 0.4rem 0 0;
+}
+
+@media (max-width: 700px) {
+  .join-sheet {
+    padding: 14vh 7vw 16vh;
+  }
+}
