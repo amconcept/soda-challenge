@@ -23,7 +23,7 @@ export const copy = {
     soda: {
       kicker: "What is SOD+A?",
       title: "Schools of Discovery + Action",
-      body: "SOD+A stands for Schools of Discovery + Action. It is an international design challenge where students explore ideas through creative uses of technology, share knowledge and collaborate with students in other communities, then bring their different skills and discoveries together to co-design a project that makes a lasting contribution locally.",
+      body: "SOD+A stands for Schools of Discovery + Action. It is an international design challenge for high school students where they explore ideas through creative uses of technology, share knowledge and collaborate with students in other communities, then bring their different skills and discoveries together to co-design a project that makes a lasting contribution locally.",
       quote: "You may be working locally, but knowledge is global.",
     },
     schools: {
@@ -37,12 +37,12 @@ export const copy = {
     who: {
       kicker: "Who is it for?",
       title: "Students who want to make things with others",
-      body: "SOD+A is for students in schools, makerspaces, or Fab Labs interested in engineering, entrepreneurship, digital and product design, creative direction, project management, art and technology, or any field where ideas, initiative, collaboration, and community engagement matter.",
+      body: "SOD+A is for students aged 14-18 in schools, makerspaces, or Fab Labs interested in engineering, entrepreneurship, digital and product design, creative direction, project management, art and technology, or any field where ideas, initiative, collaboration, and community engagement matter.",
     },
     why: {
       kicker: "Why?",
-      title: "The hidden side of innovation",
-      p1: "School gives you knowledge, skills, and structure. The SOD+A Challenge guides you through an experience and the hidden side of innovation: creativity, resilience, judgement, collaboration, and the ability to dive deeply into interests, technologies, and  that can have a positive impact.",
+      title: "The other side of innovation",
+      p1: "School gives you knowledge, skills, and structure. SOD+A gives you the experience of learning through design and community. Hands-on, collaborative discovery that's common in Fab Labs and universities but doesn't always fit into a high school curriculum. Working alongside students, Fab Labs, and universities beyond your own school, you'll dive deep into what you're curious about, use technology to make something meaningful, and build the skills the world actually needs more of. Creativity, resilience, judgment, collaboration.",
       p2: "Along the way, you build a portfolio that makes your process, decisions, and growth visible, while receiving feedback and recognition from partner schools and organizations that value these skills. It is a chance to get noticed while having fun, discovering what you can do, and learning what it means to bring your talents into the world.",
     },
     how: {
@@ -115,7 +115,7 @@ export const copy = {
     soda: {
       kicker: "¿Qué es SOD+A?",
       title: "Schools of Discovery + Action",
-      body: "SOD+A significa Schools of Discovery + Action (Escuelas de Descubrimiento + Acción). Es un reto internacional de diseño en el que el estudiantado explora ideas a través de usos creativos de la tecnología, comparte conocimiento y colabora con estudiantes de otras comunidades, y luego reúne distintas habilidades y descubrimientos para co-diseñar un proyecto que deje una contribución duradera en lo local.",
+      body: "SOD+A significa Schools of Discovery + Action (Escuelas de Descubrimiento + Acción). Es un reto internacional de diseño para estudiantes de secundaria en el que exploran ideas a través de usos creativos de la tecnología, comparten conocimiento y colaboran con estudiantes de otras comunidades, y luego reúnen distintas habilidades y descubrimientos para co-diseñar un proyecto que deje una contribución duradera en lo local.",
       quote: "Puedes estar trabajando en lo local, pero el conocimiento es global.",
     },
     schools: {
@@ -129,12 +129,12 @@ export const copy = {
     who: {
       kicker: "¿Para quién es?",
       title: "Estudiantes que quieren crear con otras personas",
-      body: "SOD+A es para estudiantes de escuelas, makerspaces o Fab Labs interesados en ingeniería, emprendimiento, diseño digital y de producto, dirección creativa, gestión de proyectos, arte y tecnología, o cualquier campo en el que importen las ideas, la iniciativa, la colaboración y el compromiso con la comunidad.",
+      body: "SOD+A es para estudiantes de 14 a 18 años en escuelas, makerspaces o Fab Labs interesados en ingeniería, emprendimiento, diseño digital y de producto, dirección creativa, gestión de proyectos, arte y tecnología, o cualquier campo en el que importen las ideas, la iniciativa, la colaboración y el compromiso con la comunidad.",
     },
     why: {
       kicker: "¿Por qué?",
-      title: "El lado oculto de la innovación",
-      p1: "La escuela te da conocimiento, habilidades y estructura. El Reto SOD+A te pide vivir el lado oculto de la innovación: creatividad, resiliencia, criterio, colaboración y la capacidad de profundizar en intereses, tecnologías e ideas que pueden tener un impacto positivo.",
+      title: "El otro lado de la innovación",
+      p1: "La escuela te da conocimiento, habilidades y estructura. SOD+A te da la experiencia de aprender a través del diseño y la comunidad. Un descubrimiento colaborativo y práctico, habitual en Fab Labs y universidades, que no siempre encaja en un currículo de secundaria. Trabajando junto a estudiantes, Fab Labs y universidades más allá de tu propia escuela, profundizarás en lo que te interesa, usarás la tecnología para hacer algo con sentido y desarrollarás las habilidades que el mundo realmente necesita más. Creatividad, resiliencia, criterio, colaboración.",
       p2: "Construyes un portafolio que hace visible tu proceso, tus decisiones y tu crecimiento, mientras recibes comentarios y reconocimiento de escuelas y organizaciones colaboradoras que valoran estas habilidades. Es una oportunidad de que te vean, de divertirte, de descubrir lo que puedes hacer y de aprender lo que significa llevar tu talento al mundo.",
     },
     how: {

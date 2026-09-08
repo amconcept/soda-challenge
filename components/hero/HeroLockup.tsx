@@ -9,11 +9,12 @@ export default function HeroLockup() {
     <svg
       className="hero-lockup"
       viewBox="300 110 1330 870"
+      width="100%"
       aria-labelledby="hero-title"
       role="img"
     >
       <title id="hero-title">SOD+A CHALLENGE</title>
-      <g className="strokes">
+      <g className="strokes" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         {/* S — 4 arcs, 0.85s each, 0.06s stagger from t=0.15 */}
         <g
           className="float-box float-a"

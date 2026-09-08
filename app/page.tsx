@@ -4,9 +4,11 @@ import ScrollHue from "@/components/ScrollHue";
 import SiteActions from "@/components/SiteActions";
 import { listBubbleImages, shuffleBubbleImages } from "@/lib/bubbleImages";
 
-export default function HomePage() {
-  const bubbleImages = shuffleBubbleImages(listBubbleImages());
+export const dynamic = "force-static";
 
+const bubbleImages = shuffleBubbleImages(listBubbleImages());
+
+export default function HomePage() {
   return (
     <main>
       <ScrollHue />
