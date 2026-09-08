@@ -1,9 +1,11 @@
 "use client";
 
 import { useLayoutEffect, useState } from "react";
+import Link from "next/link";
 import HeroLockup from "./HeroLockup";
 import { cssVars } from "./cssVars";
 import { useLanguage } from "@/components/LanguageProvider";
+import { PARTNER_PATH } from "@/lib/contact";
 import "./hero.css";
 
 const asset = (file: string) =>
@@ -14,6 +16,7 @@ export default function Hero() {
   // Wait until after hydration so the sequence starts once —
   // not during SSR paint and again when React attaches.
   const [ready, setReady] = useState(false);
+
   useLayoutEffect(() => {
     setReady(true);
   }, []);
@@ -25,7 +28,6 @@ export default function Hero() {
   return (
     <section
       className={ready ? "hero hero--ready" : "hero"}
-      data-show-mark="false"
       data-show-schematic="true"
       data-show-partners="true"
       aria-label="SOD+A CHALLENGE"
@@ -69,7 +71,8 @@ export default function Hero() {
           >
             <img src={asset("soda-16.svg")} alt="OCAD University" />
           </span>
-          <span
+          <Link
+            href={PARTNER_PATH}
             className="sticker sticker-invite float-b"
             aria-label={t.becomeLabel}
             style={{
@@ -83,7 +86,7 @@ export default function Hero() {
           >
             <span>{t.becomeLine1}</span>
             <span>{t.becomeLine2}</span>
-          </span>
+          </Link>
         </div>
       </div>
 

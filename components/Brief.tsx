@@ -1,14 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import Bubbles from "./Bubbles";
 import SiteActions from "./SiteActions";
 import { useLanguage } from "./LanguageProvider";
+import { JOIN_PATH } from "@/lib/contact";
 import "./brief.css";
 
 const partnerAsset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
-export default function Brief() {
+export default function Brief({ images }: { images: string[] }) {
   const { t } = useLanguage();
 
   return (
@@ -25,10 +27,10 @@ export default function Brief() {
             <span className="school-sticker">
               <img src={partnerAsset("soda-18.svg")} alt="LCC Fab Lab" />
             </span>
-            <span className="school-invite" aria-label={t.join}>
+            <Link href={JOIN_PATH} className="school-invite" aria-label={t.join}>
               <span>{t.joinLine1}</span>
               <span>{t.joinLine2}</span>
-            </span>
+            </Link>
           </div>
         </div>
 
@@ -39,7 +41,7 @@ export default function Brief() {
         </a>
       </section>
 
-      <Bubbles variant="b" slot={0} />
+      <Bubbles images={images} variant="b" slot={0} />
 
       <section id="challenge" className="brief-section">
         <p className="brief-kicker">{t.challenge.kicker}</p>
@@ -47,7 +49,7 @@ export default function Brief() {
         <p>{t.challenge.body}</p>
       </section>
 
-      <Bubbles variant="c" slot={1} />
+      <Bubbles images={images} variant="c" slot={1} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.who.kicker}</p>
@@ -55,7 +57,7 @@ export default function Brief() {
         <p>{t.who.body}</p>
       </section>
 
-      <Bubbles variant="a" slot={2} />
+      <Bubbles images={images} variant="a" slot={2} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.why.kicker}</p>
@@ -64,7 +66,7 @@ export default function Brief() {
         <p>{t.why.p2}</p>
       </section>
 
-      <Bubbles variant="b" slot={3} />
+      <Bubbles images={images} variant="b" slot={3} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.how.kicker}</p>
@@ -75,7 +77,7 @@ export default function Brief() {
         <p>{t.how.p4}</p>
       </section>
 
-      <Bubbles variant="c" slot={4} />
+      <Bubbles images={images} variant="c" slot={4} />
 
       <SiteActions placement="footer" />
     </article>
