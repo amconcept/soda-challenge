@@ -71,9 +71,22 @@ export default function Hero() {
           >
             <img src={asset("soda-16.svg")} alt="OCAD University" />
           </span>
+          <span
+            className="sticker sticker-link float-b"
+            style={{
+              opacity: 0,
+              ...cssVars({
+                "--delay": "6.35s",
+                "--float-dur": "6.9s",
+                "--float-delay": "7.15s",
+              }),
+            }}
+          >
+            <img src={asset("soda-18.svg")} alt="LCC Fab Lab" />
+          </span>
           <Link
             href={PARTNER_PATH}
-            className="sticker sticker-invite float-b"
+            className="sticker sticker-invite float-c"
             aria-label={t.becomeLabel}
             style={{
               opacity: 0,
