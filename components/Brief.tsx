@@ -24,9 +24,15 @@ export default function Brief({ images }: { images: string[] }) {
         <div className="schools" id="schools">
           <p className="brief-kicker">{t.schools.kicker}</p>
           <div className="schools-row">
-            <span className="school-sticker">
-              <img src={partnerAsset("soda-18.svg")} alt="LCC Fab Lab" />
-            </span>
+            <a
+              className="school-sticker"
+              href="https://www.lcc.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Lower Canada College"
+            >
+              <img src={partnerAsset("lcc-crest.png")} alt="Lower Canada College" />
+            </a>
             <Link href={JOIN_PATH} className="school-invite" aria-label={t.join}>
               <span>{t.joinLine1}</span>
               <span>{t.joinLine2}</span>

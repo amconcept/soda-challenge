@@ -220,6 +220,7 @@
 }
 
 .schools-row {
+  --school-mark: clamp(56px, 10vh, 78px);
   display: flex;
   align-items: center;
   gap: clamp(24px, 4vw, 52px);
@@ -227,10 +228,15 @@
 }
 
 .school-sticker {
-  height: clamp(84px, 16vh, 132px);
+  /* Taller than the Join circle so the die-cut matches its visual weight. */
+  height: calc(var(--school-mark) * 1.28);
+  width: auto;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  cursor: default;
+  cursor: pointer;
+  animation: floatC 7.4s ease-in-out infinite;
 }
 
 .school-sticker img {
@@ -240,8 +246,8 @@
 }
 
 .school-invite {
-  width: clamp(56px, 10vh, 78px);
-  height: clamp(56px, 10vh, 78px);
+  width: var(--school-mark);
+  height: var(--school-mark);
   border-radius: 50%;
   background: #f7f2ea;
   box-shadow: inset 0 0 0 2px #111;
@@ -271,6 +277,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .school-sticker,
   .school-invite,
   .scroll-cue {
     animation: none !important;
