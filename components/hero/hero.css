@@ -298,7 +298,7 @@
 .sticker-link {
   display: inline-flex;
   text-decoration: none;
-  cursor: default;
+  cursor: pointer;
 }
 
 .sticker-link img {
