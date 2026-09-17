@@ -2,13 +2,20 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
-import { copy, type Locale } from "@/lib/copy";
+import {
+  copy,
+  isLocale,
+  localeFromBrowser,
+  LOCALE_STORAGE_KEY,
+  type Locale,
+} from "@/lib/copy";
 
 type LanguageContextValue = {
   locale: Locale;
@@ -18,8 +25,28 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
+function readStoredLocale(): Locale | null {
+  try {
+    const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    return isLocale(stored) ? stored : null;
+  } catch {
+    return null;
+  }
+}
+
+function browserLanguages(): readonly string[] {
+  if (typeof navigator === "undefined") return [];
+  if (navigator.languages?.length) return navigator.languages;
+  return navigator.language ? [navigator.language] : [];
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("en");
+  const [locale, setLocaleState] = useState<Locale>("en");
+
+  // After mount: keep an explicit EN/ES/FR choice, otherwise follow the browser.
+  useEffect(() => {
+    setLocaleState(readStoredLocale() ?? localeFromBrowser(browserLanguages()));
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -27,13 +54,22 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (meta) meta.setAttribute("content", copy[locale].metaDescription);
   }, [locale]);
 
+  const setLocale = useCallback((next: Locale) => {
+    setLocaleState(next);
+    try {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    } catch {
+      // Private mode / blocked storage: the choice still applies for this visit.
+    }
+  }, []);
+
   const value = useMemo<LanguageContextValue>(
     () => ({
       locale,
       setLocale,
       t: copy[locale],
     }),
-    [locale],
+    [locale, setLocale],
   );
 
   return (

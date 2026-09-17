@@ -45,8 +45,12 @@ export default function Hero() {
           <div className="hero-rule" />
         </div>
         <div className="hero-stickers">
-          <span
+          <a
             className="sticker sticker-link float-c"
+            href="https://fablabbcn.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Fab Lab Barcelona"
             style={{
               opacity: 0,
               ...cssVars({
@@ -57,9 +61,13 @@ export default function Hero() {
             }}
           >
             <img src={asset("soda-17.svg")} alt="Fab Lab Barcelona" />
-          </span>
-          <span
+          </a>
+          <a
             className="sticker sticker-link float-a"
+            href="https://www.ocadu.ca/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="OCAD University"
             style={{
               opacity: 0,
               ...cssVars({
@@ -70,9 +78,13 @@ export default function Hero() {
             }}
           >
             <img src={asset("soda-16.svg")} alt="OCAD University" />
-          </span>
-          <span
+          </a>
+          <a
             className="sticker sticker-link float-b"
+            href="https://www.lcc.ca/student-life/fablab"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LCC Fab Lab"
             style={{
               opacity: 0,
               ...cssVars({
@@ -83,7 +95,7 @@ export default function Hero() {
             }}
           >
             <img src={asset("soda-18.svg")} alt="LCC Fab Lab" />
-          </span>
+          </a>
           <Link
             href={PARTNER_PATH}
             className="sticker sticker-invite float-c"

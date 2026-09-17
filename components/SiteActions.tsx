@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
-import type { Locale } from "@/lib/copy";
+import { locales, type Locale } from "@/lib/copy";
 import { JOIN_PATH, PARTNER_PATH } from "@/lib/contact";
 import "./site-actions.css";
 
@@ -30,21 +30,18 @@ function LanguageSwitch() {
 
   return (
     <div className="lang-switch" role="group" aria-label={t.language}>
-      <button
-        type="button"
-        aria-pressed={locale === "en"}
-        onClick={() => select("en")}
-      >
-        EN
-      </button>
-      <span aria-hidden="true">|</span>
-      <button
-        type="button"
-        aria-pressed={locale === "es"}
-        onClick={() => select("es")}
-      >
-        ES
-      </button>
+      {locales.map((code, index) => (
+        <span key={code} className="lang-switch-item">
+          {index > 0 ? <span aria-hidden="true">|</span> : null}
+          <button
+            type="button"
+            aria-pressed={locale === code}
+            onClick={() => select(code)}
+          >
+            {code.toUpperCase()}
+          </button>
+        </span>
+      ))}
     </div>
   );
 }

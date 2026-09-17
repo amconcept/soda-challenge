@@ -37,6 +37,12 @@
   color: #0e0d0c;
 }
 
+.lang-switch-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .lang-switch button {
   background: transparent;
   border: 0;

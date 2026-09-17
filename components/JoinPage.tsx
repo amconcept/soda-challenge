@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import SiteActions from "./SiteActions";
 import { useLanguage } from "./LanguageProvider";
-import { JOIN_EMAIL } from "@/lib/contact";
+import { fieldsFromForm, FormSendError, sendChallengeForm } from "@/lib/sendForm";
 import "./join.css";
 
 type Role = "student" | "facilitator";
@@ -38,22 +38,23 @@ export default function JoinPage() {
   const { t } = useLanguage();
   const form = t.joinForm;
   const [role, setRole] = useState<Role | null>(null);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "activate">("idle");
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!role) return;
+    if (!role || status === "sending") return;
 
-    const data = new FormData(event.currentTarget);
-    const lines = [`Role: ${role === "student" ? form.studentChoice : form.facilitatorChoice}`, ""];
-    data.forEach((value, key) => {
-      lines.push(`${key}: ${String(value).trim()}`);
+    const fields = fieldsFromForm(event.currentTarget, {
+      Role: role === "student" ? form.studentChoice : form.facilitatorChoice,
     });
 
-    const subject = encodeURIComponent(`SOD+A Challenge — ${role}`);
-    const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:${JOIN_EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setStatus("sending");
+    try {
+      await sendChallengeForm(fields, `SOD+A Challenge — ${role}`);
+      setStatus("sent");
+    } catch (error) {
+      setStatus(error instanceof FormSendError ? error.kind : "error");
+    }
   }
 
   return (
@@ -77,7 +78,7 @@ export default function JoinPage() {
             aria-pressed={role === "student"}
             onClick={() => {
               setRole("student");
-              setSent(false);
+              setStatus("idle");
             }}
           >
             {form.studentChoice}
@@ -88,14 +89,14 @@ export default function JoinPage() {
             aria-pressed={role === "facilitator"}
             onClick={() => {
               setRole("facilitator");
-              setSent(false);
+              setStatus("idle");
             }}
           >
             {form.facilitatorChoice}
           </button>
         </div>
 
-        {role === "student" && !sent ? (
+        {role === "student" && status !== "sent" ? (
           <form className="join-form" onSubmit={onSubmit}>
             <p className="join-note">{form.studentNote}</p>
             <Field id="name" label={form.name} />
@@ -106,13 +107,16 @@ export default function JoinPage() {
             <Field id="guideName" label={form.guideName} />
             <Field id="guideEmail" label={form.guideEmail} type="email" />
             <Field id="interests" label={form.interests} multiline />
-            <button type="submit" className="site-btn site-btn--fill">
-              {form.submit}
+            {status === "error" || status === "activate" ? (
+              <p className="join-error">{status === "activate" ? form.activate : form.error}</p>
+            ) : null}
+            <button type="submit" className="site-btn site-btn--fill" disabled={status === "sending"}>
+              {status === "sending" ? form.sending : form.submit}
             </button>
           </form>
         ) : null}
 
-        {role === "facilitator" && !sent ? (
+        {role === "facilitator" && status !== "sent" ? (
           <form className="join-form" onSubmit={onSubmit}>
             <Field id="name" label={form.name} />
             <Field id="email" label={form.email} type="email" />
@@ -123,13 +127,16 @@ export default function JoinPage() {
             <Field id="expertise" label={form.expertise} multiline />
             <Field id="questions" label={form.questions} multiline required={false} />
             <Field id="hours" label={form.hours} type="number" />
-            <button type="submit" className="site-btn site-btn--fill">
-              {form.submit}
+            {status === "error" || status === "activate" ? (
+              <p className="join-error">{status === "activate" ? form.activate : form.error}</p>
+            ) : null}
+            <button type="submit" className="site-btn site-btn--fill" disabled={status === "sending"}>
+              {status === "sending" ? form.sending : form.submit}
             </button>
           </form>
         ) : null}
 
-        {sent ? <p className="join-thanks">{form.thanks}</p> : null}
+        {status === "sent" ? <p className="join-thanks">{form.thanks}</p> : null}
       </article>
     </main>
   );

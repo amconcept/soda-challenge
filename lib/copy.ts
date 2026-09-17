@@ -1,4 +1,20 @@
-export type Locale = "en" | "es";
+export const locales = ["en", "es", "fr"] as const;
+export type Locale = (typeof locales)[number];
+
+export const LOCALE_STORAGE_KEY = "soda-locale";
+
+export function isLocale(value: string | null | undefined): value is Locale {
+  return value != null && (locales as readonly string[]).includes(value);
+}
+
+/** First matching tag in a browser language list (`fr-CA` → `fr`), else English. */
+export function localeFromBrowser(languages: readonly string[] = []): Locale {
+  for (const tag of languages) {
+    const base = tag.trim().toLowerCase().split(/[-_]/)[0];
+    if (base === "en" || base === "es" || base === "fr") return base;
+  }
+  return "en";
+}
 
 export const copy = {
   en: {
@@ -60,7 +76,10 @@ export const copy = {
       facilitatorChoice: "I am a facilitator",
       studentNote: "We will help find you a group to join.",
       submit: "Send",
+      sending: "Sending…",
       thanks: "Thank you. We will be in touch.",
+      error: "Couldn't send. Try again, or email hello@sodachallenge.org.",
+      activate: "Check Gmail for an email from FormSubmit, click Activate Form, then send again.",
       back: "Back to the challenge",
       name: "Name",
       email: "Email",
@@ -82,7 +101,10 @@ export const copy = {
       title: "Become a partner",
       intro: "Want to partner with the SOD+A Challenge? Fill this form:",
       submit: "Send",
+      sending: "Sending…",
       thanks: "Thank you. We will be in touch.",
+      error: "Couldn't send. Try again, or email hello@sodachallenge.org.",
+      activate: "Check Gmail for an email from FormSubmit, click Activate Form, then send again.",
       back: "Back to the challenge",
       name: "Name",
       email: "Email",
@@ -91,6 +113,104 @@ export const copy = {
       location: "City / country",
       offer: "How would you like to partner?",
       questions: "Any questions about the challenge?",
+    },
+  },
+  fr: {
+    metaDescription:
+      "Un défi de design en collaboration avec Fab Lab Barcelona et OCAD University",
+    season: "2026 – 2027 (pilote)",
+    collaboration: "En collaboration avec",
+    becomeLine1: "Devenir",
+    becomeLine2: "partenaire",
+    becomeLabel: "Devenir partenaire",
+    discover: "Découvrir",
+    join: "Rejoindre le défi",
+    joinLine1: "Rejoindre",
+    joinLine2: "le défi",
+    partner: "Partenaire",
+    menu: "Menu",
+    openMenu: "Ouvrir le menu",
+    closeMenu: "Fermer le menu",
+    involved: "Participer",
+    language: "Langue",
+    scrollMore: "Continuer vers le bas",
+    soda: {
+      kicker: "Qu'est-ce que SOD+A ?",
+      title: "Schools of Discovery + Action",
+      body: "SOD+A signifie Schools of Discovery + Action (écoles de découverte + action). C'est un défi international de design pour les élèves du secondaire : ils explorent des idées par des usages créatifs de la technologie, partagent leurs connaissances et collaborent avec des élèves d'autres communautés, puis rassemblent leurs compétences et découvertes pour co-concevoir un projet qui laisse une contribution durable à l'échelle locale.",
+      quote: "Vous travaillez peut-être à l'échelle locale, mais le savoir est mondial.",
+    },
+    schools: {
+      kicker: "Écoles participantes",
+    },
+    challenge: {
+      kicker: "Quel est le défi ?",
+      title: "Voir jusqu'où une idée peut aller",
+      body: "Le défi consiste à voir jusqu'où vous pouvez mener une idée : expérimenter, apprendre de nouvelles compétences, recevoir des commentaires, faire des changements, partager ce que vous découvrez, passer à l'action et répondre aux critères des institutions partenaires. En chemin, vous construisez un portfolio et développez les compétences créatives, techniques et humaines que recherchent les universités et les organisations innovantes.",
+    },
+    who: {
+      kicker: "Pour qui ?",
+      title: "Des élèves qui veulent créer avec d'autres",
+      body: "SOD+A s'adresse aux élèves de 14 à 18 ans, dans les écoles, makerspaces ou Fab Labs, intéressés par l'ingénierie, l'entrepreneuriat, le design numérique et de produit, la direction créative, la gestion de projet, l'art et la technologie, ou tout domaine où comptent les idées, l'initiative, la collaboration et l'engagement communautaire.",
+    },
+    why: {
+      kicker: "Pourquoi ?",
+      title: "L'autre côté de l'innovation",
+      p1: "L'école vous donne des connaissances, des compétences et une structure. SOD+A vous donne l'expérience d'apprendre par le design et la communauté. Une découverte collaborative et concrète, courante dans les Fab Labs et les universités, qui n'entre pas toujours dans un programme de secondaire. Aux côtés d'élèves, de Fab Labs et d'universités au-delà de votre propre école, vous irez au fond de ce qui vous passionne, utiliserez la technologie pour créer quelque chose de porteur de sens, et développerez les compétences dont le monde a réellement le plus besoin. Créativité, résilience, jugement, collaboration.",
+      p2: "En chemin, vous construisez un portfolio qui rend visibles votre processus, vos décisions et votre progression, tout en recevant des commentaires et une reconnaissance d'écoles et d'organisations partenaires qui valorisent ces compétences. C'est une chance d'être vu, de s'amuser, de découvrir ce que vous pouvez faire, et d'apprendre ce que signifie porter vos talents dans le monde.",
+    },
+    how: {
+      kicker: "Comment ça marche ?",
+      title: "Rejoindre un groupe local. Partager un processus mondial.",
+      p1: "Vous rejoignez un groupe local et identifiez un projet que vous pouvez co-concevoir dans votre communauté. Puis vous entrez dans un atelier, un labo, une classe, un makerspace ou un autre espace créatif pour expérimenter avec des idées, des matériaux et des technologies.",
+      p2: "Des consignes aléatoires choisies et des contraintes créatives vous poussent vers des combinaisons inattendues, de nouvelles compétences et des idées que vous n'auriez peut-être pas explorées seul.",
+      p3: "En chemin, vous documentez et partagez ce que vous apprenez, voyez ce que découvrent des élèves d'autres communautés, recevez des commentaires, faites des changements et ramenez vos découvertes dans le projet collectif.",
+      p4: "Le défi est de continuer à développer vos idées, de partager ce que vous savez, de répondre aux commentaires, de mettre l'apprentissage en action, et de répondre aux critères des institutions partenaires.",
+    },
+    joinForm: {
+      title: "Rejoindre le défi",
+      intro: "Vous voulez participer au défi SOD+A ? Remplissez ce formulaire :",
+      studentChoice: "Je suis élève",
+      facilitatorChoice: "Je suis facilitateur/facilitatrice",
+      studentNote: "Nous vous aiderons à trouver un groupe.",
+      submit: "Envoyer",
+      sending: "Envoi…",
+      thanks: "Merci. Nous vous écrirons.",
+      error: "L'envoi a échoué. Réessayez, ou écrivez à hello@sodachallenge.org.",
+      activate: "Vérifiez Gmail, ouvrez le courriel de FormSubmit, cliquez sur Activate Form, puis renvoyez.",
+      back: "Retour au défi",
+      name: "Nom",
+      email: "Courriel",
+      age: "Âge",
+      schoolLevel: "Niveau scolaire",
+      schoolOrg: "École ou organisation",
+      guideName: "Nom d'un enseignant ou d'un professionnel qui peut vous accompagner",
+      guideEmail: "Son courriel",
+      interests: "Intérêts",
+      orgName: "Nom de l'organisation",
+      role: "Rôle",
+      studentAges: "Âge des élèves avec qui vous travaillez",
+      facilities: "Installations auxquelles vous avez accès",
+      expertise: "Quelle expertise dans votre organisation peut aider ?",
+      questions: "Des questions sur le défi ?",
+      hours: "Combien d'heures par semaine pouvez-vous consacrer à cette activité ?",
+    },
+    partnerForm: {
+      title: "Devenir partenaire",
+      intro: "Vous voulez être partenaire du défi SOD+A ? Remplissez ce formulaire :",
+      submit: "Envoyer",
+      sending: "Envoi…",
+      thanks: "Merci. Nous vous écrirons.",
+      error: "L'envoi a échoué. Réessayez, ou écrivez à hello@sodachallenge.org.",
+      activate: "Vérifiez Gmail, ouvrez le courriel de FormSubmit, cliquez sur Activate Form, puis renvoyez.",
+      back: "Retour au défi",
+      name: "Nom",
+      email: "Courriel",
+      orgName: "Nom de l'organisation",
+      role: "Rôle",
+      location: "Ville / pays",
+      offer: "Comment aimeriez-vous collaborer ?",
+      questions: "Des questions sur le défi ?",
     },
   },
   es: {
@@ -152,7 +272,10 @@ export const copy = {
       facilitatorChoice: "Soy facilitador/a",
       studentNote: "Te ayudaremos a encontrar un grupo.",
       submit: "Enviar",
+      sending: "Enviando…",
       thanks: "Gracias. Nos pondremos en contacto.",
+      error: "No se pudo enviar. Inténtalo de nuevo, o escribe a hello@sodachallenge.org.",
+      activate: "Revisa Gmail, abre el correo de FormSubmit, pulsa Activate Form y vuelve a enviar.",
       back: "Volver al reto",
       name: "Nombre",
       email: "Correo",
@@ -174,7 +297,10 @@ export const copy = {
       title: "Hazte partner",
       intro: "¿Quieres ser partner del Reto SOD+A? Completa este formulario:",
       submit: "Enviar",
+      sending: "Enviando…",
       thanks: "Gracias. Nos pondremos en contacto.",
+      error: "No se pudo enviar. Inténtalo de nuevo, o escribe a hello@sodachallenge.org.",
+      activate: "Revisa Gmail, abre el correo de FormSubmit, pulsa Activate Form y vuelve a enviar.",
       back: "Volver al reto",
       name: "Nombre",
       email: "Correo",
