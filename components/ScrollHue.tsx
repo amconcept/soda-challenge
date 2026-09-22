@@ -2,13 +2,17 @@
 
 import { useEffect } from "react";
 
-/** Pastel stops: sage → yellow → orange → pink as the page scrolls. */
+/** Pastel stops: sage → yellow → orange → pink. */
 const STOPS = [
   { t: 0, h: 160, s: 18, l: 90 },
   { t: 0.34, h: 50, s: 42, l: 90 },
   { t: 0.64, h: 22, s: 46, l: 90 },
   { t: 1, h: 338, s: 32, l: 91 },
 ];
+
+/** Idle wash on the hero: a full sage → pink → sage breath. */
+const IDLE_CYCLE_MS = 20_000;
+const IDLE_TOP_PX = 48;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -32,34 +36,52 @@ function colorAt(progress: number) {
   return `hsl(${h.toFixed(1)} ${s.toFixed(1)}% ${l.toFixed(1)}%)`;
 }
 
+/** 0→1→0 so standby color eases back to sage without a jump. */
+function pingPong(cycle: number) {
+  return cycle < 0.5 ? cycle * 2 : 2 - cycle * 2;
+}
+
 export default function ScrollHue() {
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let frame = 0;
+    const origin = performance.now();
 
-    function paint() {
+    function progressAt(now: number) {
       const max = root.scrollHeight - window.innerHeight;
-      const color = colorAt(max <= 0 ? 0 : window.scrollY / max);
+      const scrolled = window.scrollY;
+      // On the hero (standby), shift color over time. Once you scroll, follow the page.
+      if (!reduced && scrolled <= IDLE_TOP_PX) {
+        return pingPong(((now - origin) / IDLE_CYCLE_MS) % 1);
+      }
+      return max <= 0 ? 0 : scrolled / max;
+    }
+
+    function paint(now: number) {
+      const color = colorAt(progressAt(now));
       root.style.backgroundColor = color;
       body.style.backgroundColor = color;
     }
 
-    function onScroll() {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        paint();
-      });
+    function loop(now: number) {
+      frame = window.requestAnimationFrame(loop);
+      if (window.scrollY <= IDLE_TOP_PX) paint(now);
     }
 
-    paint();
+    function onScroll() {
+      paint(performance.now());
+    }
+
+    paint(origin);
+    if (!reduced) frame = window.requestAnimationFrame(loop);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
+      if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 
