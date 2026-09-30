@@ -69,6 +69,12 @@ export const copy = {
       p3: "Along the way, you document and share what you learn, see what students in other communities are discovering, receive feedback, make changes, and bring your discoveries back into the collective project.",
       p4: "The challenge is to keep developing your ideas, share what you know, respond to feedback, put your learning into action, and meet the criteria set by partner institutions.",
     },
+    criteria: {
+      kicker: "Challenge criteria",
+      title: "Show us what you can do?",
+      intro:
+        "Partner institutions set the criteria. Meeting them leads to levels, achievements, and certificates as you experiment, document, and share.",
+    },
     joinForm: {
       title: "Join the challenge",
       intro: "Want to participate in the SOD+A Challenge? Fill this form:",
@@ -167,6 +173,12 @@ export const copy = {
       p3: "En chemin, vous documentez et partagez ce que vous apprenez, voyez ce que découvrent des élèves d'autres communautés, recevez des commentaires, faites des changements et ramenez vos découvertes dans le projet collectif.",
       p4: "Le défi est de continuer à développer vos idées, de partager ce que vous savez, de répondre aux commentaires, de mettre l'apprentissage en action, et de répondre aux critères des institutions partenaires.",
     },
+    criteria: {
+      kicker: "Critères du défi",
+      title: "Montrez-nous ce que vous savez faire ?",
+      intro:
+        "Les institutions partenaires définissent les critères. Les remplir ouvre des niveaux, des accomplissements et des certificats, pendant que vous expérimentez, documentez et partagez.",
+    },
     joinForm: {
       title: "Rejoindre le défi",
       intro: "Vous voulez participer au défi SOD+A ? Remplissez ce formulaire :",
@@ -264,6 +276,12 @@ export const copy = {
       p2: "Indicaciones aleatorias curadas y restricciones creativas te empujan hacia combinaciones inesperadas, nuevas habilidades e ideas que quizá no habrías explorado por tu cuenta.",
       p3: "Por el camino, documentas y compartes lo que aprendes, ves lo que descubren estudiantes de otras comunidades, recibes comentarios, haces cambios y llevas tus descubrimientos de vuelta al proyecto colectivo.",
       p4: "El reto es seguir desarrollando tus ideas, compartir lo que sabes, responder a los comentarios, poner el aprendizaje en práctica y cumplir los criterios de las instituciones colaboradoras.",
+    },
+    criteria: {
+      kicker: "Criterios del reto",
+      title: "¿Nos enseñas lo que sabes hacer?",
+      intro:
+        "Las instituciones colaboradoras marcan los criterios. Cumplirlos abre niveles, logros y certificados mientras experimentas, documentas y compartes.",
     },
     joinForm: {
       title: "Únete al reto",
