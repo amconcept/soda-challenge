@@ -43,7 +43,7 @@ export const copy = {
       quote: "You may be working locally, but knowledge is global.",
     },
     schools: {
-      kicker: "Participating schools",
+      kicker: "Participating schools 2026-27",
     },
     challenge: {
       kicker: "What is the challenge?",
@@ -147,7 +147,7 @@ export const copy = {
       quote: "Vous travaillez peut-être à l'échelle locale, mais le savoir est mondial.",
     },
     schools: {
-      kicker: "Écoles participantes",
+      kicker: "Écoles participantes 2026-27",
     },
     challenge: {
       kicker: "Quel est le défi ?",
@@ -251,7 +251,7 @@ export const copy = {
       quote: "Puedes estar trabajando en lo local, pero el conocimiento es global.",
     },
     schools: {
-      kicker: "Escuelas participantes",
+      kicker: "Escuelas participantes 2026-27",
     },
     challenge: {
       kicker: "¿Qué es el reto?",
