@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import Bubbles from "./Bubbles";
 import SiteActions from "./SiteActions";
@@ -53,8 +54,23 @@ const CRITERIA_CARDS = [
   },
 ];
 
+/** New order each visit. Positions and sizes stay in the sticker layout. */
+function shufflePhotos(images: string[]) {
+  const next = [...images];
+  for (let i = next.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 export default function Brief({ images }: { images: string[] }) {
   const { t, locale } = useLanguage();
+  const [photos, setPhotos] = useState(images);
+
+  useLayoutEffect(() => {
+    setPhotos(shufflePhotos(images));
+  }, [images]);
 
   return (
     <article className="brief">
@@ -90,7 +106,7 @@ export default function Brief({ images }: { images: string[] }) {
         </a>
       </section>
 
-      <Bubbles images={images} variant="b" slot={0} />
+      <Bubbles images={photos} variant="b" slot={0} />
 
       <section id="challenge" className="brief-section">
         <p className="brief-kicker">{t.challenge.kicker}</p>
@@ -98,7 +114,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.challenge.body}</p>
       </section>
 
-      <Bubbles images={images} variant="c" slot={1} />
+      <Bubbles images={photos} variant="c" slot={1} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.who.kicker}</p>
@@ -106,7 +122,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.who.body}</p>
       </section>
 
-      <Bubbles images={images} variant="a" slot={2} />
+      <Bubbles images={photos} variant="a" slot={2} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.why.kicker}</p>
@@ -115,7 +131,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.why.p2}</p>
       </section>
 
-      <Bubbles images={images} variant="b" slot={3} />
+      <Bubbles images={photos} variant="b" slot={3} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.how.kicker}</p>
@@ -126,7 +142,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.how.p4}</p>
       </section>
 
-      <Bubbles images={images} variant="c" slot={4} />
+      <Bubbles images={photos} variant="c" slot={4} />
 
       <section id="criteria" className="brief-section">
         <p className="brief-kicker">{t.criteria.kicker}</p>

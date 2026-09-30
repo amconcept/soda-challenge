@@ -12,13 +12,3 @@ export function listBubbleImages(): string[] {
     .sort()
     .map((file) => `${base}/bubbles/${encodeURIComponent(file)}`);
 }
-
-/** One shuffle per server render so client hydration sees the same order. */
-export function shuffleBubbleImages(images: string[]): string[] {
-  const next = [...images];
-  for (let i = next.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-}

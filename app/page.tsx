@@ -2,11 +2,11 @@ import Hero from "@/components/hero/Hero";
 import Brief from "@/components/Brief";
 import ScrollHue from "@/components/ScrollHue";
 import SiteActions from "@/components/SiteActions";
-import { listBubbleImages, shuffleBubbleImages } from "@/lib/bubbleImages";
+import { listBubbleImages } from "@/lib/bubbleImages";
 
 export const dynamic = "force-static";
 
-const bubbleImages = shuffleBubbleImages(listBubbleImages());
+const bubbleImages = listBubbleImages();
 
 export default function HomePage() {
   return (
