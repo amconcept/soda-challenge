@@ -191,8 +191,31 @@
   opacity: 0.95 !important;
 }
 
+/* Intro is one group: statement, schools, then a complete photo pile.
+   The old gap left the circles cut off at the fold. */
+.brief-section--intro .brief-quote {
+  margin-top: 1.6rem !important;
+}
+
 .schools {
-  margin-top: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 3.2rem auto 0;
+}
+
+.brief-section--intro .schools {
+  margin-top: 1.5rem;
+}
+
+.brief-section--intro .scroll-cue {
+  margin-top: 0.35rem;
+}
+
+.brief-section--intro + .bubbles {
+  height: clamp(200px, 32vh, 300px);
+  margin-top: -0.4rem;
 }
 
 .scroll-cue {
@@ -219,10 +242,45 @@
   50% { transform: translateY(6px); }
 }
 
+/* Same hairline and type as “In collaboration with”. */
+.brief-section p.schools-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  max-width: none;
+  margin: 0 0 1.15rem;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.schools-line span:not(.schools-rule) {
+  opacity: 0.7;
+}
+
+.schools-rule {
+  width: 46px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  flex: 0 0 auto;
+}
+
+.schools-rule--end {
+  align-self: stretch;
+  width: auto;
+  flex: none;
+  margin-top: 1.15rem;
+}
+
 .schools-row {
   --school-mark: clamp(56px, 10vh, 78px);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: clamp(24px, 4vw, 52px);
   flex-wrap: wrap;
 }

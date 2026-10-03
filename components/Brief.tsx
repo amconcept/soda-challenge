@@ -3,6 +3,8 @@
 import { useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import Bubbles from "./Bubbles";
+import Ask from "./Ask";
+import Schedule from "./Schedule";
 import SiteActions from "./SiteActions";
 import { useLanguage } from "./LanguageProvider";
 import { JOIN_PATH } from "@/lib/contact";
@@ -81,7 +83,11 @@ export default function Brief({ images }: { images: string[] }) {
         <p className="brief-quote">{t.soda.quote}</p>
 
         <div className="schools" id="schools">
-          <p className="brief-kicker">{t.schools.kicker}</p>
+          <p className="schools-line">
+            <span className="schools-rule" aria-hidden="true" />
+            <span>{t.schools.kicker}</span>
+            <span className="schools-rule" aria-hidden="true" />
+          </p>
           <div className="schools-row">
             <a
               className="school-sticker"
@@ -97,6 +103,7 @@ export default function Brief({ images }: { images: string[] }) {
               <span>{t.joinLine2}</span>
             </Link>
           </div>
+          <div className="schools-rule schools-rule--end" aria-hidden="true" />
         </div>
 
         <a href="#challenge" className="scroll-cue" aria-label={t.scrollMore}>
@@ -161,6 +168,10 @@ export default function Brief({ images }: { images: string[] }) {
           ))}
         </div>
       </section>
+
+      <Schedule />
+
+      <Ask variant="main" />
 
       <SiteActions placement="footer" />
     </article>

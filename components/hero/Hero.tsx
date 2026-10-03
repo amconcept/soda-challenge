@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useState } from "react";
 import Link from "next/link";
+import HeroHook from "./HeroHook";
 import HeroLockup from "./HeroLockup";
 import { cssVars } from "./cssVars";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -11,8 +12,9 @@ import "./hero.css";
 const asset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
-/** Draw, hold, fade out, then restart from the centered logo. */
-const HERO_LOOP_MS = 20_000;
+/* Full draw, then a hold. The wordmark fades and the draw replays in place. */
+const LOOP_MS = 20_000;
+const FADE_AT_MS = 18_000;
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -20,6 +22,7 @@ export default function Hero() {
   // not during SSR paint and again when React attaches.
   const [ready, setReady] = useState(false);
   const [cycle, setCycle] = useState(0);
+  const [fading, setFading] = useState(false);
 
   useLayoutEffect(() => {
     setReady(true);
@@ -28,9 +31,16 @@ export default function Hero() {
   useEffect(() => {
     if (!ready) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setCycle((n) => n + 1), HERO_LOOP_MS);
-    return () => window.clearInterval(id);
-  }, [ready]);
+    const fadeId = window.setTimeout(() => setFading(true), FADE_AT_MS);
+    const loopId = window.setTimeout(() => {
+      setFading(false);
+      setCycle((n) => n + 1);
+    }, LOOP_MS);
+    return () => {
+      window.clearTimeout(fadeId);
+      window.clearTimeout(loopId);
+    };
+  }, [ready, cycle]);
 
   function discover() {
     document.getElementById("intro")?.scrollIntoView({ behavior: "smooth" });
@@ -38,21 +48,28 @@ export default function Hero() {
 
   return (
     <section
-      className={ready ? "hero hero--ready" : "hero"}
-      style={{ ["--hero-loop" as string]: `${HERO_LOOP_MS}ms` }}
+      className={
+        ready
+          ? `hero hero--ready${cycle > 0 ? " hero--rest" : ""}${fading ? " hero--fade" : ""}`
+          : "hero"
+      }
       data-show-schematic="true"
       data-show-partners="true"
-      aria-label="SOD+A CHALLENGE"
+      aria-label="Creativity ... Curiosity ... Collaboration. SOD+A CHALLENGE"
     >
-      {/* Remount to replay string-in, rise, and partner reveal. */}
-      <div key={cycle} className="hero-cycle">
-        <div className="hero-stage">
-          <HeroLockup />
-        </div>
+      <p className="hero-season" style={{ opacity: 0 }}>
+        {t.season}
+      </p>
 
-        <p className="hero-season" style={{ opacity: 0 }}>
-          {t.season}
-        </p>
+      {/* Partners stay mounted. Only the tagline and lockup replay. */}
+      <div className="hero-cycle">
+        <HeroHook key={cycle} />
+        <div className="hero-play">
+        <div className="hero-stage">
+          <div className="hero-mark" key={cycle}>
+            <HeroLockup />
+          </div>
+        </div>
 
         <div className="hero-partners">
           <div className="hero-partners-label" style={{ opacity: 0 }}>
@@ -137,6 +154,7 @@ export default function Hero() {
             <polyline points="1 1 9 11 17 1" />
           </svg>
         </button>
+        </div>
       </div>
     </section>
   );

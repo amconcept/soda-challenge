@@ -10,6 +10,8 @@
   --hero-guide: 0.8s;
   /* Extra drop so SOD+A sits in the middle while it draws. */
   --lockup-center: 18vh;
+  /* Hook plays once, then the rest of the lockup. The centre axis starts earlier. */
+  --hero-seq: 3.9s;
 
   width: 100%;
   height: 92vh;
@@ -30,6 +32,7 @@
 }
 
 .hero-cycle {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,17 +44,23 @@
   gap: inherit;
 }
 
-/* Hold the finished lockup, then fade away before the next loop. */
-.hero--ready .hero-cycle {
-  animation: heroLoopFade var(--hero-loop, 20s) linear both;
-}
-
-@keyframes heroLoopFade {
-  0%, 80% { opacity: 1; }
-  90%, 100% { opacity: 0; }
+/* Stays up after the draw. The hook is a sibling, so this does not hide the opening line. */
+.hero-play {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  gap: inherit;
 }
 
 .hero-stage {
+  position: relative;
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
@@ -60,19 +69,120 @@
   justify-content: center;
 }
 
-.hero-lockup {
+/* Hook + wordmark rise together once CHALLENGE has filled. */
+.hero-mark {
   width: 88%;
   max-width: 1240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: lockupRise
+    calc(1.15s / var(--hero-speed))
+    cubic-bezier(0.22, 1, 0.36, 1)
+    calc((5.15s + var(--hero-seq)) / var(--hero-speed))
+    both;
+}
+
+.hero-hook:not(.hero-hook--measured) .hook-word {
+  animation: none !important;
+}
+
+/* Centered on the spot SOD+A occupies while it draws. */
+.hero-hook {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35em;
+  width: 100%;
+  margin: 0;
+  padding: 0 4vw;
+  box-sizing: border-box;
+  color: var(--hero-line);
+  pointer-events: none;
+  transform: translateY(calc(-50% + var(--lockup-center) - 22vh));
+}
+
+.hook-piece {
+  height: clamp(22px, 4.4vw, 48px);
+  width: auto;
+  overflow: visible;
+  display: block;
+}
+
+/* One visit: outline, fill, then reverse out. No second pass later in the loop. */
+.hook-word {
+  font-family: "Avenir Next", Avenir, Futura, "Century Gothic", "Arial Black", sans-serif;
+  font-weight: 700;
+  font-size: 92px;
+  letter-spacing: -0.04em;
+  fill: currentColor;
+  fill-opacity: 0;
+  stroke: currentColor;
+  stroke-width: 2.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  paint-order: stroke fill;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: hookVisit, var(--float-name, floatA);
+  animation-duration: 4.6s, var(--float-dur, 6.4s);
+  animation-timing-function: linear, ease-in-out;
+  animation-delay: var(--delay, 0s), var(--delay, 0s);
+  animation-fill-mode: both, none;
+  animation-iteration-count: 1, infinite;
+}
+
+.hook-word.float-a { --float-name: floatA; }
+.hook-word.float-b { --float-name: floatB; }
+.hook-word.float-c { --float-name: floatC; }
+.hook-word.float-d { --float-name: floatD; }
+
+@keyframes hookVisit {
+  0% {
+    stroke-dashoffset: var(--len);
+    fill-opacity: 0;
+    opacity: 1;
+  }
+  13.5% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+    opacity: 1;
+  }
+  22.6%, 37% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+    opacity: 1;
+  }
+  45.7% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+    opacity: 1;
+  }
+  59% {
+    stroke-dashoffset: var(--len);
+    fill-opacity: 0;
+    opacity: 1;
+  }
+  62%, 100% {
+    stroke-dashoffset: var(--len);
+    fill-opacity: 0;
+    opacity: 0;
+  }
+}
+
+.hero-lockup {
+  width: 100%;
   height: auto;
   max-height: 100%;
   color: var(--hero-line);
   overflow: visible;
-  /* Hold the centered pose until the wordmark is drawn, then float up. */
-  animation: lockupRise
-    calc(1.15s / var(--hero-speed))
-    cubic-bezier(0.22, 1, 0.36, 1)
-    calc(5.15s / var(--hero-speed))
-    both;
 }
 
 @keyframes lockupRise {
@@ -153,7 +263,7 @@
   animation: draw
     calc(var(--d, 0.85s) / var(--hero-speed))
     var(--ease, ease-in-out)
-    calc((var(--delay) + var(--shift, 0s)) / var(--hero-speed))
+    calc((var(--delay) + var(--shift, 0s) + var(--hero-seq)) / var(--hero-speed))
     both;
 }
 
@@ -175,12 +285,18 @@
 .guide-draw-y {
   animation-duration: calc(var(--d, 0.7s) / var(--hero-speed));
   animation-timing-function: ease-out;
-  animation-delay: calc(var(--delay) / var(--hero-speed));
+  animation-delay: calc((var(--delay) + var(--hero-seq)) / var(--hero-speed));
   animation-fill-mode: both;
 }
 
 .guide-draw-x { animation-name: guideWipeX; }
 .guide-draw-y { animation-name: guideWipeY; }
+
+/* Centre axis wipes across the hook while the words draw back out. */
+.guide-draw-x.guide-through {
+  animation-delay: calc(var(--delay) / var(--hero-speed));
+  animation-duration: calc(var(--d, 1.7s) / var(--hero-speed));
+}
 
 /* Clip helper only — must not inherit the lockup stroke. */
 .guide-bounds {
@@ -193,7 +309,7 @@
   animation: fadeIn
     calc(var(--d, 0.7s) / var(--hero-speed))
     ease-out
-    calc(var(--delay) / var(--hero-speed))
+    calc((var(--delay) + var(--hero-seq)) / var(--hero-speed))
     both;
 }
 
@@ -204,19 +320,19 @@
 
 /* Letter-group floats only. Glyphs / dots / stickers compose float into their own shorthand. */
 .float-box.float-a {
-  animation: floatA var(--float-dur) ease-in-out calc(var(--float-delay) / var(--hero-speed)) infinite;
+  animation: floatA var(--float-dur) ease-in-out calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed)) infinite;
 }
 
 .float-box.float-b {
-  animation: floatB var(--float-dur) ease-in-out calc(var(--float-delay) / var(--hero-speed)) infinite;
+  animation: floatB var(--float-dur) ease-in-out calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed)) infinite;
 }
 
 .float-box.float-c {
-  animation: floatC var(--float-dur) ease-in-out calc(var(--float-delay) / var(--hero-speed)) infinite;
+  animation: floatC var(--float-dur) ease-in-out calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed)) infinite;
 }
 
 .float-box.float-d {
-  animation: floatD var(--float-dur) ease-in-out calc(var(--float-delay) / var(--hero-speed)) infinite;
+  animation: floatD var(--float-dur) ease-in-out calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed)) infinite;
 }
 
 /* CHALLENGE glyphs: outline draw, then fill, then float about their own centre. */
@@ -238,9 +354,9 @@
     var(--float-dur);
   animation-timing-function: ease-in-out, ease-out, ease-in-out;
   animation-delay:
-    calc((var(--delay) + var(--hero-guide)) / var(--hero-speed)),
-    calc((var(--fill-delay) + var(--hero-guide)) / var(--hero-speed)),
-    calc(var(--float-delay) / var(--hero-speed));
+    calc((var(--delay) + var(--hero-guide) + var(--hero-seq)) / var(--hero-speed)),
+    calc((var(--fill-delay) + var(--hero-guide) + var(--hero-seq)) / var(--hero-speed)),
+    calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed));
   animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
 }
@@ -262,9 +378,9 @@
     var(--float-dur);
   animation-timing-function: ease-out, ease-out, ease-in-out;
   animation-delay:
-    calc((var(--delay) + var(--hero-guide)) / var(--hero-speed)),
-    calc((var(--fill-delay) + var(--hero-guide)) / var(--hero-speed)),
-    calc(var(--float-delay) / var(--hero-speed));
+    calc((var(--delay) + var(--hero-guide) + var(--hero-seq)) / var(--hero-speed)),
+    calc((var(--fill-delay) + var(--hero-guide) + var(--hero-seq)) / var(--hero-speed)),
+    calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed));
   animation-fill-mode: both, both, none;
   animation-iteration-count: 1, 1, infinite;
 }
@@ -276,15 +392,20 @@
 .hero-season {
   position: absolute;
   top: 22px;
-  left: 24px;
+  left: 50%;
   z-index: 5;
   margin: 0;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 11rem);
+  text-align: center;
   font-size: 11px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   opacity: 0;
+  pointer-events: none;
   /* Same beat as Discover. */
-  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(7.9s / var(--hero-speed)) both;
+  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc((7.9s + var(--hero-seq)) / var(--hero-speed)) both;
 }
 
 .hero-partners {
@@ -304,7 +425,7 @@
   align-items: center;
   gap: 14px;
   opacity: 0;
-  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc(6.35s / var(--hero-speed)) both;
+  animation: fadeIn calc(0.9s / var(--hero-speed)) ease-out calc((6.35s + var(--hero-seq)) / var(--hero-speed)) both;
 }
 
 .hero-rule {
@@ -389,8 +510,8 @@
     var(--float-dur);
   animation-timing-function: cubic-bezier(0.2, 1.3, 0.4, 1), ease-in-out;
   animation-delay:
-    calc(var(--delay) / var(--hero-speed)),
-    calc(var(--float-delay) / var(--hero-speed));
+    calc((var(--delay) + var(--hero-seq)) / var(--hero-speed)),
+    calc((var(--float-delay) + var(--hero-seq)) / var(--hero-speed));
   animation-fill-mode: both, none;
   animation-iteration-count: 1, infinite;
 }
@@ -417,7 +538,7 @@
   opacity: 0;
   z-index: 2;
   /* After last partner sticker (delay 6.95s + stickerIn 0.8s). */
-  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc(7.9s / var(--hero-speed)) both;
+  animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc((7.9s + var(--hero-seq)) / var(--hero-speed)) both;
 }
 
 .hero-discover:hover,
@@ -427,13 +548,32 @@
 }
 
 .hero-discover svg {
-  animation: nudge 1.9s ease-in-out calc(8.5s / var(--hero-speed)) infinite;
+  animation: nudge 1.9s ease-in-out calc((8.5s + var(--hero-seq)) / var(--hero-speed)) infinite;
+}
+
+/* Replays stay in the risen spot. The first visit still drops and rises. */
+.hero--rest .hero-mark {
+  animation: none;
+  transform: none;
+}
+
+.hero--rest .hero-hook {
+  /* Draw-position offset, minus the 18vh rise, so the line sits on settled SOD+A. */
+  transform: translateY(calc(-50% - 22vh));
+}
+
+/* Fade the wordmark only. The partner row is outside this and stays put. */
+.hero--fade .hero-mark,
+.hero--fade .hero-hook {
+  opacity: 0;
+  transition: opacity 1.15s linear;
 }
 
 /* Hold the first frame until after mount so the sequence does not start
    during SSR and then restart on hydration. */
 .hero:not(.hero--ready) .stroke-draw,
 .hero:not(.hero--ready) .glyph,
+.hero:not(.hero--ready) .hook-word,
 .hero:not(.hero--ready) .dot,
 .hero:not(.hero--ready) .fade-in,
 .hero:not(.hero--ready) .guide-draw-x,
@@ -447,6 +587,8 @@
   animation: none !important;
 }
 
+.hero:not(.hero--ready) .hero-play,
+.hero:not(.hero--ready) .hero-mark,
 .hero:not(.hero--ready) .hero-lockup,
 .hero:not(.hero--ready) [data-schematic] {
   opacity: 0;
@@ -461,8 +603,17 @@
     animation: none !important;
   }
 
+  .hero-hook {
+    display: none;
+  }
+
+  .hero-play {
+    opacity: 1 !important;
+  }
+
   .hero .stroke-draw,
   .hero .glyph,
+  .hero .hook-word,
   .hero .dot {
     stroke-dashoffset: 0;
     fill-opacity: 1;
@@ -483,6 +634,7 @@
 
   .hero .float-box,
   .hero .glyph,
+  .hero .hook-word,
   .hero .dot,
   .hero .sticker,
   .hero .hero-discover svg {
@@ -496,9 +648,9 @@
   }
 
   .hero-season {
-    top: 16px;
-    left: 16px;
+    top: 18px;
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
+    max-width: calc(100% - 9.5rem);
   }
 }

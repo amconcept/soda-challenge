@@ -33,6 +33,8 @@ export const copy = {
     menu: "Menu",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    navCriteria: "Criteria",
+    navSchedule: "Schedule",
     involved: "Get involved",
     language: "Language",
     scrollMore: "Scroll for more",
@@ -43,7 +45,7 @@ export const copy = {
       quote: "You may be working locally, but knowledge is global.",
     },
     schools: {
-      kicker: "Participating schools 2026-27",
+      kicker: "Participating schools & labs",
     },
     challenge: {
       kicker: "What is the challenge?",
@@ -74,6 +76,12 @@ export const copy = {
       title: "Show us what you can do?",
       intro:
         "Partner institutions set the criteria. Meeting them leads to levels, achievements, and certificates as you experiment, document, and share.",
+    },
+    schedule: {
+      kicker: "Schedule",
+      title: "September to May",
+      intro: "The pilot year, marked on one line. Rest on a dot to read that date.",
+      months: ["September", "November", "February", "May"],
     },
     joinForm: {
       title: "Join the challenge",
@@ -120,6 +128,35 @@ export const copy = {
       offer: "How would you like to partner?",
       questions: "Any questions about the challenge?",
     },
+    ask: {
+      kicker: "The bigger picture",
+      paragraphs: [
+        "We want to make SOD+A an international showcase of student discovery, action, and knowledge sharing. A place to get excited about what you're capable of, and to practice creativity, curiosity, and collaboration, the skills a rapidly changing future needs. This is where you get the room to build them, and real feedback from the world, which needs them.",
+      ],
+    },
+    partnerAsk: {
+      kicker: "The bigger picture",
+      paragraphs: [
+        "Our goal is to celebrate high school students becoming more aware of the ideas and technologies that are shaping their world, and to build their agency and capacity for design literacy and collaboration. We want to encourage creation, informed decision-making, and curiosity about how the things they care about work. These are skills the future needs but that a single class period or standard curriculum rarely has room for because they cross disciplines and move at a different pace.",
+        "Partner with us and help us make this structure exciting and real. Right now, no cost. Just a bit of time and energy. We need criteria, a promise to give students meaningful feedback on their journey through discovery and action, and the willingness to sign a certificate of completion when they're done, one they can point to as a marker of their desire to practice these skills.",
+        "Our future goal is to get funding that makes this sustainable and helps it grow into a motivational force that helps more students see what they're capable of while helping institutions find the talent and shape the experience-based skills they feel matter most. This is a starting point, and we're happy to invite partners to help us build it out."
+      ],
+    },
+    reach: {
+      mapLabel: "World map of Schools of Discovery + Action",
+      cities: {
+        montreal: "Montreal",
+        barcelona: "Barcelona",
+        toronto: "Toronto",
+        calgary: "Calgary",
+      },
+      places: {
+        montreal: "Lower Canada College",
+        barcelona: "Fab Lab Barcelona",
+        toronto: "OCAD University",
+        calgary: "",
+      },
+    },
   },
   fr: {
     metaDescription:
@@ -137,6 +174,8 @@ export const copy = {
     menu: "Menu",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
+    navCriteria: "Critères",
+    navSchedule: "Calendrier",
     involved: "Participer",
     language: "Langue",
     scrollMore: "Continuer vers le bas",
@@ -147,7 +186,7 @@ export const copy = {
       quote: "Vous travaillez peut-être à l'échelle locale, mais le savoir est mondial.",
     },
     schools: {
-      kicker: "Écoles participantes 2026-27",
+      kicker: "Écoles et labs participants",
     },
     challenge: {
       kicker: "Quel est le défi ?",
@@ -178,6 +217,12 @@ export const copy = {
       title: "Montrez-nous ce que vous savez faire ?",
       intro:
         "Les institutions partenaires définissent les critères. Les remplir ouvre des niveaux, des accomplissements et des certificats, pendant que vous expérimentez, documentez et partagez.",
+    },
+    schedule: {
+      kicker: "Calendrier",
+      title: "De septembre à mai",
+      intro: "L'année pilote, marquée sur une ligne. Survolez un point pour lire cette date.",
+      months: ["Septembre", "Novembre", "Février", "Mai"],
     },
     joinForm: {
       title: "Rejoindre le défi",
@@ -224,6 +269,34 @@ export const copy = {
       offer: "Comment aimeriez-vous collaborer ?",
       questions: "Des questions sur le défi ?",
     },
+    ask: {
+      kicker: "L'invitation",
+      paragraphs: [
+        "Nous voulons faire de SOD+A une vitrine internationale de la créativité, de la collaboration et du partage de connaissances des élèves. Un endroit pour s'enthousiasmer de ce dont vous êtes capables, et pour pratiquer les compétences qui comptent le plus dans le travail et dans la vie. C'est ici que vous avez la place de les construire, et de vrais retours du monde, qui en a besoin.",
+      ],
+    },
+    partnerAsk: {
+      kicker: "L'invitation",
+      paragraphs: [
+        "Notre objectif est d'en faire une vitrine internationale de la créativité, de la collaboration et du partage de connaissances des élèves. Que les élèves s'enthousiasment de leur potentiel à être des participants actifs d'un avenir qui leur appartient. Célébrer les compétences qui comptent le plus dans le travail et dans la vie, celles qu'une seule période de cours ou un programme standard laisse rarement le temps de pratiquer. Réunir une communauté de passionnés d'innovation, de personnes qui font changer les choses, et d'institutions qui croient que nous pouvons aider à motiver les penseurs et les faiseurs de demain. Et prouver que nous sommes plus efficaces en communauté qu'en individus.",
+        "Devenez partenaire et aidez-nous à y arriver. Pour l'instant, sans coût. Juste un peu de temps et d'énergie, et la promesse de donner aux élèves des commentaires utiles sur leur travail et de signer un certificat de fin de parcours quand ils ont terminé. Notre objectif futur est d'obtenir un financement qui rende cela durable, et qui l'aide à grandir en une force capable d'aider plus d'élèves à découvrir ce dont ils sont capables, et d'aider les partenaires à trouver des talents et à façonner les compétences qui, selon eux, comptent le plus.",
+      ],
+    },
+    reach: {
+      mapLabel: "Carte du monde des Schools of Discovery + Action",
+      cities: {
+        montreal: "Montréal",
+        barcelona: "Barcelone",
+        toronto: "Toronto",
+        calgary: "Calgary",
+      },
+      places: {
+        montreal: "Lower Canada College",
+        barcelona: "Fab Lab Barcelona",
+        toronto: "OCAD University",
+        calgary: "",
+      },
+    },
   },
   es: {
     metaDescription:
@@ -241,6 +314,8 @@ export const copy = {
     menu: "Menú",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
+    navCriteria: "Criterios",
+    navSchedule: "Calendario",
     involved: "Participa",
     language: "Idioma",
     scrollMore: "Sigue bajando",
@@ -251,7 +326,7 @@ export const copy = {
       quote: "Puedes estar trabajando en lo local, pero el conocimiento es global.",
     },
     schools: {
-      kicker: "Escuelas participantes 2026-27",
+      kicker: "Escuelas y labs participantes",
     },
     challenge: {
       kicker: "¿Qué es el reto?",
@@ -282,6 +357,12 @@ export const copy = {
       title: "¿Nos enseñas lo que sabes hacer?",
       intro:
         "Las instituciones colaboradoras marcan los criterios. Cumplirlos abre niveles, logros y certificados mientras experimentas, documentas y compartes.",
+    },
+    schedule: {
+      kicker: "Calendario",
+      title: "De septiembre a mayo",
+      intro: "El año piloto, marcado en una línea. Pasa el cursor por un punto para leer esa fecha.",
+      months: ["Septiembre", "Noviembre", "Febrero", "Mayo"],
     },
     joinForm: {
       title: "Únete al reto",
@@ -327,6 +408,34 @@ export const copy = {
       location: "Ciudad / país",
       offer: "¿Cómo te gustaría colaborar?",
       questions: "¿Alguna pregunta sobre el reto?",
+    },
+    ask: {
+      kicker: "La invitación",
+      paragraphs: [
+        "Queremos hacer de SOD+A una vitrina internacional de la creatividad, la colaboración y el intercambio de conocimiento de los estudiantes. Un lugar para entusiasmarte con lo que eres capaz de hacer, y para practicar las habilidades que más importan en el trabajo y en la vida. Aquí tienes el espacio para construirlas, y comentarios reales del mundo, que las necesita.",
+      ],
+    },
+    partnerAsk: {
+      kicker: "La invitación",
+      paragraphs: [
+        "Nuestra meta es hacer de esto una vitrina internacional de la creatividad, la colaboración y el intercambio de conocimiento de los estudiantes. Que los estudiantes se entusiasmen con su potencial para ser participantes activos de un futuro que les pertenece. Celebrar las habilidades que más importan en el trabajo y en la vida, esas para las que un solo periodo de clase o un currículo estándar rara vez tiene espacio. Reunir una comunidad de entusiastas de la innovación, personas que impulsan el cambio, e instituciones que creen que podemos ayudar a motivar a quienes piensan y hacen el mañana. Y demostrar que somos más efectivos como comunidad que como individuos.",
+        "Hazte partner y ayúdanos a hacerlo posible. Ahora mismo, sin costo. Solo un poco de tiempo y energía, y la promesa de dar a los estudiantes comentarios con sentido sobre su trabajo y firmar un certificado de finalización cuando terminen. Nuestra meta futura es conseguir financiamiento que lo haga sostenible, y que lo ayude a crecer hasta ser una fuerza capaz de ayudar a más estudiantes a descubrir de lo que son capaces, y de ayudar a los partners a encontrar talento y a formar las habilidades que sienten que más importan.",
+      ],
+    },
+    reach: {
+      mapLabel: "Mapa del mundo de Schools of Discovery + Action",
+      cities: {
+        montreal: "Montreal",
+        barcelona: "Barcelona",
+        toronto: "Toronto",
+        calgary: "Calgary",
+      },
+      places: {
+        montreal: "Lower Canada College",
+        barcelona: "Fab Lab Barcelona",
+        toronto: "OCAD University",
+        calgary: "",
+      },
     },
   },
 } as const;
