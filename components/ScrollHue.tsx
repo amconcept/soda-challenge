@@ -62,6 +62,7 @@ export default function ScrollHue() {
     function paint(now: number) {
       const color = colorAt(progressAt(now));
       root.style.backgroundColor = color;
+      root.style.setProperty("--page-bg", color);
       body.style.backgroundColor = color;
     }
 

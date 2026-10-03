@@ -1,0 +1,241 @@
+#schedule {
+  position: relative;
+  z-index: 1;
+}
+
+.schedule-scroll {
+  margin-top: 2.6rem;
+  overflow-x: auto;
+  padding: 0.4rem 0 1.2rem;
+}
+
+.schedule-track {
+  position: relative;
+  min-width: 680px;
+  /* Headroom for a raised sticker and its card. overflow-x on the scroller
+     also clips the vertical axis, so the card has to live inside this box. */
+  height: 328px;
+}
+
+/* Solid axis. Centered on the same y as the dots. */
+.schedule-axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 238px;
+  height: 1px;
+  margin-top: -0.5px;
+  background: #0e0d0c;
+}
+
+/* Month divider. Names alternate above and below so neighbours do not collide. */
+.schedule-mark {
+  position: absolute;
+  top: 238px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.schedule-tick {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  opacity: 0.7;
+}
+
+.schedule-mark-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.78;
+  white-space: nowrap;
+}
+
+.schedule-mark.is-above .schedule-mark-label {
+  bottom: 12px;
+}
+
+.schedule-mark.is-below .schedule-mark-label {
+  top: 12px;
+}
+
+.schedule-mark.is-past .schedule-mark-label,
+.schedule-mark.is-past .schedule-tick {
+  opacity: 0.35;
+}
+
+.schedule-dot {
+  position: absolute;
+  top: 238px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: inherit;
+}
+
+.schedule-dot-mark {
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--dot, #e24b4b);
+  /* Page color, so the line stops cleanly behind the dot as the hue shifts. */
+  box-shadow: 0 0 0 2px var(--page-bg, #dfe9e6);
+}
+
+.schedule-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 3;
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: max-content;
+  max-width: 240px;
+  padding: 12px 14px;
+  transform: translateX(-50%);
+  background: #f7f2ea;
+  color: #0e0d0c;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgb(14 13 12 / 14%);
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.schedule-dot:hover .schedule-tip,
+.schedule-dot:focus-visible .schedule-tip,
+.schedule-dot.is-open .schedule-tip {
+  display: flex;
+}
+
+/* The open card paints above neighbouring marks and the section above the line. */
+.schedule-dot:hover,
+.schedule-dot:focus-visible,
+.schedule-dot.is-open {
+  z-index: 5;
+}
+
+.schedule-dot:focus-visible {
+  outline: none;
+}
+
+.schedule-dot.is-past .schedule-dot-mark {
+  background: #9a9590;
+}
+
+.schedule-dot.is-showcase .schedule-dot-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+/* Dotted stem from a school sticker down to its date. */
+.schedule-leader {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 6px);
+  width: 1.5px;
+  height: 28px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    180deg,
+    var(--dot, currentColor) 0 2px,
+    transparent 2px 5px
+  );
+  pointer-events: none;
+}
+
+/* Partner sticker standing on the date, when the sheet names that school. */
+.schedule-sticker {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 22px);
+  width: 40px;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.schedule-sticker--soda {
+  width: 68px;
+  /* Clear of the month names, which sit about 28px off the axis. */
+  bottom: calc(50% + 42px);
+}
+
+.schedule-dot:has(.schedule-sticker--soda) .schedule-leader {
+  height: 44px;
+}
+
+.schedule-dot.is-past .schedule-sticker {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.schedule-dot:has(.schedule-sticker) .schedule-tip {
+  bottom: calc(100% + 64px);
+}
+
+.schedule-dot:has(.schedule-sticker--soda) .schedule-tip {
+  bottom: calc(100% + 86px);
+}
+
+.schedule-dot:focus-visible .schedule-dot-mark {
+  box-shadow: 0 0 0 2px var(--page-bg, #dfe9e6), 0 0 0 3.5px var(--dot, #e24b4b);
+}
+
+.schedule-tip-date {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.schedule-tip strong {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.schedule-dot--start .schedule-tip {
+  left: 0;
+  transform: none;
+}
+
+.schedule-dot--end .schedule-tip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -396,7 +396,7 @@ export default function HeroLockup() {
             className="fade-in"
             style={cssVars({ "--d": "0.55s", "--delay": "0.32s" })}
           />
-          <g className="guide-draw-x" style={cssVars({ "--d": "0.7s", "--delay": "0s" })}>
+          <g className="guide-draw-x guide-through" style={cssVars({ "--d": "1.7s", "--delay": "2.05s" })}>
             <rect className="guide-bounds" x="330" y="449" width="1170" height="21" />
             <line
               x1="330"

@@ -108,6 +108,12 @@ function SiteNav() {
         </button>
       </div>
       <div id="site-nav-panel" className="site-nav-panel" hidden={!open}>
+        <Link href="/#criteria" className="site-btn" onClick={() => setOpen(false)}>
+          {t.navCriteria}
+        </Link>
+        <Link href="/#schedule" className="site-btn" onClick={() => setOpen(false)}>
+          {t.navSchedule}
+        </Link>
         <ActionLinks />
       </div>
     </nav>

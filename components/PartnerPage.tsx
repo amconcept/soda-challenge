@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import Ask from "./Ask";
 import SiteActions from "./SiteActions";
 import { useLanguage } from "./LanguageProvider";
 import { fieldsFromForm, FormSendError, sendChallengeForm } from "@/lib/sendForm";
@@ -64,6 +65,7 @@ export default function PartnerPage() {
           </svg>
           {form.back}
         </Link>
+        <Ask variant="partner" />
         <p className="join-kicker">{form.title}</p>
         <h1>{form.intro}</h1>
 
