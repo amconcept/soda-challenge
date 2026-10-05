@@ -6,6 +6,7 @@ import Bubbles from "./Bubbles";
 import Ask from "./Ask";
 import Schedule from "./Schedule";
 import SiteActions from "./SiteActions";
+import StudentBoards from "./StudentBoards";
 import { useLanguage } from "./LanguageProvider";
 import { JOIN_PATH } from "@/lib/contact";
 import "./brief.css";
@@ -146,6 +147,8 @@ export default function Brief({ images }: { images: string[] }) {
           <h2>{t.involve.title}</h2>
           <p>{t.involve.pilot}</p>
           <p>{t.involve.body}</p>
+          {/* Last year's boards, one row, opened on request. See DESIGN_DECISIONS.md. */}
+          <StudentBoards />
           {/* At a glance replaces the cost paragraph. Palette is local to this block. See DESIGN_DECISIONS.md. */}
           <div className="glance">
             <div className="glance-lead">

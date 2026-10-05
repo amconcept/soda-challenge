@@ -234,6 +234,97 @@
   margin-top: 0;
 }
 
+/* Last year's boards sit between the intro and the colored blocks.
+   The strip stays one row. The chosen board opens under it. See DESIGN_DECISIONS.md. */
+.year-roll {
+  max-width: 46rem;
+  margin-top: 0.4rem;
+}
+
+.year-roll-label {
+  margin: 0 0 0.65rem;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  opacity: 1;
+}
+
+.year-roll-strip {
+  display: flex;
+  gap: 0.7rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0;
+  padding: 0 0 0.15rem;
+  list-style: none;
+}
+
+.year-roll-strip > li {
+  flex: 0 0 9.6rem;
+  scroll-snap-align: start;
+}
+
+.year-roll-card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.year-roll-card img {
+  display: block;
+  width: 100%;
+  height: 4.7rem;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px transparent;
+}
+
+.year-roll-card.is-open img {
+  box-shadow: 0 0 0 2px #0e0d0c;
+}
+
+.year-roll-card span {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0.86;
+}
+
+.year-roll-card:focus-visible {
+  outline: 2px solid #0e0d0c;
+  outline-offset: 3px;
+}
+
+.year-roll-open {
+  display: block;
+  width: 100%;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.year-roll-open img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.year-roll-open:focus-visible {
+  outline: 2px solid #0e0d0c;
+  outline-offset: 3px;
+}
+
 /* At a glance. Lavender, mint, peach, sky, and butter are not site-wide
    colors, so they live only here. Type stays the page monospace because
    Baloo 2 and Nunito are not loaded. See DESIGN_DECISIONS.md. */

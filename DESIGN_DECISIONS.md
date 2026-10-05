@@ -76,6 +76,12 @@ Asked, not deleted:
 
 “Four key dates” also appears in the Timeline row. Both lines are left in place.
 
+### Last year's boards, under Connecting Students to the Challenge
+
+Four boards from last year sit after the two paragraphs and before the colored blocks. They stay in one sideways row: Bennett, Sofia, Theo, and Abby. Choosing a name opens that board under the row. Choosing it again, or pressing Escape, closes it.
+
+The heading “From last year” was not supplied. French and Spanish for that heading are machine drafts. Theo’s board is labeled “THEO PRE-U” on the image. The row uses “Theo”, the same first-name style as the others.
+
 ### Map: hide city names, add Monterey, join every dot
 
 The city names are still in the page. The row of name buttons under the map, and the name that used to appear when a dot was selected, are hidden. The dots stay.
