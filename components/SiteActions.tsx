@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
 import { locales, type Locale } from "@/lib/copy";
-import { JOIN_PATH, PARTNER_PATH } from "@/lib/contact";
+import { JOIN_PATH } from "@/lib/contact";
 import "./site-actions.css";
 
 function ActionLinks() {
@@ -13,9 +13,6 @@ function ActionLinks() {
     <>
       <Link href={JOIN_PATH} className="site-btn site-btn--fill">
         {t.join}
-      </Link>
-      <Link href={PARTNER_PATH} className="site-btn">
-        {t.partner}
       </Link>
     </>
   );

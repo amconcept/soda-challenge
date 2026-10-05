@@ -97,12 +97,12 @@ function ReachMap() {
   );
 }
 
-export default function Ask({ variant }: { variant: "main" | "partner" }) {
+export default function Ask() {
   const { t } = useLanguage();
-  const block = variant === "main" ? t.ask : t.partnerAsk;
+  const block = t.ask;
 
   return (
-    <section className={`ask${variant === "partner" ? " ask--partner" : ""}`} id={variant === "main" ? "ask" : undefined}>
+    <section className="ask" id="ask">
       <p className="ask-kicker">{block.kicker}</p>
       {block.paragraphs.map((paragraph) => (
         <p key={paragraph}>{paragraph}</p>

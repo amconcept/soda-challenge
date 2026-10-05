@@ -80,10 +80,18 @@
   color: #f7f2ea;
 }
 
-.join-note {
+.join-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0 0 0.4rem;
+  max-width: 38em;
+}
+
+.join-copy p {
   font-size: 15px;
-  line-height: 1.7;
-  margin: 0 0 1.6rem;
+  line-height: 1.75;
+  margin: 0;
   opacity: 0.86;
 }
 
