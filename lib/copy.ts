@@ -49,6 +49,14 @@ export const copy = {
       title: "Connecting Students to the Challenge",
       pilot: "This pilot year, participation is by invite, or you can reach out using one of the forms on this page.",
       body: "Participating schools and labs have a facilitator, teacher, coach, or mentor to help a student group take part in the SOD+A Challenge, encouraging them to iterate, experiment, share, and document their creations and attempts on our global board. Participating schools and labs also help connect students to co-design opportunities where their newly discovered skills can be put into action to make a difference.",
+      // Strip of last year's boards. The heading was not supplied. See DESIGN_DECISIONS.md.
+      examplesTitle: "From last year",
+      examples: [
+        { id: "bennett", name: "Bennett" },
+        { id: "sofia", name: "Sofia" },
+        { id: "theo", name: "Theo" },
+        { id: "abby", name: "Abby" },
+      ],
     },
     // At a glance replaces the standalone cost paragraph. See DESIGN_DECISIONS.md.
     glance: {
@@ -213,6 +221,14 @@ export const copy = {
       // Machine draft, needs human review.
       pilot: "Cette année pilote, la participation se fait sur invitation, ou vous pouvez nous joindre avec l'un des formulaires de cette page.",
       body: "Les écoles et labs participants ont un facilitateur, un enseignant, un coach ou un mentor pour aider un groupe d'élèves à prendre part au défi SOD+A, en les encourageant à itérer, expérimenter, partager et documenter leurs créations et leurs essais sur notre tableau global. Les écoles et labs participants aident aussi à relier les élèves à des occasions de co-conception où leurs compétences nouvellement découvertes peuvent être mises en action pour faire une différence.",
+      // Machine draft, needs human review.
+      examplesTitle: "L'an dernier",
+      examples: [
+        { id: "bennett", name: "Bennett" },
+        { id: "sofia", name: "Sofia" },
+        { id: "theo", name: "Theo" },
+        { id: "abby", name: "Abby" },
+      ],
     },
     // Machine draft, needs human review.
     glance: {
@@ -379,6 +395,14 @@ export const copy = {
       // Machine draft, needs human review.
       pilot: "Este año piloto, la participación es por invitación, o puedes escribirnos con uno de los formularios de esta página.",
       body: "Las escuelas y labs participantes cuentan con un facilitador, docente, coach o mentor para ayudar a un grupo de estudiantes a participar en el Reto SOD+A, animándolos a iterar, experimentar, compartir y documentar sus creaciones e intentos en nuestro tablero global. Las escuelas y labs participantes también ayudan a conectar a los estudiantes con oportunidades de co-diseño donde sus habilidades recién descubiertas pueden ponerse en acción para marcar una diferencia.",
+      // Machine draft, needs human review.
+      examplesTitle: "El año pasado",
+      examples: [
+        { id: "bennett", name: "Bennett" },
+        { id: "sofia", name: "Sofia" },
+        { id: "theo", name: "Theo" },
+        { id: "abby", name: "Abby" },
+      ],
     },
     // Machine draft, needs human review.
     glance: {
