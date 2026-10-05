@@ -82,6 +82,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.soda.body}</p>
         <p className="brief-quote">{t.soda.quote}</p>
 
+        {/* Schools stay under What is SOD+A. The challenge follows this block. See DESIGN_DECISIONS.md. */}
         <div className="schools" id="schools">
           <p className="schools-line">
             <span className="schools-rule" aria-hidden="true" />
@@ -106,13 +107,6 @@ export default function Brief({ images }: { images: string[] }) {
           <div className="schools-rule schools-rule--end" aria-hidden="true" />
         </div>
 
-        <div className="involve">
-          <p className="brief-kicker">{t.involve.kicker}</p>
-          <h2>{t.involve.title}</h2>
-          <p>{t.involve.pilot}</p>
-          <p>{t.involve.body}</p>
-        </div>
-
         <a href="#challenge" className="scroll-cue" aria-label={t.scrollMore}>
           <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             <polyline points="2 2 11 12 20 2" />
@@ -120,40 +114,87 @@ export default function Brief({ images }: { images: string[] }) {
         </a>
       </section>
 
+      {/* A photo pile between each section. Slots pick different photos. See DESIGN_DECISIONS.md. */}
       <Bubbles images={photos} variant="b" slot={0} />
 
       <section id="challenge" className="brief-section">
         <p className="brief-kicker">{t.challenge.kicker}</p>
         <h2>{t.challenge.title}</h2>
-        <p>{t.challenge.body}</p>
+        {/* Opening paragraph, no lead-in. Discover and Act keep a bold lead-in. See DESIGN_DECISIONS.md. */}
+        <p>{t.challenge.intro}</p>
+        <div className="challenge-beats">
+          {t.challenge.beats.map((beat) => (
+            <div key={beat.title}>
+              <p className="challenge-step-title">{beat.title}</p>
+              <p>{beat.detail}</p>
+            </div>
+          ))}
+        </div>
+        {/* "criteria" links to the criteria section. See DESIGN_DECISIONS.md. */}
+        <p>
+          {t.challenge.closeBefore}
+          <a className="challenge-close-link" href="#criteria">{t.challenge.closeLink}</a>
+          {t.challenge.closeAfter}
+        </p>
       </section>
 
       <Bubbles images={photos} variant="c" slot={1} />
 
       <section className="brief-section">
+        <div className="involve">
+          <p className="brief-kicker">{t.involve.kicker}</p>
+          <h2>{t.involve.title}</h2>
+          <p>{t.involve.pilot}</p>
+          <p>{t.involve.body}</p>
+          {/* At a glance replaces the cost paragraph. Palette is local to this block. See DESIGN_DECISIONS.md. */}
+          <div className="glance">
+            <div className="glance-lead">
+              <p className="glance-heading">{t.glance.leadTitle}</p>
+              <p>{t.glance.lead}</p>
+            </div>
+            <div className="glance-rows">
+              <div className="glance-row">
+                <p className="glance-heading">{t.glance.fitTitle}</p>
+                <p>{t.glance.fit}</p>
+              </div>
+              <div className="glance-row">
+                <p className="glance-heading">{t.glance.timelineTitle}</p>
+                <p>{t.glance.timeline}</p>
+              </div>
+              <div className="glance-row">
+                <p className="glance-heading">{t.glance.whoTitle}</p>
+                <p>{t.glance.who}</p>
+              </div>
+            </div>
+            <div className="glance-split">
+              <div className="glance-bring">
+                <p className="glance-heading">{t.glance.bringTitle}</p>
+                <p>{t.glance.bring}</p>
+              </div>
+              <div className="glance-provides">
+                <p className="glance-heading">{t.glance.providesTitle}</p>
+                <p>{t.glance.provides}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Bubbles images={photos} variant="a" slot={2} />
+
+      <section id="who" className="brief-section">
         <p className="brief-kicker">{t.who.kicker}</p>
         <h2>{t.who.title}</h2>
         <p>{t.who.body}</p>
       </section>
 
-      <Bubbles images={photos} variant="a" slot={2} />
+      <Bubbles images={photos} variant="b" slot={3} />
 
       <section className="brief-section">
         <p className="brief-kicker">{t.why.kicker}</p>
         <h2>{t.why.title}</h2>
         <p>{t.why.p1}</p>
         <p>{t.why.p2}</p>
-      </section>
-
-      <Bubbles images={photos} variant="b" slot={3} />
-
-      <section className="brief-section">
-        <p className="brief-kicker">{t.how.kicker}</p>
-        <h2>{t.how.title}</h2>
-        <p>{t.how.p1}</p>
-        <p>{t.how.p2}</p>
-        <p>{t.how.p3}</p>
-        <p>{t.how.p4}</p>
       </section>
 
       <Bubbles images={photos} variant="c" slot={4} />
@@ -176,7 +217,11 @@ export default function Brief({ images }: { images: string[] }) {
         </div>
       </section>
 
+      <Bubbles images={photos} variant="a" slot={5} />
+
       <Schedule />
+
+      <Bubbles images={photos} variant="b" slot={6} />
 
       <Ask />
 

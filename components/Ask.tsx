@@ -5,19 +5,54 @@ import { useLanguage } from "./LanguageProvider";
 import { WORLD_H, WORLD_OUTLINE, WORLD_W } from "@/lib/worldOutline";
 import "./reach.css";
 
-type CityId = "calgary" | "toronto" | "montreal" | "barcelona";
+type CityId = "calgary" | "monterey" | "toronto" | "montreal" | "barcelona";
 
 /** Positions are the Natural Earth projection of each city, same sheet as the coast. */
 const CITIES: { id: CityId; x: number; y: number; color: string; side: "left" | "up" | "down" | "right" }[] = [
   { id: "calgary", x: 220.76, y: 131.6, color: "#e39b12", side: "left" },
+  // Monterey, Mexico. Spelled as given. See DESIGN_DECISIONS.md.
+  { id: "monterey", x: 226.74, y: 213.8, color: "#c45c26", side: "down" },
   { id: "toronto", x: 297.59, y: 155.14, color: "#1aa36a", side: "down" },
   { id: "montreal", x: 314.16, y: 149.19, color: "#3b6cff", side: "up" },
   { id: "barcelona", x: 505.6, y: 162.46, color: "#e24b4b", side: "right" },
 ];
 
-/* Calgary–Toronto–Montreal, then a northern arc to Barcelona. */
-const ROUTE =
-  "M 220.76 131.60 L 297.59 155.14 L 314.16 149.19 Q 418.39 98.37 505.60 162.46";
+const CITY_AT = Object.fromEntries(CITIES.map((city) => [city.id, city])) as Record<
+  CityId,
+  (typeof CITIES)[number]
+>;
+
+/** A curve that bows north of the straight line, the way a flight route does. See DESIGN_DECISIONS.md. */
+function flightArc(fromId: CityId, toId: CityId) {
+  const from = CITY_AT[fromId];
+  const to = CITY_AT[toId];
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy) || 1;
+  // Perpendicular. Flip so the bow points up the map (north).
+  let px = -dy;
+  let py = dx;
+  if (py > 0) {
+    px = -px;
+    py = -py;
+  }
+  const bow = Math.min(78, Math.max(18, len * 0.22));
+  const cx = (from.x + to.x) / 2 + (px / len) * bow;
+  const cy = (from.y + to.y) / 2 + (py / len) * bow;
+  return `M ${from.x.toFixed(2)} ${from.y.toFixed(2)} Q ${cx.toFixed(2)} ${cy.toFixed(2)} ${to.x.toFixed(2)} ${to.y.toFixed(2)}`;
+}
+
+/* Mexico–Calgary, Mexico–Barcelona, Calgary–Montreal, Calgary–Barcelona, Toronto–Mexico, Toronto–Barcelona. */
+const FLIGHTS: [CityId, CityId][] = [
+  ["monterey", "calgary"],
+  ["monterey", "barcelona"],
+  ["calgary", "montreal"],
+  ["calgary", "barcelona"],
+  ["toronto", "monterey"],
+  ["toronto", "barcelona"],
+];
+
+const ROUTE = FLIGHTS.map(([from, to]) => flightArc(from, to)).join(" ");
 
 function ReachMap() {
   const { t } = useLanguage();
