@@ -71,8 +71,8 @@
 
 /* Hook + wordmark rise together once CHALLENGE has filled. */
 .hero-mark {
-  width: 88%;
-  max-width: 1240px;
+  width: 70%;
+  max-width: 920px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -472,6 +472,28 @@
   display: block;
 }
 
+/* Cream circle beside the partner logos. Words are set in small capitals so they fit. */
+.sticker-invite {
+  width: clamp(52px, 9.5vh, 72px);
+  height: clamp(52px, 9.5vh, 72px);
+  border-radius: 50%;
+  background: #f7f2ea;
+  box-shadow: inset 0 0 0 2px #111;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.1em;
+  font-size: clamp(6px, 0.9vh, 8px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  padding: 8px;
+  cursor: default;
+}
+
 .sticker-link:hover,
 .sticker-link:focus-visible {
   outline: none;
@@ -513,7 +535,7 @@
   cursor: pointer;
   opacity: 0;
   z-index: 2;
-  /* After last partner sticker (delay 6.85s + stickerIn 0.8s). */
+  /* After last partner sticker (delay 6.95s + stickerIn 0.8s). */
   animation: fadeIn calc(0.8s / var(--hero-speed)) ease-out calc((7.9s + var(--hero-seq)) / var(--hero-speed)) both;
 }
 
@@ -600,7 +622,8 @@
   .hero .hero-season,
   .hero .sticker,
   .hero .hero-discover {
-    opacity: 1;
+    /* Inline opacity: 0 is only the start of the fade-in. Reduced motion skips that fade. */
+    opacity: 1 !important;
   }
 
   .hero .guide-draw-x,

@@ -127,6 +127,21 @@ export default function Hero() {
             >
               <img src={asset("soda-18.svg")} alt="LCC Fab Lab" />
             </a>
+            {/* Label only. Partners are invited by email, so this is not a link. See DESIGN_DECISIONS.md. */}
+            <div
+              className="sticker sticker-invite float-c"
+              style={{
+                opacity: 0,
+                ...cssVars({
+                  "--delay": "6.95s",
+                  "--float-dur": "7.8s",
+                  "--float-delay": "7.75s",
+                }),
+              }}
+            >
+              <span>{t.becomeLine1}</span>
+              <span>{t.becomeLine2}</span>
+            </div>
           </div>
         </div>
 

@@ -26,6 +26,10 @@ export const copy = {
     join: "Join the challenge",
     joinLine1: "Join the",
     joinLine2: "challenge",
+    // Circle next to the partner logos. The partner page is gone, so this opens the join form. See DESIGN_DECISIONS.md.
+    becomeLine1: "Become a",
+    becomeLine2: "Partner",
+    becomeLabel: "Become a Partner",
     menu: "Menu",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -43,16 +47,51 @@ export const copy = {
     involve: {
       kicker: "How to Participate",
       title: "Connecting Students to the Challenge",
-      pilot: "This pilot year is by invite or you can reach out using one of the forms on this page.",
-      body: "Participating schools and labs have a facilitator, teacher, coach, or mentor to help a student group take part in the SOD+A Challenge, encouraging them to iterate, experiment, share and document their creations and attempts on our global board. Participating schools and labs also help connect students to co-design opportunities where their newly discovered skills can be put into action to make a difference.",
+      pilot: "This pilot year, participation is by invite, or you can reach out using one of the forms on this page.",
+      body: "Participating schools and labs have a facilitator, teacher, coach, or mentor to help a student group take part in the SOD+A Challenge, encouraging them to iterate, experiment, share, and document their creations and attempts on our global board. Participating schools and labs also help connect students to co-design opportunities where their newly discovered skills can be put into action to make a difference.",
+    },
+    // At a glance replaces the standalone cost paragraph. See DESIGN_DECISIONS.md.
+    glance: {
+      leadTitle: "Learn across borders",
+      lead: "Share your process with students in other communities, remake and adapt each other's work, and build relationships through making.",
+      fitTitle: "How it fits",
+      fit: "Run SOD+A as a co-curricular activity, a class, or a collaboration with another organization. Your group chooses the format and can use the frameworks it already knows.",
+      timelineTitle: "Timeline",
+      timeline: "Four key dates between September and May. Smaller shared moments may happen in between.",
+      whoTitle: "Who can join",
+      who: "Students aged 14-18 working with a school, a makerspace, or another organization. No Fab Lab is needed. Any level of technology is welcome, from simple hand tools to laser cutters and code.",
+      bringTitle: "Participating Schools & Labs",
+      // Schools and labs are asked to include a facilitator. See DESIGN_DECISIONS.md.
+      bring: "Include a facilitator who runs the group, such as a teacher, coach, or mentor. Student access to computers, tools or fabrication machines, and craft supplies. A project students co-design to make an impact. A willingness to share your process, such as a file, a recipe, or a series of steps, so others can remake, learn from, and adapt your work. Investment of enough time to iterate, respond to feedback, and showcase your efforts.",
+      providesTitle: "SOD+A provides",
+      // Structure and dates for deliverables and feedback. See DESIGN_DECISIONS.md.
+      provides: "The structure facilitators need to get started, including prompts, criteria, best practices, and four key dates for deliverables and feedback. A global board for sharing, and regular group check-ins to compare notes and ask questions. No cost to join this pilot year.",
     },
     schools: {
       kicker: "Participating schools & labs",
     },
+    // Intro paragraph, then two bold lead-ins. See DESIGN_DECISIONS.md.
     challenge: {
       kicker: "What is the challenge?",
-      title: "See how far you can take an idea",
-      body: "The challenge is to see how far you can take an idea: experiment, learn new skills, get feedback, make changes, share what you discover, put it into action, and meet criteria set by partner institutions. Along the way, you build a portfolio and develop the creative, technical, and human skills universities and innovative organizations are looking for.",
+      title: "See how far you can push an idea",
+      intro:
+        "It can be exciting to think of something you'd love to make. Sometimes you don't know where to start or how to use your skills to contribute to your community. Either way, the challenge is turning ideas into meaningful action. That is what SOD+A stands for, moving from discovery to action.",
+      beats: [
+        {
+          title: "Discover.",
+          detail:
+            "Instead of a big, defined project, we add a twist. Bring an interest or start from scratch, let the randomly drawn prompts guide you somewhere new, experiment, share what you learn, and see what happens.",
+        },
+        {
+          title: "Act.",
+          detail:
+            "Now you have new ideas and new skills. Put them to work with friends and your school. Work as a team to bring positive change to a community through design. Document it for the world to see.",
+        },
+      ],
+      // Closing line links the word criteria to the criteria section. See DESIGN_DECISIONS.md.
+      closeBefore: "Scroll to the ",
+      closeLink: "criteria",
+      closeAfter: " to see what to aim for...",
     },
     who: {
       kicker: "Who is it for?",
@@ -62,20 +101,14 @@ export const copy = {
     why: {
       kicker: "Why?",
       title: "The other side of innovation",
-      p1: "School gives you knowledge, skills, and structure. SOD+A gives you the experience of learning through design and community. Hands-on, collaborative discovery that's common in Fab Labs and universities but doesn't always fit into a high school curriculum. Working alongside students, Fab Labs, and universities beyond your own school, you'll dive deep into what you're curious about, use technology to make something meaningful, and build the skills the world actually needs more of. Creativity, resilience, judgment, collaboration.",
+      // "dive deeper" replaces "dive deep". See DESIGN_DECISIONS.md.
+      p1: "School gives you knowledge, skills, and structure. SOD+A gives you the experience of learning through design and community. Hands-on, collaborative discovery that's common in Fab Labs and universities but doesn't always fit into a high school curriculum. Working alongside students, Fab Labs, and universities beyond your own school, you'll dive deeper into what you're curious about, use technology to make something meaningful, and build the many skills the world needs, including creativity, curiosity, resilience, judgment, and collaboration.",
       p2: "Along the way, you build a portfolio that makes your process, decisions, and growth visible, while receiving feedback and recognition from partner schools and organizations that value these skills. It is a chance to get noticed while having fun, discovering what you can do, and learning what it means to bring your talents into the world.",
-    },
-    how: {
-      kicker: "How does it work?",
-      title: "Join a local group. Share a global process.",
-      p1: "You join a local group and identify a project you can co-design in your community. Then you head into a studio, lab, classroom, makerspace, or other creative space to experiment with ideas, materials, and technologies.",
-      p2: "Curated random prompts and creative constraints push you toward unexpected combinations, new skills, and ideas you may not have explored on your own.",
-      p3: "Along the way, you document and share what you learn, see what students in other communities are discovering, receive feedback, make changes, and bring your discoveries back into the collective project.",
-      p4: "The challenge is to keep developing your ideas, share what you know, respond to feedback, put your learning into action, and meet the criteria set by partner institutions.",
     },
     criteria: {
       kicker: "Challenge criteria",
-      title: "Show us what you can do?",
+      // Question mark removed. See DESIGN_DECISIONS.md.
+      title: "Show us what you can do",
       intro:
         "Partner institutions set the criteria. Meeting them leads to levels, achievements, and certificates as you experiment, document, and share.",
     },
@@ -123,8 +156,9 @@ export const copy = {
     ask: {
       kicker: "The bigger picture",
       paragraphs: [
-        "Currently the SOD+A Challenge is a concept in action. We have had one very successful year and participants and partners are excited to return. We are co-designing this experience together.",
-        "The SOD+A Challenge provides a creative platform for students to make and share, while facilitators work with them to motivate and support their journey through discovery and action. Right now there is no cost to joining, only a modest amount of time and energy to make the most of the experience and to encourage students to share and document their work, so they can receive feedback and meet the program's criteria.",
+        "Our goal is to grow SOD+A as an international showcase that celebrates student action toward creativity, curiosity, and collaboration. We want to challenge students to engage in the kinds of experiences that build these skills, and to offer real feedback from the world that needs them.",
+        // Second paragraph only. See DESIGN_DECISIONS.md.
+        "Currently the SOD+A Challenge is a concept in action. We tested the idea last year with two schools and two partners, and saw students get excited to experiment, iterate, share, and act on their ideas through design. We are now looking at a second pilot year to expand on this, and co-designing the experience with our participants and partners.",
       ],
     },
     reach: {
@@ -134,12 +168,15 @@ export const copy = {
         barcelona: "Barcelona",
         toronto: "Toronto",
         calgary: "Calgary",
+        // Spelled as given. The usual spelling is Monterrey. See DESIGN_DECISIONS.md.
+        monterey: "Monterey",
       },
       places: {
         montreal: "Lower Canada College",
         barcelona: "Fab Lab Barcelona",
         toronto: "OCAD University",
         calgary: "",
+        monterey: "Mexico",
       },
     },
   },
@@ -152,6 +189,10 @@ export const copy = {
     join: "Rejoindre le défi",
     joinLine1: "Rejoindre",
     joinLine2: "le défi",
+    // Machine draft, needs human review.
+    becomeLine1: "Devenir",
+    becomeLine2: "partenaire",
+    becomeLabel: "Devenir partenaire",
     menu: "Menu",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
@@ -169,16 +210,53 @@ export const copy = {
     involve: {
       kicker: "Comment participer",
       title: "Relier les élèves au défi",
-      pilot: "Cette année pilote se fait sur invitation, ou vous pouvez nous joindre avec l'un des formulaires de cette page.",
+      // Machine draft, needs human review.
+      pilot: "Cette année pilote, la participation se fait sur invitation, ou vous pouvez nous joindre avec l'un des formulaires de cette page.",
       body: "Les écoles et labs participants ont un facilitateur, un enseignant, un coach ou un mentor pour aider un groupe d'élèves à prendre part au défi SOD+A, en les encourageant à itérer, expérimenter, partager et documenter leurs créations et leurs essais sur notre tableau global. Les écoles et labs participants aident aussi à relier les élèves à des occasions de co-conception où leurs compétences nouvellement découvertes peuvent être mises en action pour faire une différence.",
+    },
+    // Machine draft, needs human review.
+    glance: {
+      leadTitle: "Apprendre au-delà des frontières",
+      lead: "Partagez votre processus avec des élèves d'autres communautés, refaites et adaptez le travail les uns des autres, et tissez des liens en fabriquant.",
+      fitTitle: "Comment ça s'intègre",
+      fit: "Menez SOD+A comme une activité parascolaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà.",
+      timelineTitle: "Calendrier",
+      timeline: "Quatre dates clés entre septembre et mai. De plus petits moments partagés peuvent avoir lieu entre les deux.",
+      whoTitle: "Qui peut participer",
+      who: "Des élèves de 14 à 18 ans qui travaillent avec une école, un espace de fabrication, ou une autre organisation. Un Fab Lab n'est pas nécessaire. Tout niveau de technologie est le bienvenu, des outils à main simples aux découpeuses laser et au code.",
+      bringTitle: "Écoles et labs participants",
+      // Machine draft, needs human review.
+      bring: "Incluez une personne qui anime le groupe, comme un enseignant, un coach ou un mentor. Un accès des élèves à des ordinateurs, des outils ou des machines de fabrication, et du matériel d'artisanat. Un projet que les élèves co-conçoivent pour avoir un impact. Une volonté de partager votre processus, comme un fichier, une recette ou une série d'étapes, pour que d'autres puissent refaire votre travail, en tirer des leçons et l'adapter. L'investissement du temps nécessaire pour itérer, répondre aux commentaires et présenter vos efforts.",
+      providesTitle: "SOD+A fournit",
+      // Machine draft, needs human review.
+      provides: "Le cadre dont les animateurs ont besoin pour commencer, y compris des amorces, des critères, des bonnes pratiques et quatre dates clés pour les livrables et les retours. Un tableau global pour partager, et des points réguliers en groupe pour comparer les notes et poser des questions. Aucun coût pour rejoindre cette année pilote.",
     },
     schools: {
       kicker: "Écoles et labs participants",
     },
+    // Machine draft, needs human review. "un twist" and "consignes tirées au hasard" need a native speaker.
     challenge: {
       kicker: "Quel est le défi ?",
-      title: "Voir jusqu'où une idée peut aller",
-      body: "Le défi consiste à voir jusqu'où vous pouvez mener une idée : expérimenter, apprendre de nouvelles compétences, recevoir des commentaires, faire des changements, partager ce que vous découvrez, passer à l'action et répondre aux critères des institutions partenaires. En chemin, vous construisez un portfolio et développez les compétences créatives, techniques et humaines que recherchent les universités et les organisations innovantes.",
+      title: "Voyez jusqu'où vous pouvez pousser une idée",
+      // Machine draft, needs human review.
+      intro:
+        "Il peut être passionnant de penser à quelque chose que vous aimeriez fabriquer. Parfois, vous ne savez pas par où commencer, ni comment utiliser vos compétences pour contribuer à votre communauté. Dans un cas comme dans l'autre, le défi est de transformer des idées en action porteuse de sens. C'est ce que signifie SOD+A, passer de la découverte à l'action.",
+      beats: [
+        {
+          title: "Découvrez.",
+          detail:
+            "Au lieu d'un grand projet défini, nous ajoutons un twist. Apportez un intérêt ou partez de zéro, laissez les consignes tirées au hasard vous guider vers quelque chose de nouveau, expérimentez, partagez ce que vous apprenez, et voyez ce qui se passe.",
+        },
+        {
+          title: "Agissez.",
+          detail:
+            "Vous avez maintenant de nouvelles idées et de nouvelles compétences. Mettez-les au travail avec des amis et votre école. Travaillez en équipe pour apporter un changement positif à une communauté par le design. Documentez-le pour que le monde le voie.",
+        },
+      ],
+      // Machine draft, needs human review.
+      closeBefore: "Faites défiler jusqu'aux ",
+      closeLink: "critères",
+      closeAfter: " pour voir quoi viser...",
     },
     who: {
       kicker: "Pour qui ?",
@@ -188,20 +266,14 @@ export const copy = {
     why: {
       kicker: "Pourquoi ?",
       title: "L'autre côté de l'innovation",
-      p1: "L'école vous donne des connaissances, des compétences et une structure. SOD+A vous donne l'expérience d'apprendre par le design et la communauté. Une découverte collaborative et concrète, courante dans les Fab Labs et les universités, qui n'entre pas toujours dans un programme de secondaire. Aux côtés d'élèves, de Fab Labs et d'universités au-delà de votre propre école, vous irez au fond de ce qui vous passionne, utiliserez la technologie pour créer quelque chose de porteur de sens, et développerez les compétences dont le monde a réellement le plus besoin. Créativité, résilience, jugement, collaboration.",
+      // Machine draft, needs human review.
+      p1: "L'école vous donne des connaissances, des compétences et une structure. SOD+A vous donne l'expérience d'apprendre par le design et la communauté. Une découverte collaborative et concrète, courante dans les Fab Labs et les universités, qui n'entre pas toujours dans un programme de secondaire. Aux côtés d'élèves, de Fab Labs et d'universités au-delà de votre propre école, vous irez plus au fond de ce qui vous passionne, utiliserez la technologie pour créer quelque chose de porteur de sens, et développerez les nombreuses compétences dont le monde a besoin, dont la créativité, la curiosité, la résilience, le jugement et la collaboration.",
       p2: "En chemin, vous construisez un portfolio qui rend visibles votre processus, vos décisions et votre progression, tout en recevant des commentaires et une reconnaissance d'écoles et d'organisations partenaires qui valorisent ces compétences. C'est une chance d'être vu, de s'amuser, de découvrir ce que vous pouvez faire, et d'apprendre ce que signifie porter vos talents dans le monde.",
-    },
-    how: {
-      kicker: "Comment ça marche ?",
-      title: "Rejoindre un groupe local. Partager un processus mondial.",
-      p1: "Vous rejoignez un groupe local et identifiez un projet que vous pouvez co-concevoir dans votre communauté. Puis vous entrez dans un atelier, un labo, une classe, un makerspace ou un autre espace créatif pour expérimenter avec des idées, des matériaux et des technologies.",
-      p2: "Des consignes aléatoires choisies et des contraintes créatives vous poussent vers des combinaisons inattendues, de nouvelles compétences et des idées que vous n'auriez peut-être pas explorées seul.",
-      p3: "En chemin, vous documentez et partagez ce que vous apprenez, voyez ce que découvrent des élèves d'autres communautés, recevez des commentaires, faites des changements et ramenez vos découvertes dans le projet collectif.",
-      p4: "Le défi est de continuer à développer vos idées, de partager ce que vous savez, de répondre aux commentaires, de mettre l'apprentissage en action, et de répondre aux critères des institutions partenaires.",
     },
     criteria: {
       kicker: "Critères du défi",
-      title: "Montrez-nous ce que vous savez faire ?",
+      // Machine draft, needs human review. Question mark and the space before it removed.
+      title: "Montrez-nous ce que vous savez faire",
       intro:
         "Les institutions partenaires définissent les critères. Les remplir ouvre des niveaux, des accomplissements et des certificats, pendant que vous expérimentez, documentez et partagez.",
     },
@@ -248,9 +320,10 @@ export const copy = {
     },
     ask: {
       kicker: "Le tableau d'ensemble",
+      // Machine draft, needs human review.
       paragraphs: [
-        "Actuellement, le SOD+A Challenge est un concept en action. Nous avons connu une année très réussie, et les participants comme les partenaires ont hâte de revenir. Nous co-concevons cette expérience ensemble.",
-        "Le SOD+A Challenge offre aux élèves une plateforme créative pour faire et partager, pendant que les facilitateurs travaillent avec eux pour les motiver et soutenir leur parcours de découverte et d'action. Pour l'instant, rejoindre ne coûte rien, seulement une quantité modeste de temps et d'énergie pour tirer le meilleur de l'expérience et encourager les élèves à partager et documenter leur travail, afin qu'ils puissent recevoir des commentaires et répondre aux critères du programme.",
+        "Notre objectif est de faire grandir SOD+A comme vitrine internationale qui célèbre l'action des élèves vers la créativité, la curiosité et la collaboration. Nous voulons mettre les élèves au défi de vivre le genre d'expériences qui construisent ces compétences, et leur offrir de vrais retours du monde qui en a besoin.",
+        "Actuellement, le SOD+A Challenge est un concept en action. Nous avons testé l'idée l'an dernier avec deux écoles et deux partenaires, et nous avons vu des élèves s'enthousiasmer pour expérimenter, itérer, partager et agir sur leurs idées par le design. Nous envisageons maintenant une deuxième année pilote pour aller plus loin, et nous co-concevons l'expérience avec nos participants et nos partenaires.",
       ],
     },
     reach: {
@@ -260,12 +333,16 @@ export const copy = {
         barcelona: "Barcelone",
         toronto: "Toronto",
         calgary: "Calgary",
+        // Machine draft, needs human review. Spelling kept as given.
+        monterey: "Monterey",
       },
       places: {
         montreal: "Lower Canada College",
         barcelona: "Fab Lab Barcelona",
         toronto: "OCAD University",
         calgary: "",
+        // Machine draft, needs human review.
+        monterey: "Mexique",
       },
     },
   },
@@ -278,6 +355,10 @@ export const copy = {
     join: "Únete al reto",
     joinLine1: "Únete al",
     joinLine2: "reto",
+    // Machine draft, needs human review.
+    becomeLine1: "Hazte",
+    becomeLine2: "socio",
+    becomeLabel: "Hazte socio",
     menu: "Menú",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
@@ -295,16 +376,53 @@ export const copy = {
     involve: {
       kicker: "Cómo participar",
       title: "Conectar a los estudiantes con el reto",
-      pilot: "Este año piloto es por invitación, o puedes escribirnos con uno de los formularios de esta página.",
+      // Machine draft, needs human review.
+      pilot: "Este año piloto, la participación es por invitación, o puedes escribirnos con uno de los formularios de esta página.",
       body: "Las escuelas y labs participantes cuentan con un facilitador, docente, coach o mentor para ayudar a un grupo de estudiantes a participar en el Reto SOD+A, animándolos a iterar, experimentar, compartir y documentar sus creaciones e intentos en nuestro tablero global. Las escuelas y labs participantes también ayudan a conectar a los estudiantes con oportunidades de co-diseño donde sus habilidades recién descubiertas pueden ponerse en acción para marcar una diferencia.",
+    },
+    // Machine draft, needs human review.
+    glance: {
+      leadTitle: "Aprender entre fronteras",
+      lead: "Comparte tu proceso con estudiantes de otras comunidades, rehace y adapta el trabajo de los demás, y construye relaciones a través de hacer.",
+      fitTitle: "Cómo encaja",
+      fit: "Lleva SOD+A como una actividad extracurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce.",
+      timelineTitle: "Calendario",
+      timeline: "Cuatro fechas clave entre septiembre y mayo. Pueden ocurrir momentos compartidos más pequeños entre medias.",
+      whoTitle: "Quién puede unirse",
+      who: "Estudiantes de 14 a 18 años que trabajan con una escuela, un espacio de fabricación u otra organización. No hace falta un Fab Lab. Cualquier nivel de tecnología es bienvenido, desde herramientas de mano sencillas hasta cortadoras láser y código.",
+      bringTitle: "Escuelas y labs participantes",
+      // Machine draft, needs human review.
+      bring: "Incluye a una persona que dirige el grupo, como un docente, un coach o un mentor. Acceso de los estudiantes a computadoras, herramientas o máquinas de fabricación, y materiales de manualidades. Un proyecto que los estudiantes co-diseñan para generar un impacto. La disposición a compartir tu proceso, como un archivo, una receta o una serie de pasos, para que otros puedan rehacer tu trabajo, aprender de él y adaptarlo. La inversión de tiempo suficiente para iterar, responder a los comentarios y mostrar tus esfuerzos.",
+      providesTitle: "SOD+A aporta",
+      // Machine draft, needs human review.
+      provides: "La estructura que las personas facilitadoras necesitan para empezar, incluidas consignas, criterios, buenas prácticas y cuatro fechas clave para entregas y comentarios. Un tablero global para compartir, y encuentros regulares del grupo para comparar notas y hacer preguntas. Sin costo para unirse este año piloto.",
     },
     schools: {
       kicker: "Escuelas y labs participantes",
     },
+    // Machine draft, needs human review. "un giro inesperado" and "consignas al azar" need a native speaker.
     challenge: {
       kicker: "¿Qué es el reto?",
-      title: "A ver hasta dónde puedes llevar una idea",
-      body: "El reto consiste en ver hasta dónde puedes llevar una idea: experimentar, aprender nuevas habilidades, recibir comentarios, hacer cambios, compartir lo que descubres, ponerlo en práctica y cumplir los criterios de las instituciones colaboradoras. Por el camino, construyes un portafolio y desarrollas las habilidades creativas, técnicas y humanas que buscan las universidades y las organizaciones innovadoras.",
+      title: "Mira hasta dónde puedes empujar una idea",
+      // Machine draft, needs human review.
+      intro:
+        "Puede ser emocionante pensar en algo que te encantaría hacer. A veces no sabes por dónde empezar, o cómo usar tus habilidades para contribuir a tu comunidad. De cualquier modo, el reto es convertir ideas en acción con sentido. Eso es lo que significa SOD+A, pasar del descubrimiento a la acción.",
+      beats: [
+        {
+          title: "Descubre.",
+          detail:
+            "En lugar de un proyecto grande y definido, añadimos un giro inesperado. Trae un interés o empieza de cero, deja que las consignas al azar te guíen a un lugar nuevo, experimenta, comparte lo que aprendes y mira qué pasa.",
+        },
+        {
+          title: "Actúa.",
+          detail:
+            "Ahora tienes ideas nuevas y habilidades nuevas. Ponlas a trabajar con amigos y tu escuela. Trabaja en equipo para llevar un cambio positivo a una comunidad a través del diseño. Documéntalo para que el mundo lo vea.",
+        },
+      ],
+      // Machine draft, needs human review.
+      closeBefore: "Desplázate hasta los ",
+      closeLink: "criterios",
+      closeAfter: " para ver hacia dónde apuntar...",
     },
     who: {
       kicker: "¿Para quién es?",
@@ -314,20 +432,14 @@ export const copy = {
     why: {
       kicker: "¿Por qué?",
       title: "El otro lado de la innovación",
-      p1: "La escuela te da conocimiento, habilidades y estructura. SOD+A te da la experiencia de aprender a través del diseño y la comunidad. Un descubrimiento colaborativo y práctico, habitual en Fab Labs y universidades, que no siempre encaja en un currículo de secundaria. Trabajando junto a estudiantes, Fab Labs y universidades más allá de tu propia escuela, profundizarás en lo que te interesa, usarás la tecnología para hacer algo con sentido y desarrollarás las habilidades que el mundo realmente necesita más. Creatividad, resiliencia, criterio, colaboración.",
+      // Machine draft, needs human review.
+      p1: "La escuela te da conocimiento, habilidades y estructura. SOD+A te da la experiencia de aprender a través del diseño y la comunidad. Un descubrimiento colaborativo y práctico, habitual en Fab Labs y universidades, que no siempre encaja en un currículo de secundaria. Trabajando junto a estudiantes, Fab Labs y universidades más allá de tu propia escuela, profundizarás más en lo que te interesa, usarás la tecnología para hacer algo con sentido, y desarrollarás las muchas habilidades que el mundo necesita, entre ellas la creatividad, la curiosidad, la resiliencia, el criterio y la colaboración.",
       p2: "Por el camino, construyes un portafolio que hace visible tu proceso, tus decisiones y tu crecimiento, mientras recibes comentarios y reconocimiento de escuelas y organizaciones colaboradoras que valoran estas habilidades. Es una oportunidad de que te vean, de divertirte, de descubrir lo que puedes hacer y de aprender lo que significa llevar tu talento al mundo.",
-    },
-    how: {
-      kicker: "¿Cómo funciona?",
-      title: "Únete a un grupo local. Comparte un proceso global.",
-      p1: "Te unes a un grupo local e identificas un proyecto que puedas co-diseñar en tu comunidad. Luego entras a un estudio, laboratorio, aula, makerspace u otro espacio creativo para experimentar con ideas, materiales y tecnologías.",
-      p2: "Indicaciones aleatorias curadas y restricciones creativas te empujan hacia combinaciones inesperadas, nuevas habilidades e ideas que quizá no habrías explorado por tu cuenta.",
-      p3: "Por el camino, documentas y compartes lo que aprendes, ves lo que descubren estudiantes de otras comunidades, recibes comentarios, haces cambios y llevas tus descubrimientos de vuelta al proyecto colectivo.",
-      p4: "El reto es seguir desarrollando tus ideas, compartir lo que sabes, responder a los comentarios, poner el aprendizaje en práctica y cumplir los criterios de las instituciones colaboradoras.",
     },
     criteria: {
       kicker: "Criterios del reto",
-      title: "¿Nos enseñas lo que sabes hacer?",
+      // Machine draft, needs human review. Opening and closing question marks removed.
+      title: "Nos enseñas lo que sabes hacer",
       intro:
         "Las instituciones colaboradoras marcan los criterios. Cumplirlos abre niveles, logros y certificados mientras experimentas, documentas y compartes.",
     },
@@ -374,9 +486,10 @@ export const copy = {
     },
     ask: {
       kicker: "El panorama general",
+      // Machine draft, needs human review.
       paragraphs: [
-        "Actualmente, el SOD+A Challenge es un concepto en acción. Hemos tenido un año muy exitoso y los participantes y los socios tienen ganas de volver. Estamos co-diseñando esta experiencia juntos.",
-        "El SOD+A Challenge ofrece a los estudiantes una plataforma creativa para hacer y compartir, mientras los facilitadores trabajan con ellos para motivarlos y apoyar su recorrido de descubrimiento y acción. Ahora mismo no hay costo por unirse, solo una cantidad modesta de tiempo y energía para aprovechar al máximo la experiencia y animar a los estudiantes a compartir y documentar su trabajo, para que puedan recibir comentarios y cumplir los criterios del programa.",
+        "Nuestra meta es hacer crecer SOD+A como una vitrina internacional que celebra la acción de los estudiantes hacia la creatividad, la curiosidad y la colaboración. Queremos retar a los estudiantes a participar en el tipo de experiencias que construyen estas habilidades, y ofrecer comentarios reales del mundo que las necesita.",
+        "Actualmente, el SOD+A Challenge es un concepto en acción. Probamos la idea el año pasado con dos escuelas y dos partners, y vimos a los estudiantes entusiasmarse por experimentar, iterar, compartir y actuar sobre sus ideas a través del diseño. Ahora miramos un segundo año piloto para ampliar esto, y estamos co-diseñando la experiencia con nuestros participantes y partners.",
       ],
     },
     reach: {
@@ -386,12 +499,16 @@ export const copy = {
         barcelona: "Barcelona",
         toronto: "Toronto",
         calgary: "Calgary",
+        // Machine draft, needs human review. Spelling kept as given.
+        monterey: "Monterey",
       },
       places: {
         montreal: "Lower Canada College",
         barcelona: "Fab Lab Barcelona",
         toronto: "OCAD University",
         calgary: "",
+        // Machine draft, needs human review.
+        monterey: "México",
       },
     },
   },

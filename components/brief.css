@@ -11,20 +11,23 @@
   padding: 6vh 8vw 2.2vh;
 }
 
-/* Photo slots between copy. A short pile of overlapping discs —
+/* Photo slots between copy. A loose pile of discs —
    text, then photos, then the next text. */
 .bubbles {
   position: relative;
-  height: clamp(240px, 42vh, 400px);
-  padding: 0 6vw;
+  height: auto;
+  padding: 2.5vh 4vw 2vh;
   pointer-events: none;
   overflow: visible;
 }
 
+/* Wide enough that the largest disc and the next one only cross at the rim.
+   See DESIGN_DECISIONS.md. */
 .bubble-cluster {
   position: relative;
-  height: 100%;
-  width: min(28rem, 64vw);
+  width: min(46rem, 88vw);
+  aspect-ratio: 6 / 5;
+  height: auto;
   margin: 0 auto;
 }
 
@@ -40,46 +43,50 @@
   filter: drop-shadow(0 6px 12px rgb(14 13 12 / 14%));
 }
 
-/* 100 / 62 / 42 — one big, two stepping down. */
+/* Sizes are a share of the pile, so the overlap stays the same as the
+   page gets wider. The former small disc is still the largest and sits behind. */
 .bubble--lg {
-  width: clamp(160px, 22vw, 240px);
-  height: clamp(160px, 22vw, 240px);
+  width: 32%;
+  height: auto;
+  aspect-ratio: 1;
   z-index: 2;
   --dx: 10;
   --dy: 18;
 }
 
 .bubble--md {
-  width: clamp(100px, 13.6vw, 149px);
-  height: clamp(100px, 13.6vw, 149px);
+  width: 20%;
+  height: auto;
+  aspect-ratio: 1;
   z-index: 3;
   --dx: -12;
   --dy: 14;
 }
 
 .bubble--sm {
-  width: clamp(68px, 9.2vw, 101px);
-  height: clamp(68px, 9.2vw, 101px);
-  z-index: 4;
+  width: 42%;
+  height: auto;
+  aspect-ratio: 1;
+  z-index: 1;
   --dx: 8;
   --dy: -16;
 }
 
-/* Packed pile sitting on the large disc. */
-.bubbles--a .bubble:nth-child(1) { left: 18%; top: 16%; }
-.bubbles--a .bubble:nth-child(2) { left: 52%; top: 6%; }
-.bubbles--a .bubble:nth-child(3) { left: 58%; top: 48%; }
-.bubbles--a .bubble:nth-child(4) { left: 2%; top: 50%; }
+/* Each smaller disc only covers the rim of the largest one. */
+.bubbles--a .bubble:nth-child(1) { left: 38%; top: 27%; }
+.bubbles--a .bubble:nth-child(2) { left: 32%; top: 1%; }
+.bubbles--a .bubble:nth-child(3) { left: 2%; top: 11%; }
+.bubbles--a .bubble:nth-child(4) { left: 20%; top: 55%; }
 
-.bubbles--b .bubble:nth-child(1) { left: 22%; top: 14%; }
-.bubbles--b .bubble:nth-child(2) { left: 4%; top: 8%; }
-.bubbles--b .bubble:nth-child(3) { left: 56%; top: 10%; }
-.bubbles--b .bubble:nth-child(4) { left: 46%; top: 50%; }
+.bubbles--b .bubble:nth-child(1) { left: 0%; top: 2%; }
+.bubbles--b .bubble:nth-child(2) { left: 60%; top: 3%; }
+.bubbles--b .bubble:nth-child(3) { left: 26%; top: 6%; }
+.bubbles--b .bubble:nth-child(4) { left: 60%; top: 35%; }
 
-.bubbles--c .bubble:nth-child(1) { left: 24%; top: 16%; }
-.bubbles--c .bubble:nth-child(2) { left: 50%; top: 6%; }
-.bubbles--c .bubble:nth-child(3) { left: 8%; top: 10%; }
-.bubbles--c .bubble:nth-child(4) { left: 4%; top: 52%; }
+.bubbles--c .bubble:nth-child(1) { left: 23%; top: 0%; }
+.bubbles--c .bubble:nth-child(2) { left: 40%; top: 41%; }
+.bubbles--c .bubble:nth-child(3) { left: 2%; top: 28%; }
+.bubbles--c .bubble:nth-child(4) { left: 27%; top: 69%; }
 
 /* Sticker rim: black against the photo, white lip outside. */
 .bubble-float {
@@ -182,6 +189,26 @@
   margin-bottom: 0;
 }
 
+/* Discover and Act lead-ins are bold. The paragraph above them is a normal intro.
+   See DESIGN_DECISIONS.md. */
+.challenge-beats {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  max-width: 38em;
+  margin: 0 0 1.6rem;
+}
+
+.brief-section .challenge-beats p {
+  margin: 0;
+}
+
+.brief-section p.challenge-step-title {
+  margin: 0 0 0.15rem;
+  font-weight: 700;
+  opacity: 1;
+}
+
 .brief-quote {
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   line-height: 1.45;
@@ -202,6 +229,94 @@
   margin-top: clamp(4.5rem, 10vh, 7rem);
 }
 
+/* How to Participate is its own section now, so the section padding is the gap. */
+.brief-section > .involve:first-child {
+  margin-top: 0;
+}
+
+/* At a glance. Lavender, mint, peach, sky, and butter are not site-wide
+   colors, so they live only here. Type stays the page monospace because
+   Baloo 2 and Nunito are not loaded. See DESIGN_DECISIONS.md. */
+.glance {
+  --glance-mint: #d7f3e4;
+  --glance-lavender: #efe8f8;
+  --glance-butter: #f8f0c8;
+  --glance-sky: #dceef8;
+  --glance-peach: #f0c4a6;
+  margin-top: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 46rem;
+}
+
+.glance-lead,
+.glance-rows,
+.glance-bring,
+.glance-provides {
+  border-radius: 14px;
+  padding: 1rem 1.15rem 1.1rem;
+}
+
+.glance-lead {
+  background: var(--glance-mint);
+}
+
+.glance-rows {
+  background: var(--glance-lavender);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 0.95rem;
+  padding-bottom: 1rem;
+}
+
+.glance-row + .glance-row {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 3px solid var(--glance-peach);
+}
+
+.glance-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+.glance-bring {
+  background: var(--glance-butter);
+}
+
+.glance-provides {
+  background: var(--glance-sky);
+}
+
+.brief-section .glance p {
+  margin: 0;
+  max-width: none;
+  opacity: 0.92;
+}
+
+.brief-section .glance p.glance-heading {
+  margin: 0 0 0.35rem;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  opacity: 1;
+}
+
+.brief-section .glance-lead p:not(.glance-heading) {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.45;
+  opacity: 1;
+}
+
+@media (min-width: 760px) {
+  .glance-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .schools {
   display: flex;
   flex-direction: column;
@@ -216,11 +331,6 @@
 
 .brief-section--intro .scroll-cue {
   margin-top: 0.35rem;
-}
-
-.brief-section--intro + .bubbles {
-  height: clamp(200px, 32vh, 300px);
-  margin-top: -0.4rem;
 }
 
 .scroll-cue {
@@ -352,48 +462,48 @@
     padding: 5.5vh 7vw 2vh;
   }
 
+  /* Long kickers such as “What is the challenge?” would otherwise run under the menu button. */
+  .brief-kicker {
+    padding-right: 3.4rem;
+  }
+
   .bubbles {
-    height: clamp(210px, 40vh, 320px);
-    padding: 0 4vw;
+    height: auto;
+    padding: 2vh 3vw;
   }
 
   .bubble-cluster {
-    width: min(20rem, 90vw);
+    width: min(22rem, 92vw);
+    aspect-ratio: 1;
   }
 
-  .bubble--lg {
-    width: clamp(140px, 46vw, 196px);
-    height: clamp(140px, 46vw, 196px);
-  }
+  .bubble--lg { width: 40%; }
+  .bubble--md { width: 26%; }
+  .bubble--sm { width: 56%; }
 
-  .bubble--md {
-    width: clamp(88px, 28.5vw, 122px);
-    height: clamp(88px, 28.5vw, 122px);
-  }
-
-  .bubble--sm {
-    width: clamp(60px, 19vw, 82px);
-    height: clamp(60px, 19vw, 82px);
-  }
-
-  /* Three discs on a phone so the pile stays dense. */
+  /* Three discs on a phone so the pile stays readable. */
   .bubble:nth-child(4) {
     display: none;
   }
 
   .bubbles--a .bubble:nth-child(1),
   .bubbles--b .bubble:nth-child(1),
-  .bubbles--c .bubble:nth-child(1) { left: 14%; top: 18%; }
+  .bubbles--c .bubble:nth-child(1) { left: 48%; top: 8%; }
   .bubbles--a .bubble:nth-child(2),
   .bubbles--b .bubble:nth-child(2),
-  .bubbles--c .bubble:nth-child(2) { left: 48%; top: 6%; }
+  .bubbles--c .bubble:nth-child(2) { left: 12%; top: 52%; }
   .bubbles--a .bubble:nth-child(3),
   .bubbles--b .bubble:nth-child(3),
-  .bubbles--c .bubble:nth-child(3) { left: 50%; top: 48%; }
+  .bubbles--c .bubble:nth-child(3) { left: 2%; top: 4%; }
 }
 
 #criteria {
   padding-bottom: 8vh;
+  scroll-margin-top: 4.5rem;
+}
+
+.challenge-close-link {
+  color: inherit;
 }
 
 .criteria-grid {

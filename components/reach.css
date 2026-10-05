@@ -120,9 +120,10 @@
   opacity: 0.7;
 }
 
+/* City names stay in the markup. Hidden for now. See DESIGN_DECISIONS.md. */
 .reach-pin.is-on .reach-pin-label,
 .reach-pin:focus-visible .reach-pin-label {
-  display: block;
+  display: none;
 }
 
 .reach-pin[data-side="up"] .reach-pin-label {
@@ -149,8 +150,9 @@
   transform: translateY(-50%);
 }
 
+/* Names stay in these buttons. Hidden for now, not deleted. See DESIGN_DECISIONS.md. */
 .reach-cities {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 0.8rem;
