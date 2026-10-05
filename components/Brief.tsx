@@ -106,6 +106,13 @@ export default function Brief({ images }: { images: string[] }) {
           <div className="schools-rule schools-rule--end" aria-hidden="true" />
         </div>
 
+        <div className="involve">
+          <p className="brief-kicker">{t.involve.kicker}</p>
+          <h2>{t.involve.title}</h2>
+          <p>{t.involve.pilot}</p>
+          <p>{t.involve.body}</p>
+        </div>
+
         <a href="#challenge" className="scroll-cue" aria-label={t.scrollMore}>
           <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             <polyline points="2 2 11 12 20 2" />
@@ -171,7 +178,7 @@ export default function Brief({ images }: { images: string[] }) {
 
       <Schedule />
 
-      <Ask variant="main" />
+      <Ask />
 
       <SiteActions placement="footer" />
     </article>

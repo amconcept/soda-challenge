@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useState } from "react";
-import Link from "next/link";
 import HeroHook from "./HeroHook";
 import HeroLockup from "./HeroLockup";
 import { cssVars } from "./cssVars";
 import { useLanguage } from "@/components/LanguageProvider";
-import { PARTNER_PATH } from "@/lib/contact";
 import "./hero.css";
 
 const asset = (file: string) =>
@@ -129,22 +127,6 @@ export default function Hero() {
             >
               <img src={asset("soda-18.svg")} alt="LCC Fab Lab" />
             </a>
-            <Link
-              href={PARTNER_PATH}
-              className="sticker sticker-invite float-c"
-              aria-label={t.becomeLabel}
-              style={{
-                opacity: 0,
-                ...cssVars({
-                  "--delay": "6.95s",
-                  "--float-dur": "7.8s",
-                  "--float-delay": "7.75s",
-                }),
-              }}
-            >
-              <span>{t.becomeLine1}</span>
-              <span>{t.becomeLine2}</span>
-            </Link>
           </div>
         </div>
 

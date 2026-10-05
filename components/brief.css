@@ -191,10 +191,15 @@
   opacity: 0.95 !important;
 }
 
-/* Intro is one group: statement, schools, then a complete photo pile.
-   The old gap left the circles cut off at the fold. */
+/* Quote stays close to the SOD+A statement. Schools and How to Participate
+   sit further down so the three read as separate beats, not one block. */
 .brief-section--intro .brief-quote {
   margin-top: 1.6rem !important;
+  margin-bottom: 0;
+}
+
+.involve {
+  margin-top: clamp(4.5rem, 10vh, 7rem);
 }
 
 .schools {
@@ -206,7 +211,7 @@
 }
 
 .brief-section--intro .schools {
-  margin-top: 1.5rem;
+  margin-top: clamp(4.5rem, 10vh, 7rem);
 }
 
 .brief-section--intro .scroll-cue {

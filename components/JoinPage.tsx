@@ -98,7 +98,11 @@ export default function JoinPage() {
 
         {role === "student" && status !== "sent" ? (
           <form className="join-form" onSubmit={onSubmit}>
-            <p className="join-note">{form.studentNote}</p>
+            <div className="join-copy">
+              {form.studentIntro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
             <Field id="name" label={form.name} />
             <Field id="age" label={form.age} />
             <Field id="schoolLevel" label={form.schoolLevel} />
@@ -118,6 +122,11 @@ export default function JoinPage() {
 
         {role === "facilitator" && status !== "sent" ? (
           <form className="join-form" onSubmit={onSubmit}>
+            <div className="join-copy">
+              {form.facilitatorIntro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
             <Field id="name" label={form.name} />
             <Field id="email" label={form.email} type="email" />
             <Field id="orgName" label={form.orgName} />
