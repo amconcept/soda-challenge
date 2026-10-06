@@ -21,6 +21,8 @@ export const copy = {
     metaDescription:
       "A Design Challenge in collaboration with Fab Lab Barcelona and OCAD University",
     season: "2026 – 2027 (pilot)",
+    // Three words that draw across the hero. See DESIGN_DECISIONS.md.
+    hook: ["Creativity", "Curiosity", "Collaboration"],
     collaboration: "In Collaboration With",
     discover: "Discover",
     join: "Join the challenge",
@@ -192,6 +194,8 @@ export const copy = {
     metaDescription:
       "Un défi de design en collaboration avec Fab Lab Barcelona et OCAD University",
     season: "2026 – 2027 (pilote)",
+    // Same three hero words, in French. See DESIGN_DECISIONS.md.
+    hook: ["Créativité", "Curiosité", "Collaboration"],
     collaboration: "En collaboration avec",
     discover: "Découvrir",
     join: "Rejoindre le défi",
@@ -232,25 +236,25 @@ export const copy = {
     },
     // Machine draft, needs human review.
     glance: {
-      leadTitle: "Apprendre au-delà des frontières",
+      leadTitle: "Apprendre à travers les frontières",
       lead: "Partagez votre processus avec des élèves d'autres communautés, refaites et adaptez le travail les uns des autres, et tissez des liens en fabriquant.",
       fitTitle: "Comment ça s'intègre",
-      fit: "Menez SOD+A comme une activité parascolaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà.",
+      fit: "Menez SOD+A comme une activité cocurriculaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà.",
       timelineTitle: "Calendrier",
       timeline: "Quatre dates clés entre septembre et mai. De plus petits moments partagés peuvent avoir lieu entre les deux.",
       whoTitle: "Qui peut participer",
       who: "Des élèves de 14 à 18 ans qui travaillent avec une école, un espace de fabrication, ou une autre organisation. Un Fab Lab n'est pas nécessaire. Tout niveau de technologie est le bienvenu, des outils à main simples aux découpeuses laser et au code.",
       bringTitle: "Écoles et labs participants",
       // Machine draft, needs human review.
-      bring: "Incluez une personne qui anime le groupe, comme un enseignant, un coach ou un mentor. Un accès des élèves à des ordinateurs, des outils ou des machines de fabrication, et du matériel d'artisanat. Un projet que les élèves co-conçoivent pour avoir un impact. Une volonté de partager votre processus, comme un fichier, une recette ou une série d'étapes, pour que d'autres puissent refaire votre travail, en tirer des leçons et l'adapter. L'investissement du temps nécessaire pour itérer, répondre aux commentaires et présenter vos efforts.",
+      bring: "Incluez un facilitateur qui anime le groupe, comme un enseignant, un coach ou un mentor. Un accès des élèves à des ordinateurs, des outils ou des machines de fabrication, et du matériel d'artisanat. Un projet que les élèves co-conçoivent pour avoir un impact. Une volonté de partager votre processus, comme un fichier, une recette ou une série d'étapes, pour que d'autres puissent refaire votre travail, en tirer des leçons et l'adapter. L'investissement du temps nécessaire pour itérer, répondre aux commentaires et présenter vos efforts.",
       providesTitle: "SOD+A fournit",
       // Machine draft, needs human review.
-      provides: "Le cadre dont les animateurs ont besoin pour commencer, y compris des amorces, des critères, des bonnes pratiques et quatre dates clés pour les livrables et les retours. Un tableau global pour partager, et des points réguliers en groupe pour comparer les notes et poser des questions. Aucun coût pour rejoindre cette année pilote.",
+      provides: "La structure dont les facilitateurs ont besoin pour commencer, y compris des consignes, des critères, des bonnes pratiques et quatre dates clés pour les livrables et les retours. Un tableau global pour partager, et des points réguliers en groupe pour comparer les notes et poser des questions. Aucun coût pour rejoindre cette année pilote.",
     },
     schools: {
       kicker: "Écoles et labs participants",
     },
-    // Machine draft, needs human review. "un twist" and "consignes tirées au hasard" need a native speaker.
+    // "un détour" is the chosen French for "a twist". "consignes tirées au hasard" still needs a native speaker.
     challenge: {
       kicker: "Quel est le défi ?",
       title: "Voyez jusqu'où vous pouvez pousser une idée",
@@ -261,7 +265,7 @@ export const copy = {
         {
           title: "Découvrez.",
           detail:
-            "Au lieu d'un grand projet défini, nous ajoutons un twist. Apportez un intérêt ou partez de zéro, laissez les consignes tirées au hasard vous guider vers quelque chose de nouveau, expérimentez, partagez ce que vous apprenez, et voyez ce qui se passe.",
+            "Au lieu d'un grand projet défini, nous ajoutons un détour. Apportez un intérêt ou partez de zéro, laissez les consignes tirées au hasard vous guider vers quelque chose de nouveau, expérimentez, partagez ce que vous apprenez, et voyez ce qui se passe.",
         },
         {
           title: "Agissez.",
@@ -283,13 +287,13 @@ export const copy = {
       kicker: "Pourquoi ?",
       title: "L'autre côté de l'innovation",
       // Machine draft, needs human review.
-      p1: "L'école vous donne des connaissances, des compétences et une structure. SOD+A vous donne l'expérience d'apprendre par le design et la communauté. Une découverte collaborative et concrète, courante dans les Fab Labs et les universités, qui n'entre pas toujours dans un programme de secondaire. Aux côtés d'élèves, de Fab Labs et d'universités au-delà de votre propre école, vous irez plus au fond de ce qui vous passionne, utiliserez la technologie pour créer quelque chose de porteur de sens, et développerez les nombreuses compétences dont le monde a besoin, dont la créativité, la curiosité, la résilience, le jugement et la collaboration.",
+      p1: "L'école vous donne des connaissances, des compétences et une structure. SOD+A vous donne l'expérience d'apprendre par le design et la communauté. Une découverte collaborative et concrète, courante dans les Fab Labs et les universités, qui n'entre pas toujours dans un programme de secondaire. Aux côtés d'élèves, de Fab Labs et d'universités au-delà de votre propre école, vous irez plus au fond de ce qui éveille votre curiosité, utiliserez la technologie pour créer quelque chose de porteur de sens, et développerez les nombreuses compétences dont le monde a besoin, dont la créativité, la curiosité, la résilience, le jugement et la collaboration.",
       p2: "En chemin, vous construisez un portfolio qui rend visibles votre processus, vos décisions et votre progression, tout en recevant des commentaires et une reconnaissance d'écoles et d'organisations partenaires qui valorisent ces compétences. C'est une chance d'être vu, de s'amuser, de découvrir ce que vous pouvez faire, et d'apprendre ce que signifie porter vos talents dans le monde.",
     },
     criteria: {
       kicker: "Critères du défi",
       // Machine draft, needs human review. Question mark and the space before it removed.
-      title: "Montrez-nous ce que vous savez faire",
+      title: "Montrez-nous ce que vous pouvez faire",
       intro:
         "Les institutions partenaires définissent les critères. Les remplir ouvre des niveaux, des accomplissements et des certificats, pendant que vous expérimentez, documentez et partagez.",
     },
@@ -314,7 +318,7 @@ export const copy = {
       ],
       submit: "Envoyer",
       sending: "Envoi…",
-      thanks: "Merci. Nous vous écrirons.",
+      thanks: "Merci. Nous reviendrons vers vous.",
       error: "L'envoi a échoué. Réessayez, ou écrivez à hello@sodachallenge.org.",
       activate: "Vérifiez Gmail, ouvrez le courriel de FormSubmit, cliquez sur Activate Form, puis renvoyez.",
       back: "Retour au défi",
@@ -366,15 +370,17 @@ export const copy = {
     metaDescription:
       "Un reto de diseño en colaboración con Fab Lab Barcelona y OCAD University",
     season: "2026 – 2027 (piloto)",
+    // Same three hero words, in Spanish. See DESIGN_DECISIONS.md.
+    hook: ["Creatividad", "Curiosidad", "Colaboración"],
     collaboration: "En colaboración con",
     discover: "Descubre",
     join: "Únete al reto",
     joinLine1: "Únete al",
     joinLine2: "reto",
-    // Machine draft, needs human review.
+    // "aliado" is the chosen Spanish for partner. See DESIGN_DECISIONS.md.
     becomeLine1: "Hazte",
-    becomeLine2: "socio",
-    becomeLabel: "Hazte socio",
+    becomeLine2: "aliado",
+    becomeLabel: "Hazte aliado",
     menu: "Menú",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
@@ -406,17 +412,17 @@ export const copy = {
     },
     // Machine draft, needs human review.
     glance: {
-      leadTitle: "Aprender entre fronteras",
-      lead: "Comparte tu proceso con estudiantes de otras comunidades, rehace y adapta el trabajo de los demás, y construye relaciones a través de hacer.",
+      leadTitle: "Aprender a través de las fronteras",
+      lead: "Comparte tu proceso con estudiantes de otras comunidades, rehaz y adapta el trabajo de los demás, y construye relaciones haciendo.",
       fitTitle: "Cómo encaja",
-      fit: "Lleva SOD+A como una actividad extracurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce.",
+      fit: "Lleva SOD+A como una actividad cocurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce.",
       timelineTitle: "Calendario",
       timeline: "Cuatro fechas clave entre septiembre y mayo. Pueden ocurrir momentos compartidos más pequeños entre medias.",
       whoTitle: "Quién puede unirse",
       who: "Estudiantes de 14 a 18 años que trabajan con una escuela, un espacio de fabricación u otra organización. No hace falta un Fab Lab. Cualquier nivel de tecnología es bienvenido, desde herramientas de mano sencillas hasta cortadoras láser y código.",
       bringTitle: "Escuelas y labs participantes",
       // Machine draft, needs human review.
-      bring: "Incluye a una persona que dirige el grupo, como un docente, un coach o un mentor. Acceso de los estudiantes a computadoras, herramientas o máquinas de fabricación, y materiales de manualidades. Un proyecto que los estudiantes co-diseñan para generar un impacto. La disposición a compartir tu proceso, como un archivo, una receta o una serie de pasos, para que otros puedan rehacer tu trabajo, aprender de él y adaptarlo. La inversión de tiempo suficiente para iterar, responder a los comentarios y mostrar tus esfuerzos.",
+      bring: "Incluye a un facilitador que dirige el grupo, como un docente, un coach o un mentor. Acceso de los estudiantes a computadoras, herramientas o máquinas de fabricación, y materiales de manualidades. Un proyecto que los estudiantes co-diseñan para generar un impacto. La disposición a compartir tu proceso, como un archivo, una receta o una serie de pasos, para que otros puedan rehacer tu trabajo, aprender de él y adaptarlo. La inversión de tiempo suficiente para iterar, responder a los comentarios y mostrar tus esfuerzos.",
       providesTitle: "SOD+A aporta",
       // Machine draft, needs human review.
       provides: "La estructura que las personas facilitadoras necesitan para empezar, incluidas consignas, criterios, buenas prácticas y cuatro fechas clave para entregas y comentarios. Un tablero global para compartir, y encuentros regulares del grupo para comparar notas y hacer preguntas. Sin costo para unirse este año piloto.",
@@ -424,7 +430,7 @@ export const copy = {
     schools: {
       kicker: "Escuelas y labs participantes",
     },
-    // Machine draft, needs human review. "un giro inesperado" and "consignas al azar" need a native speaker.
+    // Machine draft, needs human review. "consignas al azar" needs a native speaker.
     challenge: {
       kicker: "¿Qué es el reto?",
       title: "Mira hasta dónde puedes empujar una idea",
@@ -435,7 +441,7 @@ export const copy = {
         {
           title: "Descubre.",
           detail:
-            "En lugar de un proyecto grande y definido, añadimos un giro inesperado. Trae un interés o empieza de cero, deja que las consignas al azar te guíen a un lugar nuevo, experimenta, comparte lo que aprendes y mira qué pasa.",
+            "En lugar de un proyecto grande y definido, añadimos un giro. Trae un interés o empieza de cero, deja que las consignas al azar te guíen a un lugar nuevo, experimenta, comparte lo que aprendes y mira qué pasa.",
         },
         {
           title: "Actúa.",
@@ -457,13 +463,13 @@ export const copy = {
       kicker: "¿Por qué?",
       title: "El otro lado de la innovación",
       // Machine draft, needs human review.
-      p1: "La escuela te da conocimiento, habilidades y estructura. SOD+A te da la experiencia de aprender a través del diseño y la comunidad. Un descubrimiento colaborativo y práctico, habitual en Fab Labs y universidades, que no siempre encaja en un currículo de secundaria. Trabajando junto a estudiantes, Fab Labs y universidades más allá de tu propia escuela, profundizarás más en lo que te interesa, usarás la tecnología para hacer algo con sentido, y desarrollarás las muchas habilidades que el mundo necesita, entre ellas la creatividad, la curiosidad, la resiliencia, el criterio y la colaboración.",
-      p2: "Por el camino, construyes un portafolio que hace visible tu proceso, tus decisiones y tu crecimiento, mientras recibes comentarios y reconocimiento de escuelas y organizaciones colaboradoras que valoran estas habilidades. Es una oportunidad de que te vean, de divertirte, de descubrir lo que puedes hacer y de aprender lo que significa llevar tu talento al mundo.",
+      p1: "La escuela te da conocimiento, habilidades y estructura. SOD+A te da la experiencia de aprender a través del diseño y la comunidad. Un descubrimiento colaborativo y práctico, habitual en Fab Labs y universidades, que no siempre encaja en un currículo de secundaria. Trabajando junto a estudiantes, Fab Labs y universidades más allá de tu propia escuela, profundizarás más en lo que despierta tu curiosidad, usarás la tecnología para hacer algo con sentido, y desarrollarás las muchas habilidades que el mundo necesita, entre ellas la creatividad, la curiosidad, la resiliencia, el criterio y la colaboración.",
+      p2: "Por el camino, construyes un portafolio que hace visible tu proceso, tus decisiones y tu crecimiento, mientras recibes comentarios y reconocimiento de escuelas y organizaciones colaboradoras que valoran estas habilidades. Es una oportunidad de que te vean, de divertirte, de descubrir lo que puedes hacer y de aprender lo que significa llevar tus talentos al mundo.",
     },
     criteria: {
       kicker: "Criterios del reto",
       // Machine draft, needs human review. Opening and closing question marks removed.
-      title: "Nos enseñas lo que sabes hacer",
+      title: "Muéstranos lo que puedes hacer",
       intro:
         "Las instituciones colaboradoras marcan los criterios. Cumplirlos abre niveles, logros y certificados mientras experimentas, documentas y compartes.",
     },
@@ -513,7 +519,7 @@ export const copy = {
       // Machine draft, needs human review.
       paragraphs: [
         "Nuestra meta es hacer crecer SOD+A como una vitrina internacional que celebra la acción de los estudiantes hacia la creatividad, la curiosidad y la colaboración. Queremos retar a los estudiantes a participar en el tipo de experiencias que construyen estas habilidades, y ofrecer comentarios reales del mundo que las necesita.",
-        "Actualmente, el SOD+A Challenge es un concepto en acción. Probamos la idea el año pasado con dos escuelas y dos partners, y vimos a los estudiantes entusiasmarse por experimentar, iterar, compartir y actuar sobre sus ideas a través del diseño. Ahora miramos un segundo año piloto para ampliar esto, y estamos co-diseñando la experiencia con nuestros participantes y partners.",
+        "Actualmente, el SOD+A Challenge es un concepto en acción. Probamos la idea el año pasado con dos escuelas y dos aliados, y vimos a los estudiantes entusiasmarse por experimentar, iterar, compartir y actuar sobre sus ideas a través del diseño. Ahora miramos un segundo año piloto para ampliar esto, y estamos co-diseñando la experiencia con nuestros participantes y aliados.",
       ],
     },
     reach: {
