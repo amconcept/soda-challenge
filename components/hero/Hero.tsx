@@ -15,7 +15,7 @@ const LOOP_MS = 20_000;
 const FADE_AT_MS = 18_000;
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   // Wait until after hydration so the sequence starts once —
   // not during SSR paint and again when React attaches.
   const [ready, setReady] = useState(false);
@@ -53,7 +53,7 @@ export default function Hero() {
       }
       data-show-schematic="true"
       data-show-partners="true"
-      aria-label="Creativity ... Curiosity ... Collaboration. SOD+A CHALLENGE"
+      aria-label={`${t.hook.join(" ... ")}. SOD+A CHALLENGE`}
     >
       <p className="hero-season" style={{ opacity: 0 }}>
         {t.season}
@@ -61,7 +61,8 @@ export default function Hero() {
 
       {/* Partners stay mounted. Only the tagline and lockup replay. */}
       <div className="hero-cycle">
-        <HeroHook key={cycle} />
+        {/* Restart the draw when the language changes, so the new words draw in. */}
+        <HeroHook key={`${cycle}-${locale}`} />
         <div className="hero-play">
         <div className="hero-stage">
           <div className="hero-mark" key={cycle}>

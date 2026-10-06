@@ -141,3 +141,17 @@ Lavender, mint, peach, sky, and butter were not existing color names in the styl
 ### Redundancy left in place on purpose
 
 The earlier note under the challenge rewrite is the current list. The old overlap between “Learn across borders” and step 3 is gone because that step was replaced.
+
+## 2026-10-06
+
+### Hero line follows the language
+
+The three words that draw across the hero, Creativity, Curiosity, and Collaboration, now switch with the language. Spanish is Creatividad, Curiosidad, Colaboración. French is Créativité, Curiosité, Collaboration. The dots between the words stay as they are. The English spacing is unchanged. A longer word gets a wider slot so it does not collide with the dots.
+
+### Translations lined up with the English
+
+French and Spanish lines that said something different from the English were brought back in line. “Facilitator” is named again under Participating Schools & Labs. French “SOD+A provides” says structure and facilitators, and uses consignes for prompts. The criteria heading is a request again: show us what you can do. “Learn across borders” uses “across,” and the Spanish sentence addresses “you” all the way through. “Co-curricular” stays co-curricular rather than becoming an after-school activity. “What you’re curious about” stays about curiosity. Spanish “talents” is plural. The French thank-you says we will be back in touch. Spanish “a twist” no longer adds “unexpected.” On the French criteria cards, “Design for circularity” and “Experiment to get ideas” are requests, matching the English. The read-aloud text on the cards now includes the lines already printed on the cards.
+
+Still waiting on a word choice: the Spanish word for partner, the French word for twist, and “scalable” plus “informing your work” on the criteria cards.
+
+The choices are now in. Spanish “partner” is “aliado”: the circle reads “Hazte aliado,” and the bigger picture says “dos aliados” and “nuestros aliados.” French “a twist” is “un détour.” The French Fab Lab card says “évolutif” for scalable. The LCC cards use the supplied sentences about constraints nourishing the work in French and giving shape to the work in Spanish.

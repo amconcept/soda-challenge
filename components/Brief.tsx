@@ -15,7 +15,7 @@ const partnerAsset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
 const criteriaAsset = (file: string) =>
-  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/criteria/${file}?v=6`;
+  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/criteria/${file}?v=8`;
 
 /* English files are the original vectors. ES and FR keep the marks and swap the wording. */
 const CRITERIA_CARDS = [
@@ -24,8 +24,8 @@ const CRITERIA_CARDS = [
     file: "soda.svg",
     alt: {
       en: "SOD+A criteria. Embrace iteration: Show that you can test, change, and improve your work based on what you learn as you make. Design for circularity (people + planet): Show how you are learning with others and that your design choices and methods minimize waste (reuse, repair, regenerate, or redesign).",
-      es: "Criterios SOD+A. Acepta la iteración: Demuestra que puedes probar, cambiar y mejorar tu trabajo según lo que aprendes mientras haces. Diseña para la circularidad (personas + planeta): Muestra cómo aprendes con otras personas y que tus decisiones y métodos de diseño reducen el desperdicio.",
-      fr: "Critères SOD+A. Adoptez l'itération : Montrez que vous pouvez tester, changer et améliorer votre travail à partir de ce que vous apprenez en faisant. Concevoir pour la circularité (personnes + planète) : Montrez comment vous apprenez avec les autres et que vos choix et méthodes de design réduisent le gaspillage.",
+      es: "Criterios SOD+A. Acepta la iteración: Demuestra que puedes probar, cambiar y mejorar tu trabajo según lo que aprendes mientras haces. Diseña para la circularidad (personas + planeta): Muestra cómo aprendes con otras personas y que tus decisiones y métodos de diseño reducen el desperdicio (reutilizar, reparar, regenerar o rediseñar).",
+      fr: "Critères SOD+A. Adoptez l'itération : Montrez que vous pouvez tester, changer et améliorer votre travail à partir de ce que vous apprenez en faisant. Concevez pour la circularité (personnes + planète) : Montrez comment vous apprenez avec les autres et que vos choix et méthodes de design réduisent le gaspillage (réutiliser, réparer, régénérer ou reconcevoir).",
     },
   },
   {
@@ -33,8 +33,8 @@ const CRITERIA_CARDS = [
     file: "bcn.svg",
     alt: {
       en: "Fab Lab BCN criteria. Fab Labs as research: Show how you combined different technologies and digital fabrication tools in prototyping ideas that can be shared digitally. Fully shareable + scalable: Publish relevant files and details so others can remake, learn from, and adapt your work.",
-      es: "Criterios Fab Lab BCN. Los Fab Labs como investigación: Muestra cómo combinaste distintas tecnologías y herramientas de fabricación digital. Totalmente compartible + escalable: Publica los archivos y detalles relevantes para que otras personas puedan rehacer, aprender y adaptar tu trabajo.",
-      fr: "Critères Fab Lab BCN. Les Fab Labs comme recherche : Montrez comment vous avez combiné différentes technologies et outils de fabrication numérique. Entièrement partageable + adaptable : Publiez les fichiers et détails utiles pour que d'autres puissent refaire, apprendre et adapter votre travail.",
+      es: "Criterios Fab Lab BCN. Los Fab Labs como investigación: Muestra cómo combinaste distintas tecnologías y herramientas de fabricación digital al prototipar ideas que se pueden compartir digitalmente. Totalmente compartible + escalable: Publica los archivos y detalles relevantes para que otras personas puedan rehacer, aprender y adaptar tu trabajo.",
+      fr: "Critères Fab Lab BCN. Les Fab Labs comme recherche : Montrez comment vous avez combiné différentes technologies et outils de fabrication numérique pour prototyper des idées partageables numériquement. Entièrement partageable + évolutif : Publiez les fichiers et détails utiles pour que d'autres puissent refaire, apprendre et adapter votre travail.",
     },
   },
   {
@@ -42,8 +42,8 @@ const CRITERIA_CARDS = [
     file: "ocad.svg",
     alt: {
       en: "OCAD University criteria. Make it personal: Provide enough evidence about your creative learning process in order to reveal your unique voice as a maker / designer / artist. Clarity of expression: Provide compelling documentation (photos, video, artwork) and captions that show key relevant and creative decisions.",
-      es: "Criterios OCAD University. Hazlo personal: Aporta evidencia suficiente de tu proceso de aprendizaje creativo para revelar tu voz única. Claridad de expresión: Ofrece documentación convincente y pies que muestren las decisiones relevantes y creativas.",
-      fr: "Critères OCAD University. Rendez-le personnel : Fournissez assez de traces de votre processus d'apprentissage créatif pour révéler votre voix unique. Clarté d'expression : Fournissez une documentation convaincante et des légendes qui montrent les décisions importantes et créatives.",
+      es: "Criterios OCAD University. Hazlo personal: Aporta evidencia suficiente de tu proceso de aprendizaje creativo para revelar tu voz única como maker / diseñador/a / artista. Claridad de expresión: Ofrece documentación convincente (fotos, video, obra) y pies que muestren las decisiones relevantes y creativas.",
+      fr: "Critères OCAD University. Rendez-le personnel : Fournissez assez de traces de votre processus d'apprentissage créatif pour révéler votre voix unique de maker / designer / artiste. Clarté d'expression : Fournissez une documentation convaincante (photos, vidéo, œuvre) et des légendes qui montrent les décisions importantes et créatives.",
     },
   },
   {
@@ -51,8 +51,8 @@ const CRITERIA_CARDS = [
     file: "lcc.svg",
     alt: {
       en: "LCC Fab Lab criteria. Experiment to get ideas: Pick a few things to try and tinker with them. Show several simple ideas before locking into one. Learning through constraints: Show how your ideas evolve as a result of the creative constraints that are informing your work.",
-      es: "Criterios LCC Fab Lab. Experimenta para obtener ideas: Elige algunas cosas para probar y trastear. Muestra varias ideas simples antes de fijarte en una. Aprender con restricciones: Muestra cómo evolucionan tus ideas por las restricciones creativas que orientan tu trabajo.",
-      fr: "Critères LCC Fab Lab. Expérimenter pour trouver des idées : Choisissez quelques choses à essayer et à bricoler. Montrez plusieurs idées simples avant d'en choisir une. Apprendre par les contraintes : Montrez comment vos idées évoluent grâce aux contraintes créatives qui orientent votre travail.",
+      es: "Criterios LCC Fab Lab. Experimenta para obtener ideas: Elige algunas cosas para probar y trastear. Muestra varias ideas simples antes de fijarte en una. Aprender con restricciones: Muestra cómo evolucionan tus ideas como resultado de las restricciones creativas que dan forma a tu trabajo.",
+      fr: "Critères LCC Fab Lab. Expérimentez pour trouver des idées : Choisissez quelques choses à essayer et à bricoler. Montrez plusieurs idées simples avant d'en choisir une. Apprendre par les contraintes : Montrez comment vos idées évoluent à la suite des contraintes créatives qui nourrissent votre travail.",
     },
   },
 ];
