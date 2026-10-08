@@ -170,6 +170,10 @@ French and Spanish for these three edits are machine drafts. French “présenta
 
 A detail cell keeps its line breaks. When every line starts with a bullet character, including a cell with only one line, the timeline shows a list. Words wrapped in asterisks, in a title or a detail, as in `*Discovery Experiments*`, are bold. The timeline typeface draws a medium weight as regular, so those marked words use a true bold. The bold button in the spreadsheet does not come through the public sheet feed, so the asterisks are the mark that does.
 
+### A celebrate sticker on showcase dates
+
+When a timeline row says “showcase” in the title, the detail, or the kind, the date keeps its diamond and gains the balloon sticker. That sticker stands in for a school sticker on the same date, so the two do not stack. Its dotted stem is longer than the school stems, so the balloons sit above the neighbouring wordmarks. The word is matched in English, including the English title column while another language is showing.
+
 ### A longer read under At a Glance
 
 Tried, then removed. Who and Why were put behind buttons under At a Glance. That made the page feel shorter, but pressing a button did not feel clear, and opening one section while the other stayed open made it seem like nothing had happened. Who and Why are sections again, with a photo pile between them and a photo pile before the criteria.

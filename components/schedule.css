@@ -10,11 +10,13 @@
 }
 
 .schedule-track {
+  --line: 312px;
   position: relative;
   min-width: 680px;
-  /* Headroom for a raised sticker and its card. overflow-x on the scroller
-     also clips the vertical axis, so the card has to live inside this box. */
-  height: 328px;
+  /* Headroom for a raised sticker and its card. The showcase sticker stands
+     higher than the school marks, and overflow-x on the scroller also clips
+     the vertical axis, so the card has to live inside this box. */
+  height: 420px;
 }
 
 /* Solid axis. Centered on the same y as the dots. */
@@ -22,7 +24,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 238px;
+  top: var(--line);
   height: 1px;
   margin-top: -0.5px;
   background: #0e0d0c;
@@ -31,7 +33,7 @@
 /* Month divider. Names alternate above and below so neighbours do not collide. */
 .schedule-mark {
   position: absolute;
-  top: 238px;
+  top: var(--line);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -72,7 +74,7 @@
 
 .schedule-dot {
   position: absolute;
-  top: 238px;
+  top: var(--line);
   z-index: 2;
   display: grid;
   place-items: center;
@@ -188,6 +190,16 @@
   height: 44px;
 }
 
+/* Showcase sticker stands above the school marks, balloons clear of the wordmark. */
+.schedule-sticker--celebrate {
+  width: 86px;
+  bottom: calc(50% + 92px);
+}
+
+.schedule-dot:has(.schedule-sticker--celebrate) .schedule-leader {
+  height: 96px;
+}
+
 .schedule-dot.is-past .schedule-sticker {
   filter: grayscale(1);
   opacity: 0.55;
@@ -199,6 +211,10 @@
 
 .schedule-dot:has(.schedule-sticker--soda) .schedule-tip {
   bottom: calc(100% + 86px);
+}
+
+.schedule-dot:has(.schedule-sticker--celebrate) .schedule-tip {
+  bottom: calc(100% + 186px);
 }
 
 .schedule-dot:focus-visible .schedule-dot-mark {
