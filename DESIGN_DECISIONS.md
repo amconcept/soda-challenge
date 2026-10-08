@@ -155,3 +155,21 @@ French and Spanish lines that said something different from the English were bro
 Still waiting on a word choice: the Spanish word for partner, the French word for twist, and “scalable” plus “informing your work” on the criteria cards.
 
 The choices are now in. Spanish “partner” is “aliado”: the circle reads “Hazte aliado,” and the bigger picture says “dos aliados” and “nuestros aliados.” French “a twist” is “un détour.” The French Fab Lab card says “évolutif” for scalable. The LCC cards use the supplied sentences about constraints nourishing the work in French and giving shape to the work in Spanish.
+
+### How it fits, the timeline, and who it is for
+
+How it fits keeps the co-curricular, class, or collaboration sentence. A last sentence was added: projects can build on work students are already doing for other school initiatives. The “not another club” line was left off, because the row already offers a co-curricular activity.
+
+The Timeline row now names what the four dates include: deadlines, showcases, and group meetups. The sentence about smaller shared moments stays.
+
+Who is it for keeps its one list of fields. “Engineering” is now “creative engineering,” and “media” sits after “digital and product design.” A second sentence listing design, media, and creative engineering was not added, because design and engineering were already in the list.
+
+French and Spanish for these three edits are machine drafts. French “présentations” and Spanish “muestras” stand in for showcases.
+
+### Timeline cells can carry bullets and bold
+
+A detail cell keeps its line breaks. When every line starts with a bullet character, the timeline shows a list. Words wrapped in asterisks, as in `*Discovery Experiments*`, are bold. The bold button in the spreadsheet does not come through the public sheet feed, so the asterisks are the mark that does.
+
+### A longer read under At a Glance
+
+Tried, then removed. Who and Why were put behind buttons under At a Glance. That made the page feel shorter, but pressing a button did not feel clear, and opening one section while the other stayed open made it seem like nothing had happened. Who and Why are sections again, with a photo pile between them and a photo pile before the criteria.

@@ -217,6 +217,19 @@
   letter-spacing: 0.01em;
 }
 
+.schedule-tip-list {
+  margin: 0;
+  padding: 0 0 0 1.05em;
+}
+
+.schedule-tip-list li + li {
+  margin-top: 0.2em;
+}
+
+.schedule-tip-list strong {
+  font-weight: 700;
+}
+
 .schedule-dot--start .schedule-tip {
   left: 0;
   transform: none;

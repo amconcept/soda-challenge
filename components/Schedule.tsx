@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { useLanguage } from "./LanguageProvider";
 import {
   DEFAULT_RULERS,
@@ -24,6 +24,49 @@ const DOT_COLORS = [
 
 const TICK =
   "repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 14px, currentColor 14px 18px, transparent 18px 22px)";
+
+/** *asterisks* in a sheet cell become bold. The rest stays text. */
+function richInline(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  const pattern = /\*{1,2}([^*\n]+)\*{1,2}/g;
+  let last = 0;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text))) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    parts.push(<strong key={match.index}>{match[1]}</strong>);
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
+/** Sheet detail: one paragraph, or a bullet list when every line starts with •. */
+function SheetDetail({ text }: { text: string }) {
+  const lines = text
+    .split(/\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const bullet = /^[•·]\s+/;
+  if (lines.length > 1 && lines.every((line) => bullet.test(line))) {
+    return (
+      <ul className="schedule-tip-list">
+        {lines.map((line, index) => (
+          <li key={index}>{richInline(line.replace(bullet, ""))}</li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <span>
+      {lines.map((line, index) => (
+        <span key={index}>
+          {index > 0 ? <br /> : null}
+          {richInline(line)}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 /** True once the calendar day is over in the viewer's timezone. Today stays in color. */
 function isPast(date: Date): boolean {
@@ -136,7 +179,7 @@ export default function Schedule() {
                 <span className="schedule-tip" id={`${tipId}-${event.id}`} role="tooltip">
                   <span className="schedule-tip-date">{when}</span>
                   <strong>{event.title}</strong>
-                  {event.detail ? <span>{event.detail}</span> : null}
+                  {event.detail ? <SheetDetail text={event.detail} /> : null}
                 </span>
               </button>
             );

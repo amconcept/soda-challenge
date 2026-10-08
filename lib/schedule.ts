@@ -14,6 +14,9 @@ import type { Locale } from "./copy";
  * Two or more schools on one date show the SOD+A sticker instead of a stack.
  * If kind is blank, a row with detail is a dot; a row with only a title is a ruler.
  * Dates: 2026-09-15, or a normal Sheets date cell.
+ * Detail: a line break is kept. A line that starts with • is a bullet.
+ * Wrap a word in *asterisks* to make it bold. The bold button in the sheet
+ * does not travel with the public feed, so the asterisks are the mark that does.
  *
  * 1. Share the file as “Anyone with the link” → Viewer.
  * 2. Paste the ID (the long string in the sheet URL) below.
