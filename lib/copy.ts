@@ -66,10 +66,10 @@ export const copy = {
       lead: "Share your process with students in other communities, remake and adapt each other's work, and build relationships through making.",
       fitTitle: "How it fits",
       // Projects can continue work a school is already doing. See DESIGN_DECISIONS.md.
-      fit: "Run SOD+A as a co-curricular activity, a class, or a collaboration with another organization. Your group chooses the format and can use the frameworks it already knows. Projects can build on work students are already doing for other school initiatives.",
+      fit: "Run SOD+A as a co-curricular activity, a class, or a collaboration with another organization. Your group chooses the format and can use the frameworks it already knows, such as IB. Projects can build on work students are already doing for other school initiatives.",
       timelineTitle: "Timeline",
-      // The four dates include deadlines, showcases, and group meetups. See DESIGN_DECISIONS.md.
-      timeline: "Four key dates between September and May, with deadlines, showcases, and group meetups. Smaller shared moments may happen in between.",
+      // Months only, so this line stays with the schedule sheet. See DESIGN_DECISIONS.md.
+      timeline: "Sign up in October. Launch in November. Discover until February, then act on a co-design project until the showcase at the end of April. Four to five check-ins along the way, with live global sessions recorded for every time zone.",
       whoTitle: "Who can join",
       who: "Students aged 14-18 working with a school, a makerspace, or another organization. No Fab Lab is needed. Any level of technology is welcome, from simple hand tools to laser cutters and code.",
       bringTitle: "Participating Schools & Labs",
@@ -77,7 +77,7 @@ export const copy = {
       bring: "Include a facilitator who runs the group, such as a teacher, coach, or mentor. Student access to computers, tools or fabrication machines, and craft supplies. A project students co-design to make an impact. A willingness to share your process, such as a file, a recipe, or a series of steps, so others can remake, learn from, and adapt your work. Investment of enough time to iterate, respond to feedback, and showcase your efforts.",
       providesTitle: "SOD+A provides",
       // Structure and dates for deliverables and feedback. See DESIGN_DECISIONS.md.
-      provides: "The structure facilitators need to get started, including prompts, criteria, best practices, and four key dates for deliverables and feedback. A global board for sharing, and regular group check-ins to compare notes and ask questions. No cost to join this pilot year.",
+      provides: "The structure facilitators need to get started, including prompts, criteria, best practices, and a shared schedule for deliverables and feedback. A global Miro board for sharing, and regular group check-ins to compare notes and ask questions. No cost to join this pilot year.",
     },
     schools: {
       kicker: "Participating schools & labs",
@@ -97,7 +97,7 @@ export const copy = {
         {
           title: "Act.",
           detail:
-            "Now you have new ideas and new skills. Put them to work with friends and your school. Work as a team to bring positive change to a community through design. Document it for the world to see.",
+            "Now you have new ideas and new skills. Put them to work with friends and your school. Co-design a tool, a space, an event, or a service for your community, with each person bringing what they do best. Document it for the world to see.",
         },
       ],
       // Closing line links the word criteria to the criteria section. See DESIGN_DECISIONS.md.
@@ -123,11 +123,11 @@ export const copy = {
       // Question mark removed. See DESIGN_DECISIONS.md.
       title: "Show us what you can do",
       intro:
-        "Partner institutions set the criteria. Meeting them leads to levels, achievements, and certificates as you experiment, document, and share.",
+        "Each partner sets its own criteria. Meet them to earn that partner's certificate. One certificate earns Bronze, more than one earns Silver, and every partner's certificate earns Gold.",
     },
     schedule: {
       kicker: "Schedule",
-      title: "September to May",
+      title: "October to April",
       intro: "The pilot year, marked on one line. Rest on a dot to read that date.",
       months: ["September", "November", "February", "May"],
     },
@@ -243,10 +243,10 @@ export const copy = {
       lead: "Partagez votre processus avec des élèves d'autres communautés, refaites et adaptez le travail les uns des autres, et tissez des liens en fabriquant.",
       fitTitle: "Comment ça s'intègre",
       // Machine draft, needs human review.
-      fit: "Menez SOD+A comme une activité cocurriculaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà. Les projets peuvent s'appuyer sur le travail que les élèves font déjà pour d'autres initiatives de l'école.",
+      fit: "Menez SOD+A comme une activité cocurriculaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà, comme l'IB. Les projets peuvent s'appuyer sur le travail que les élèves font déjà pour d'autres initiatives de l'école.",
       timelineTitle: "Calendrier",
-      // Machine draft, needs human review. "présentations" stands in for showcases.
-      timeline: "Quatre dates clés entre septembre et mai, avec des échéances, des présentations et des rencontres de groupe. De plus petits moments partagés peuvent avoir lieu entre les deux.",
+      // Machine draft, needs human review. "présentation" stands in for showcase.
+      timeline: "Inscrivez-vous en octobre. Lancez en novembre. Découvrez jusqu'en février, puis agissez sur un projet de co-conception jusqu'à la présentation de la fin d'avril. Quatre à cinq points d'étape en chemin, avec des séances mondiales en direct enregistrées pour chaque fuseau horaire.",
       whoTitle: "Qui peut participer",
       who: "Des élèves de 14 à 18 ans qui travaillent avec une école, un espace de fabrication, ou une autre organisation. Un Fab Lab n'est pas nécessaire. Tout niveau de technologie est le bienvenu, des outils à main simples aux découpeuses laser et au code.",
       bringTitle: "Écoles et labs participants",
@@ -254,7 +254,7 @@ export const copy = {
       bring: "Incluez un facilitateur qui anime le groupe, comme un enseignant, un coach ou un mentor. Un accès des élèves à des ordinateurs, des outils ou des machines de fabrication, et du matériel d'artisanat. Un projet que les élèves co-conçoivent pour avoir un impact. Une volonté de partager votre processus, comme un fichier, une recette ou une série d'étapes, pour que d'autres puissent refaire votre travail, en tirer des leçons et l'adapter. L'investissement du temps nécessaire pour itérer, répondre aux commentaires et présenter vos efforts.",
       providesTitle: "SOD+A fournit",
       // Machine draft, needs human review.
-      provides: "La structure dont les facilitateurs ont besoin pour commencer, y compris des consignes, des critères, des bonnes pratiques et quatre dates clés pour les livrables et les retours. Un tableau global pour partager, et des points réguliers en groupe pour comparer les notes et poser des questions. Aucun coût pour rejoindre cette année pilote.",
+      provides: "La structure dont les facilitateurs ont besoin pour commencer, y compris des consignes, des critères, des bonnes pratiques et un calendrier partagé pour les livrables et les retours. Un tableau Miro global pour partager, et des points réguliers en groupe pour comparer les notes et poser des questions. Aucun coût pour rejoindre cette année pilote.",
     },
     schools: {
       kicker: "Écoles et labs participants",
@@ -274,8 +274,9 @@ export const copy = {
         },
         {
           title: "Agissez.",
+          // Machine draft, needs human review.
           detail:
-            "Vous avez maintenant de nouvelles idées et de nouvelles compétences. Mettez-les au travail avec des amis et votre école. Travaillez en équipe pour apporter un changement positif à une communauté par le design. Documentez-le pour que le monde le voie.",
+            "Vous avez maintenant de nouvelles idées et de nouvelles compétences. Mettez-les au travail avec des amis et votre école. Co-concevez un outil, un espace, un événement ou un service pour votre communauté, chacun apportant ce qu'il fait de mieux. Documentez-le pour que le monde le voie.",
         },
       ],
       // Machine draft, needs human review.
@@ -300,12 +301,14 @@ export const copy = {
       kicker: "Critères du défi",
       // Machine draft, needs human review. Question mark and the space before it removed.
       title: "Montrez-nous ce que vous pouvez faire",
+      // Machine draft, needs human review.
       intro:
-        "Les institutions partenaires définissent les critères. Les remplir ouvre des niveaux, des accomplissements et des certificats, pendant que vous expérimentez, documentez et partagez.",
+        "Chaque partenaire fixe ses propres critères. Remplissez-les pour obtenir le certificat de ce partenaire. Un certificat donne le Bronze, plus d'un donne l'Argent, et les certificats de tous les partenaires donnent l'Or.",
     },
     schedule: {
       kicker: "Calendrier",
-      title: "De septembre à mai",
+      // Machine draft, needs human review.
+      title: "D'octobre à avril",
       intro: "L'année pilote, marquée sur une ligne. Restez sur un point pour lire cette date.",
       months: ["Septembre", "Novembre", "Février", "Mai"],
     },
@@ -422,10 +425,10 @@ export const copy = {
       lead: "Comparte tu proceso con estudiantes de otras comunidades, rehaz y adapta el trabajo de los demás, y construye relaciones haciendo.",
       fitTitle: "Cómo encaja",
       // Machine draft, needs human review.
-      fit: "Lleva SOD+A como una actividad cocurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce. Los proyectos pueden basarse en el trabajo que los estudiantes ya hacen para otras iniciativas de la escuela.",
+      fit: "Lleva SOD+A como una actividad cocurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce, como el IB. Los proyectos pueden basarse en el trabajo que los estudiantes ya hacen para otras iniciativas de la escuela.",
       timelineTitle: "Calendario",
-      // Machine draft, needs human review. "muestras" stands in for showcases.
-      timeline: "Cuatro fechas clave entre septiembre y mayo, con plazos, muestras y encuentros de grupo. Pueden ocurrir momentos compartidos más pequeños entre medias.",
+      // Machine draft, needs human review. "muestra" stands in for showcase.
+      timeline: "Inscríbete en octubre. Lanza en noviembre. Descubre hasta febrero, y luego actúa en un proyecto de co-diseño hasta la muestra de finales de abril. Cuatro o cinco encuentros en el camino, con sesiones globales en vivo grabadas para cada zona horaria.",
       whoTitle: "Quién puede unirse",
       who: "Estudiantes de 14 a 18 años que trabajan con una escuela, un espacio de fabricación u otra organización. No hace falta un Fab Lab. Cualquier nivel de tecnología es bienvenido, desde herramientas de mano sencillas hasta cortadoras láser y código.",
       bringTitle: "Escuelas y labs participantes",
@@ -433,7 +436,7 @@ export const copy = {
       bring: "Incluye a un facilitador que dirige el grupo, como un docente, un coach o un mentor. Acceso de los estudiantes a computadoras, herramientas o máquinas de fabricación, y materiales de manualidades. Un proyecto que los estudiantes co-diseñan para generar un impacto. La disposición a compartir tu proceso, como un archivo, una receta o una serie de pasos, para que otros puedan rehacer tu trabajo, aprender de él y adaptarlo. La inversión de tiempo suficiente para iterar, responder a los comentarios y mostrar tus esfuerzos.",
       providesTitle: "SOD+A aporta",
       // Machine draft, needs human review.
-      provides: "La estructura que las personas facilitadoras necesitan para empezar, incluidas consignas, criterios, buenas prácticas y cuatro fechas clave para entregas y comentarios. Un tablero global para compartir, y encuentros regulares del grupo para comparar notas y hacer preguntas. Sin costo para unirse este año piloto.",
+      provides: "La estructura que las personas facilitadoras necesitan para empezar, incluidas consignas, criterios, buenas prácticas y un calendario compartido para entregas y comentarios. Un tablero global de Miro para compartir, y encuentros regulares del grupo para comparar notas y hacer preguntas. Sin costo para unirse este año piloto.",
     },
     schools: {
       kicker: "Escuelas y labs participantes",
@@ -453,8 +456,9 @@ export const copy = {
         },
         {
           title: "Actúa.",
+          // Machine draft, needs human review.
           detail:
-            "Ahora tienes ideas nuevas y habilidades nuevas. Ponlas a trabajar con amigos y tu escuela. Trabaja en equipo para llevar un cambio positivo a una comunidad a través del diseño. Documéntalo para que el mundo lo vea.",
+            "Ahora tienes ideas nuevas y habilidades nuevas. Ponlas a trabajar con amigos y tu escuela. Co-diseña una herramienta, un espacio, un evento o un servicio para tu comunidad, y cada persona aporta lo que mejor sabe hacer. Documéntalo para que el mundo lo vea.",
         },
       ],
       // Machine draft, needs human review.
@@ -479,12 +483,14 @@ export const copy = {
       kicker: "Criterios del reto",
       // Machine draft, needs human review. Opening and closing question marks removed.
       title: "Muéstranos lo que puedes hacer",
+      // Machine draft, needs human review.
       intro:
-        "Las instituciones colaboradoras marcan los criterios. Cumplirlos abre niveles, logros y certificados mientras experimentas, documentas y compartes.",
+        "Cada aliado fija sus propios criterios. Cúmplelos para ganar el certificado de ese aliado. Un certificado da Bronce, más de uno da Plata, y los certificados de todos los aliados dan Oro.",
     },
     schedule: {
       kicker: "Calendario",
-      title: "De septiembre a mayo",
+      // Machine draft, needs human review.
+      title: "De octubre a abril",
       intro: "El año piloto, marcado en una línea. Descansa sobre un punto para leer esa fecha.",
       months: ["Septiembre", "Noviembre", "Febrero", "Mayo"],
     },
