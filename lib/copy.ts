@@ -65,9 +65,11 @@ export const copy = {
       leadTitle: "Learn across borders",
       lead: "Share your process with students in other communities, remake and adapt each other's work, and build relationships through making.",
       fitTitle: "How it fits",
-      fit: "Run SOD+A as a co-curricular activity, a class, or a collaboration with another organization. Your group chooses the format and can use the frameworks it already knows.",
+      // Projects can continue work a school is already doing. See DESIGN_DECISIONS.md.
+      fit: "Run SOD+A as a co-curricular activity, a class, or a collaboration with another organization. Your group chooses the format and can use the frameworks it already knows. Projects can build on work students are already doing for other school initiatives.",
       timelineTitle: "Timeline",
-      timeline: "Four key dates between September and May. Smaller shared moments may happen in between.",
+      // The four dates include deadlines, showcases, and group meetups. See DESIGN_DECISIONS.md.
+      timeline: "Four key dates between September and May, with deadlines, showcases, and group meetups. Smaller shared moments may happen in between.",
       whoTitle: "Who can join",
       who: "Students aged 14-18 working with a school, a makerspace, or another organization. No Fab Lab is needed. Any level of technology is welcome, from simple hand tools to laser cutters and code.",
       bringTitle: "Participating Schools & Labs",
@@ -106,7 +108,8 @@ export const copy = {
     who: {
       kicker: "Who is it for?",
       title: "Students who want to make things with others",
-      body: "SOD+A is for students aged 14-18 in schools, makerspaces, or Fab Labs interested in engineering, entrepreneurship, digital and product design, creative direction, project management, art and technology, or any field where ideas, initiative, collaboration, and community engagement matter.",
+      // Media and creative engineering named in the existing list. See DESIGN_DECISIONS.md.
+      body: "SOD+A is for students aged 14-18 in schools, makerspaces, or Fab Labs interested in creative engineering, entrepreneurship, digital and product design, media, creative direction, project management, art and technology, or any field where ideas, initiative, collaboration, and community engagement matter.",
     },
     why: {
       kicker: "Why?",
@@ -239,9 +242,11 @@ export const copy = {
       leadTitle: "Apprendre à travers les frontières",
       lead: "Partagez votre processus avec des élèves d'autres communautés, refaites et adaptez le travail les uns des autres, et tissez des liens en fabriquant.",
       fitTitle: "Comment ça s'intègre",
-      fit: "Menez SOD+A comme une activité cocurriculaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà.",
+      // Machine draft, needs human review.
+      fit: "Menez SOD+A comme une activité cocurriculaire, un cours, ou une collaboration avec une autre organisation. Votre groupe choisit le format et peut utiliser les cadres qu'il connaît déjà. Les projets peuvent s'appuyer sur le travail que les élèves font déjà pour d'autres initiatives de l'école.",
       timelineTitle: "Calendrier",
-      timeline: "Quatre dates clés entre septembre et mai. De plus petits moments partagés peuvent avoir lieu entre les deux.",
+      // Machine draft, needs human review. "présentations" stands in for showcases.
+      timeline: "Quatre dates clés entre septembre et mai, avec des échéances, des présentations et des rencontres de groupe. De plus petits moments partagés peuvent avoir lieu entre les deux.",
       whoTitle: "Qui peut participer",
       who: "Des élèves de 14 à 18 ans qui travaillent avec une école, un espace de fabrication, ou une autre organisation. Un Fab Lab n'est pas nécessaire. Tout niveau de technologie est le bienvenu, des outils à main simples aux découpeuses laser et au code.",
       bringTitle: "Écoles et labs participants",
@@ -281,7 +286,8 @@ export const copy = {
     who: {
       kicker: "Pour qui ?",
       title: "Des élèves qui veulent créer avec d'autres",
-      body: "SOD+A s'adresse aux élèves de 14 à 18 ans, dans les écoles, makerspaces ou Fab Labs, intéressés par l'ingénierie, l'entrepreneuriat, le design numérique et de produit, la direction créative, la gestion de projet, l'art et la technologie, ou tout domaine où comptent les idées, l'initiative, la collaboration et l'engagement communautaire.",
+      // Machine draft, needs human review. "ingénierie créative" and "médias" are the new words.
+      body: "SOD+A s'adresse aux élèves de 14 à 18 ans, dans les écoles, makerspaces ou Fab Labs, intéressés par l'ingénierie créative, l'entrepreneuriat, le design numérique et de produit, les médias, la direction créative, la gestion de projet, l'art et la technologie, ou tout domaine où comptent les idées, l'initiative, la collaboration et l'engagement communautaire.",
     },
     why: {
       kicker: "Pourquoi ?",
@@ -415,9 +421,11 @@ export const copy = {
       leadTitle: "Aprender a través de las fronteras",
       lead: "Comparte tu proceso con estudiantes de otras comunidades, rehaz y adapta el trabajo de los demás, y construye relaciones haciendo.",
       fitTitle: "Cómo encaja",
-      fit: "Lleva SOD+A como una actividad cocurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce.",
+      // Machine draft, needs human review.
+      fit: "Lleva SOD+A como una actividad cocurricular, una clase, o una colaboración con otra organización. Tu grupo elige el formato y puede usar los marcos que ya conoce. Los proyectos pueden basarse en el trabajo que los estudiantes ya hacen para otras iniciativas de la escuela.",
       timelineTitle: "Calendario",
-      timeline: "Cuatro fechas clave entre septiembre y mayo. Pueden ocurrir momentos compartidos más pequeños entre medias.",
+      // Machine draft, needs human review. "muestras" stands in for showcases.
+      timeline: "Cuatro fechas clave entre septiembre y mayo, con plazos, muestras y encuentros de grupo. Pueden ocurrir momentos compartidos más pequeños entre medias.",
       whoTitle: "Quién puede unirse",
       who: "Estudiantes de 14 a 18 años que trabajan con una escuela, un espacio de fabricación u otra organización. No hace falta un Fab Lab. Cualquier nivel de tecnología es bienvenido, desde herramientas de mano sencillas hasta cortadoras láser y código.",
       bringTitle: "Escuelas y labs participantes",
@@ -457,7 +465,8 @@ export const copy = {
     who: {
       kicker: "¿Para quién es?",
       title: "Estudiantes que quieren crear con otras personas",
-      body: "SOD+A es para estudiantes de 14 a 18 años en escuelas, makerspaces o Fab Labs interesados en ingeniería, emprendimiento, diseño digital y de producto, dirección creativa, gestión de proyectos, arte y tecnología, o cualquier campo en el que importen las ideas, la iniciativa, la colaboración y el compromiso con la comunidad.",
+      // Machine draft, needs human review. "ingeniería creativa" and "medios" are the new words.
+      body: "SOD+A es para estudiantes de 14 a 18 años en escuelas, makerspaces o Fab Labs interesados en ingeniería creativa, emprendimiento, diseño digital y de producto, medios, dirección creativa, gestión de proyectos, arte y tecnología, o cualquier campo en el que importen las ideas, la iniciativa, la colaboración y el compromiso con la comunidad.",
     },
     why: {
       kicker: "¿Por qué?",
