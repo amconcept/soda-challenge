@@ -177,3 +177,17 @@ When a timeline row says “showcase” in the title, the detail, or the kind, t
 ### A longer read under At a Glance
 
 Tried, then removed. Who and Why were put behind buttons under At a Glance. That made the page feel shorter, but pressing a button did not feel clear, and opening one section while the other stayed open made it seem like nothing had happened. Who and Why are sections again, with a photo pile between them and a photo pile before the criteria.
+
+## 2026-10-08
+
+The Timeline row now follows the school email and the schedule sheet. It names October, November, February, and the end of April, and it stays at the month so the sentence cannot drift from a date in the sheet. French and Spanish are machine drafts.
+
+SOD+A provides now says a shared schedule, and names the global Miro board. The four key dates are no longer in that sentence. French and Spanish are machine drafts.
+
+How it fits now says a group can use the frameworks it already knows, such as IB. French and Spanish are machine drafts.
+
+The Act beat now asks students to co-design a tool, a space, an event, or a service, with each person bringing what they do best. French and Spanish are machine drafts.
+
+Challenge criteria now explains the certificates. One partner certificate earns Bronze, more than one earns Silver, and every partner's certificate earns Gold. The SOD+A Basics card is unchanged, pending a decision. French and Spanish are machine drafts. Spanish uses aliado.
+
+The schedule heading is now October to April. French and Spanish are machine drafts.
