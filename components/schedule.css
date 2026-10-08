@@ -226,6 +226,8 @@
   margin-top: 0.2em;
 }
 
+/* The timeline face only looks bold at 700. Weight 500, used on the title, draws as regular. */
+.schedule-tip strong.schedule-tip-em,
 .schedule-tip-list strong {
   font-weight: 700;
 }
