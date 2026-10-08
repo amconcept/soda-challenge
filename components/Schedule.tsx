@@ -169,12 +169,20 @@ export default function Schedule() {
                 }}
               >
                 <span className="schedule-dot-mark" aria-hidden="true" />
-                {event.school ? (
+                {event.showcase || event.school ? (
                   <>
                     <span className="schedule-leader" aria-hidden="true" />
                     <img
-                      className={`schedule-sticker${event.school.id === "soda" ? " schedule-sticker--soda" : ""}`}
-                      src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${event.school.file}`}
+                      className={`schedule-sticker${
+                        event.showcase
+                          ? " schedule-sticker--celebrate"
+                          : event.school?.id === "soda"
+                            ? " schedule-sticker--soda"
+                            : ""
+                      }`}
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${
+                        event.showcase ? "soda-celebrate.png" : event.school?.file
+                      }`}
                       alt=""
                     />
                   </>

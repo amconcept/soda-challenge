@@ -12,6 +12,9 @@ import type { Locale } from "./copy";
  * school (optional): bcn, ocad, or lcc. If the column is blank, a mention in the
  * title or detail still shows that school’s sticker (for example “Fab Lab BCN”).
  * Two or more schools on one date show the SOD+A sticker instead of a stack.
+ * A title, detail, or kind that contains “showcase” draws a diamond and the
+ * celebrate sticker (balloons). That sticker replaces a school sticker on the
+ * same date.
  * If kind is blank, a row with detail is a dot; a row with only a title is a ruler.
  * Dates: 2026-09-15, or a normal Sheets date cell.
  * Detail: a line break is kept. A line that starts with • is a bullet.
@@ -103,7 +106,7 @@ export type ScheduleItem = {
   title: string;
   detail: string;
   school: ScheduleSchool | null;
-  /** Title or detail contains “showcase”. Drawn as a diamond. */
+  /** Title, detail, or kind contains “showcase”. Diamond on the line, celebrate sticker above. */
   showcase: boolean;
 };
 
