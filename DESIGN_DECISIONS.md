@@ -168,7 +168,7 @@ French and Spanish for these three edits are machine drafts. French “présenta
 
 ### Timeline cells can carry bullets and bold
 
-A detail cell keeps its line breaks. When every line starts with a bullet character, the timeline shows a list. Words wrapped in asterisks, as in `*Discovery Experiments*`, are bold. The bold button in the spreadsheet does not come through the public sheet feed, so the asterisks are the mark that does.
+A detail cell keeps its line breaks. When every line starts with a bullet character, including a cell with only one line, the timeline shows a list. Words wrapped in asterisks, in a title or a detail, as in `*Discovery Experiments*`, are bold. The timeline typeface draws a medium weight as regular, so those marked words use a true bold. The bold button in the spreadsheet does not come through the public sheet feed, so the asterisks are the mark that does.
 
 ### A longer read under At a Glance
 

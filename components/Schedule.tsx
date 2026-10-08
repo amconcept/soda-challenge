@@ -33,7 +33,14 @@ function richInline(text: string): ReactNode[] {
   let match: RegExpExecArray | null;
   while ((match = pattern.exec(text))) {
     if (match.index > last) parts.push(text.slice(last, match.index));
-    parts.push(<strong key={match.index}>{match[1]}</strong>);
+    const word = match[1].trim();
+    if (word) {
+      parts.push(
+        <strong className="schedule-tip-em" key={match.index}>
+          {word}
+        </strong>,
+      );
+    }
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
@@ -47,7 +54,7 @@ function SheetDetail({ text }: { text: string }) {
     .map((line) => line.trim())
     .filter(Boolean);
   const bullet = /^[•·]\s+/;
-  if (lines.length > 1 && lines.every((line) => bullet.test(line))) {
+  if (lines.length > 0 && lines.every((line) => bullet.test(line))) {
     return (
       <ul className="schedule-tip-list">
         {lines.map((line, index) => (
@@ -178,7 +185,7 @@ export default function Schedule() {
                 </span>
                 <span className="schedule-tip" id={`${tipId}-${event.id}`} role="tooltip">
                   <span className="schedule-tip-date">{when}</span>
-                  <strong>{event.title}</strong>
+                  <strong>{richInline(event.title)}</strong>
                   {event.detail ? <SheetDetail text={event.detail} /> : null}
                 </span>
               </button>
