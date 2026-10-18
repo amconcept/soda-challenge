@@ -191,3 +191,7 @@ The Act beat now asks students to co-design a tool, a space, an event, or a serv
 Challenge criteria now explains the certificates. One partner certificate earns Bronze, more than one earns Silver, and every partner's certificate earns Gold. The SOD+A Basics card is unchanged, pending a decision. French and Spanish are machine drafts. Spanish uses aliado.
 
 The schedule heading is now October to April. French and Spanish are machine drafts.
+
+## 2026-10-17
+
+The participating schools band under What is SOD+A is removed. It showed one school crest, Lower Canada College, beside a join circle, and a single school did not make the challenge look active. The partner logos in the hero stay, under “In collaboration with.” The How to Participate column still named Participating Schools & Labs stays, because that column says what a school brings, not who has already joined. The down-arrow remains and still goes to the challenge. The crest image file is kept.
