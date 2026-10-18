@@ -1,18 +1,13 @@
 "use client";
 
 import { useLayoutEffect, useState } from "react";
-import Link from "next/link";
 import Bubbles from "./Bubbles";
 import Ask from "./Ask";
 import Schedule from "./Schedule";
 import SiteActions from "./SiteActions";
 import StudentBoards from "./StudentBoards";
 import { useLanguage } from "./LanguageProvider";
-import { JOIN_PATH } from "@/lib/contact";
 import "./brief.css";
-
-const partnerAsset = (file: string) =>
-  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
 const criteriaAsset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/criteria/${file}?v=8`;
@@ -83,31 +78,7 @@ export default function Brief({ images }: { images: string[] }) {
         <p>{t.soda.body}</p>
         <p className="brief-quote">{t.soda.quote}</p>
 
-        {/* Schools stay under What is SOD+A. The challenge follows this block. See DESIGN_DECISIONS.md. */}
-        <div className="schools" id="schools">
-          <p className="schools-line">
-            <span className="schools-rule" aria-hidden="true" />
-            <span>{t.schools.kicker}</span>
-            <span className="schools-rule" aria-hidden="true" />
-          </p>
-          <div className="schools-row">
-            <a
-              className="school-sticker"
-              href="https://www.lcc.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Lower Canada College"
-            >
-              <img src={partnerAsset("lcc-crest.png")} alt="Lower Canada College" />
-            </a>
-            <Link href={JOIN_PATH} className="school-invite" aria-label={t.join}>
-              <span>{t.joinLine1}</span>
-              <span>{t.joinLine2}</span>
-            </Link>
-          </div>
-          <div className="schools-rule schools-rule--end" aria-hidden="true" />
-        </div>
-
+        {/* The school crest band is gone. The arrow still leads to the challenge. See DESIGN_DECISIONS.md. */}
         <a href="#challenge" className="scroll-cue" aria-label={t.scrollMore}>
           <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             <polyline points="2 2 11 12 20 2" />
