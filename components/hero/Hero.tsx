@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import HeroHook from "./HeroHook";
 import HeroLockup from "./HeroLockup";
+import StoryLayer, { WatchStoryButton } from "@/components/story/StoryLayer";
 import { cssVars } from "./cssVars";
 import { useLanguage } from "@/components/LanguageProvider";
 import "./hero.css";
@@ -10,35 +11,16 @@ import "./hero.css";
 const asset = (file: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/partners/${file}`;
 
-/* Full draw, then a hold. The wordmark fades and the draw replays in place. */
-const LOOP_MS = 20_000;
-const FADE_AT_MS = 18_000;
-
 export default function Hero() {
   const { t, locale } = useLanguage();
+  const heroRef = useRef<HTMLElement>(null);
   // Wait until after hydration so the sequence starts once —
   // not during SSR paint and again when React attaches.
   const [ready, setReady] = useState(false);
-  const [cycle, setCycle] = useState(0);
-  const [fading, setFading] = useState(false);
 
   useLayoutEffect(() => {
     setReady(true);
   }, []);
-
-  useEffect(() => {
-    if (!ready) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const fadeId = window.setTimeout(() => setFading(true), FADE_AT_MS);
-    const loopId = window.setTimeout(() => {
-      setFading(false);
-      setCycle((n) => n + 1);
-    }, LOOP_MS);
-    return () => {
-      window.clearTimeout(fadeId);
-      window.clearTimeout(loopId);
-    };
-  }, [ready, cycle]);
 
   function discover() {
     document.getElementById("intro")?.scrollIntoView({ behavior: "smooth" });
@@ -46,37 +28,35 @@ export default function Hero() {
 
   return (
     <section
-      className={
-        ready
-          ? `hero hero--ready${cycle > 0 ? " hero--rest" : ""}${fading ? " hero--fade" : ""}`
-          : "hero"
-      }
-      data-show-schematic="true"
+      ref={heroRef}
+      className={ready ? "hero hero--ready hero--balloons" : "hero hero--balloons"}
+      data-show-schematic="false"
       data-show-partners="true"
+      data-mode="intro"
       aria-label={`${t.hook.join(" ... ")}. SOD+A CHALLENGE`}
     >
-      <p className="hero-season" style={{ opacity: 0 }}>
+      <StoryLayer heroRef={heroRef} ready={ready}>
+      <p className="hero-season">
         {t.season}
       </p>
 
-      {/* Partners stay mounted. Only the tagline and lockup replay. */}
       <div className="hero-cycle">
-        {/* Restart the draw when the language changes, so the new words draw in. */}
-        <HeroHook key={`${cycle}-${locale}`} />
+        {/* Restart the hook when the language changes, so the new words draw in. */}
+        <HeroHook key={locale} />
         <div className="hero-play">
         <div className="hero-stage">
-          <div className="hero-mark" key={cycle}>
+          <div className="hero-mark">
             <HeroLockup />
           </div>
         </div>
 
-        <div className="hero-partners">
+        <div className="hero-partners" data-reveal="3">
           <div className="hero-partners-label" style={{ opacity: 0 }}>
             <div className="hero-rule" />
             <span>{t.collaboration}</span>
             <div className="hero-rule" />
           </div>
-          <div className="hero-stickers">
+          <div className="hero-stickers" data-reveal-target="3">
             <a
               className="sticker sticker-link float-c"
               href="https://fablabbcn.org/"
@@ -146,14 +126,18 @@ export default function Hero() {
           </div>
         </div>
 
-        <button type="button" className="hero-discover" style={{ opacity: 0 }} onClick={discover}>
-          {t.discover}
-          <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-            <polyline points="1 1 9 11 17 1" />
-          </svg>
-        </button>
+        <div className="hero-actions">
+          <button type="button" className="hero-discover" onClick={discover}>
+            {t.discover}
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+              <polyline points="1 1 9 11 17 1" />
+            </svg>
+          </button>
+          <WatchStoryButton />
+        </div>
         </div>
       </div>
+      </StoryLayer>
     </section>
   );
 }
