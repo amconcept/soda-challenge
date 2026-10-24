@@ -128,6 +128,13 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
+  max-height: calc(100vh - 84px);
+  overflow-y: auto;
+  /* The list is long enough to cross the wordmark. A card keeps the names readable. */
+  background: #fff;
+  padding: 10px;
+  border-radius: 22px;
+  box-shadow: 0 0 0 1px rgb(14 13 12 / 12%);
 }
 
 .site-nav-panel[hidden] {

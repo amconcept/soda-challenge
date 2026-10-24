@@ -10,6 +10,7 @@ import {
 } from "react";
 import { createStory, type Story } from "@/components/story/engine/index.js";
 import { useLanguage } from "@/components/LanguageProvider";
+import { playBalloonPop, unlockStorySound } from "@/components/story/storySound";
 
 type StoryApi = {
   preload: () => void;
@@ -85,6 +86,7 @@ export default function StoryLayer({
         }
         if (name === "pop" && detail.i != null) {
           parts[detail.i]?.classList.add("is-in", ...(detail.instant ? ["instant"] : []));
+          if (!detail.instant) playBalloonPop(detail.i);
         }
         if (name === "chapter" && detail.chapter) {
           hero.dataset.chapter = detail.chapter;
@@ -123,6 +125,7 @@ export default function StoryLayer({
       story.preload();
     };
     apiRef.current.play = () => {
+      unlockStorySound();
       const small = window.matchMedia("(max-width: 700px) and (orientation: portrait)");
       if (small.matches && hero.requestFullscreen) {
         hero.requestFullscreen().then(() => {
@@ -161,12 +164,14 @@ export default function StoryLayer({
       }
     }
     document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", unlockStorySound);
     pauseRef.current?.addEventListener("click", togglePause);
 
     return () => {
       window.clearTimeout(startId);
       window.cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", unlockStorySound);
       pauseRef.current?.removeEventListener("click", togglePause);
       story.destroy();
       storyRef.current = null;
@@ -215,6 +220,18 @@ export function WatchStoryButton() {
       onFocus={() => api?.preload()}
       onClick={() => api?.play()}
     >
+      {/* Black pen line around a white pill. See DESIGN_DECISIONS.md. */}
+      <svg className="hero-watch-ring" viewBox="0 0 300 86" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          vectorEffect="non-scaling-stroke"
+          d="M48 16C28 9 14 24 16 42C18 58 30 70 52 66C96 74 148 58 196 68C236 76 274 62 276 42C278 22 258 8 220 14C168 6 92 20 48 16Z"
+          fill="none"
+          stroke="#0e0d0c"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
       {t.watchStory}
     </button>
   );

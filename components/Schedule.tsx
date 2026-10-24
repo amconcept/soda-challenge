@@ -123,9 +123,7 @@ export default function Schedule() {
   const dots = items.filter((item) => item.kind === "dot");
 
   return (
-    <section id="schedule" className="brief-section">
-      <p className="brief-kicker">{t.schedule.kicker}</p>
-      <h2>{t.schedule.title}</h2>
+    <>
       <p>{t.schedule.intro}</p>
 
       <div className="schedule-scroll">
@@ -201,6 +199,6 @@ export default function Schedule() {
           })}
         </div>
       </div>
-    </section>
+    </>
   );
 }

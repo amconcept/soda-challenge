@@ -545,6 +545,29 @@
   background: color-mix(in srgb, var(--hero-line) 6%, transparent);
 }
 
+/* The animation button. White fill, black hand-drawn edge. */
+.hero-watch {
+  position: relative;
+  background: #fff;
+  border-color: transparent;
+  overflow: visible;
+}
+
+.hero-watch .hero-watch-ring {
+  position: absolute;
+  inset: -7px -9px;
+  width: calc(100% + 18px);
+  height: calc(100% + 14px);
+  pointer-events: none;
+  overflow: visible;
+  animation: none;
+}
+
+.hero-actions .hero-watch:hover,
+.hero-actions .hero-watch:focus-visible {
+  background: #fff;
+}
+
 .hero-discover svg {
   animation: nudge 1.9s ease-in-out calc((8.5s + var(--hero-seq)) / var(--hero-speed)) infinite;
 }

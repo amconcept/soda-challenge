@@ -203,3 +203,13 @@ Under Discover, a short loop shows a Rando Calrissian draw. The words are the De
 ## 2026-10-24 story film
 
 The hero plays the story film on a transparent canvas. On load, the hook line still draws, then four balloons pop the site's own logo into place: S.o., then d+a., then CHALLENGE, then the partner row. The logo keeps floating. It does not fade and replay. The construction lines stay hidden. The film's ink is the hero's own black. A Watch the story button beside Discover plays the full film, about 74 seconds, and it ends in the same balloons. The closing line "From discovery to action" stays off, because it would sit on the hook and on the partner row. The fourth balloon reveals the partner logos that are on the site today. The press-fit blocks are not in this lockup. French and Spanish for Watch the story, Skip, Pause, and Play are machine drafts.
+
+## 2026-10-24 sections open on request
+
+What is SOD+A and What is the challenge stay open. How to Participate, Who is it for, Why, and Challenge criteria show their headings, and the rest opens when someone asks. Opening one closes the others. Each of those four keeps the photo pile that used to sit under it, so the pictures open with the words. The pile under the challenge stays visible, because that section stays open. The schedule stays open, and so does the bigger picture under it. The criteria link in the challenge opens the criteria section.
+
+The button beside Discover now says Watch the animation. Its edge is a green hand-drawn line, the same green as the button in the film, so it reads as something to press. Discover keeps the thin black outline. French and Spanish for the new label are machine drafts.
+
+The four closed sections now show the section title, such as How to Participate, with the plus beside those words. The longer heading, such as Connecting Students to the Challenge, appears when the section opens. The animation button is a white pill with a black hand-drawn outline. Each logo balloon plays a short pop, and the confetti that falls with it plays a crackle. Both are made in the browser. A browser stays quiet until the first click, so the opening balloons are silent unless someone has already clicked. Pressing Watch the animation unlocks the sound for the balloons at the end of the film. People who skip animation hear neither.
+
+Schedule and The bigger picture fold the same way. Opening one section closes the others. The schedule's photo pile opens with it. The menu lists every section, in page order, and choosing a closed one opens it. Join the challenge stays at the bottom of the menu.

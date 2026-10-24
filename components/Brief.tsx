@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 import Bubbles from "./Bubbles";
 import Ask from "./Ask";
 import Schedule from "./Schedule";
@@ -53,6 +53,53 @@ const CRITERIA_CARDS = [
   },
 ];
 
+type FoldId = "participate" | "who" | "why" | "criteria" | "schedule" | "ask";
+
+const FOLDS: FoldId[] = ["participate", "who", "why", "criteria", "schedule", "ask"];
+
+/**
+ * One middle section. The row shows the section title, such as How to Participate.
+ * The longer heading sits inside, with the copy and its photo pile.
+ * Opening one closes the others. See DESIGN_DECISIONS.md.
+ */
+function Fold({
+  id,
+  kicker,
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+  id: FoldId;
+  kicker: string;
+  title?: string;
+  open: boolean;
+  onToggle: (id: FoldId) => void;
+  children: ReactNode;
+}) {
+  const panelId = `${id}-panel`;
+  return (
+    <section id={id} className={open ? "brief-section brief-fold is-open" : "brief-section brief-fold"}>
+      <h2>
+        <button
+          type="button"
+          className="brief-fold-toggle"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={() => onToggle(id)}
+        >
+          <span className="brief-fold-label">{kicker}</span>
+          <span className="brief-fold-mark" aria-hidden="true" />
+        </button>
+      </h2>
+      <div id={panelId} className="brief-fold-panel" hidden={!open}>
+        {title ? <p className="brief-fold-title">{title}</p> : null}
+        {children}
+      </div>
+    </section>
+  );
+}
+
 /** New order each visit. Positions and sizes stay in the sticker layout. */
 function shufflePhotos(images: string[]) {
   const next = [...images];
@@ -66,10 +113,42 @@ function shufflePhotos(images: string[]) {
 export default function Brief({ images }: { images: string[] }) {
   const { t, locale } = useLanguage();
   const [photos, setPhotos] = useState(images);
+  const [openFold, setOpenFold] = useState<FoldId | null>(null);
 
   useLayoutEffect(() => {
     setPhotos(shufflePhotos(images));
   }, [images]);
+
+  function toggleFold(id: FoldId) {
+    setOpenFold((current) => (current === id ? null : id));
+  }
+
+  // A link to a closed section, from the page or the menu, opens that section.
+  useEffect(() => {
+    function openFrom(id: string) {
+      if (FOLDS.includes(id as FoldId)) setOpenFold(id as FoldId);
+    }
+    function fromHash() {
+      openFrom(window.location.hash.slice(1));
+    }
+    function fromMenu(event: Event) {
+      const id = (event as CustomEvent<string>).detail;
+      if (id) openFrom(id);
+    }
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    window.addEventListener("soda-fold", fromMenu);
+    return () => {
+      window.removeEventListener("hashchange", fromHash);
+      window.removeEventListener("soda-fold", fromMenu);
+    };
+  }, []);
+
+  // Photo piles measure themselves on scroll. Opening a fold is not a scroll.
+  useEffect(() => {
+    if (!openFold) return;
+    window.dispatchEvent(new Event("resize"));
+  }, [openFold]);
 
   return (
     <article className="brief">
@@ -109,17 +188,22 @@ export default function Brief({ images }: { images: string[] }) {
         {/* "criteria" links to the criteria section. See DESIGN_DECISIONS.md. */}
         <p>
           {t.challenge.closeBefore}
-          <a className="challenge-close-link" href="#criteria">{t.challenge.closeLink}</a>
+          <a className="challenge-close-link" href="#criteria" onClick={() => setOpenFold("criteria")}>{t.challenge.closeLink}</a>
           {t.challenge.closeAfter}
         </p>
       </section>
 
+      {/* This pile stays out. The challenge above it stays open. */}
       <Bubbles images={photos} variant="c" slot={1} />
 
-      <section className="brief-section">
+      <Fold
+        id="participate"
+        kicker={t.involve.kicker}
+        title={t.involve.title}
+        open={openFold === "participate"}
+        onToggle={toggleFold}
+      >
         <div className="involve">
-          <p className="brief-kicker">{t.involve.kicker}</p>
-          <h2>{t.involve.title}</h2>
           <p>{t.involve.pilot}</p>
           <p>{t.involve.body}</p>
           {/* Last year's boards, one row, opened on request. See DESIGN_DECISIONS.md. */}
@@ -156,30 +240,40 @@ export default function Brief({ images }: { images: string[] }) {
             </div>
           </div>
         </div>
-      </section>
+        {/* The pile that followed this section. It opens with the copy. */}
+        <Bubbles images={photos} variant="a" slot={2} />
+      </Fold>
 
-      <Bubbles images={photos} variant="a" slot={2} />
-
-      <section id="who" className="brief-section">
-        <p className="brief-kicker">{t.who.kicker}</p>
-        <h2>{t.who.title}</h2>
+      <Fold
+        id="who"
+        kicker={t.who.kicker}
+        title={t.who.title}
+        open={openFold === "who"}
+        onToggle={toggleFold}
+      >
         <p>{t.who.body}</p>
-      </section>
+        <Bubbles images={photos} variant="b" slot={3} />
+      </Fold>
 
-      <Bubbles images={photos} variant="b" slot={3} />
-
-      <section className="brief-section">
-        <p className="brief-kicker">{t.why.kicker}</p>
-        <h2>{t.why.title}</h2>
+      <Fold
+        id="why"
+        kicker={t.why.kicker}
+        title={t.why.title}
+        open={openFold === "why"}
+        onToggle={toggleFold}
+      >
         <p>{t.why.p1}</p>
         <p>{t.why.p2}</p>
-      </section>
+        <Bubbles images={photos} variant="c" slot={4} />
+      </Fold>
 
-      <Bubbles images={photos} variant="c" slot={4} />
-
-      <section id="criteria" className="brief-section">
-        <p className="brief-kicker">{t.criteria.kicker}</p>
-        <h2>{t.criteria.title}</h2>
+      <Fold
+        id="criteria"
+        kicker={t.criteria.kicker}
+        title={t.criteria.title}
+        open={openFold === "criteria"}
+        onToggle={toggleFold}
+      >
         <p>{t.criteria.intro}</p>
         <div className="criteria-grid">
           {CRITERIA_CARDS.map((card) => (
@@ -193,15 +287,28 @@ export default function Brief({ images }: { images: string[] }) {
             </article>
           ))}
         </div>
-      </section>
+        <Bubbles images={photos} variant="a" slot={5} />
+      </Fold>
 
-      <Bubbles images={photos} variant="a" slot={5} />
+      <Fold
+        id="schedule"
+        kicker={t.schedule.kicker}
+        title={t.schedule.title}
+        open={openFold === "schedule"}
+        onToggle={toggleFold}
+      >
+        <Schedule />
+        <Bubbles images={photos} variant="b" slot={6} />
+      </Fold>
 
-      <Schedule />
-
-      <Bubbles images={photos} variant="b" slot={6} />
-
-      <Ask />
+      <Fold
+        id="ask"
+        kicker={t.ask.kicker}
+        open={openFold === "ask"}
+        onToggle={toggleFold}
+      >
+        <Ask />
+      </Fold>
 
       <SiteActions placement="footer" />
     </article>
