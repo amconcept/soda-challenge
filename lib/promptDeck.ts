@@ -1,8 +1,8 @@
 /**
  * Design challenge deck from Rando Calrissian.
- * A draw locks to one grouping, then takes one line from each column.
- * Blank cells in the activity are left out.
- * Spanish and French lines are machine drafts and need a native read.
+ * Includes and Explores lock to one grouping, physical or digital.
+ * Uses is the "that has been" list. It is not a named tool, and it is not
+ * locked to a grouping. Spanish and French lines are machine drafts.
  * See DESIGN_DECISIONS.md.
  */
 import type { Locale } from "@/lib/copy";
@@ -23,12 +23,6 @@ const DECK = {
       line("fabric scraps", "retazos de tela", "chutes de tissu"),
       line("packaging", "embalaje", "emballage"),
     ],
-    uses: [
-      line("a cutting machine", "una máquina de corte", "une machine de découpe"),
-      line("a printer", "una impresora", "une imprimante"),
-      line("embroidery", "bordado", "broderie"),
-      line("sewing", "costura", "couture"),
-    ],
     explores: [
       line("balance", "equilibrio", "équilibre"),
       line("support", "soporte", "appui"),
@@ -48,16 +42,6 @@ const DECK = {
       line("data", "datos", "données"),
       line("air", "aire", "air"),
     ],
-    uses: [
-      line("a scanner", "un escáner", "un scanner"),
-      line("LEDs and microcontroller", "LEDs y un microcontrolador", "des LED et un microcontrôleur"),
-      line("a sound sensor", "un sensor de sonido", "un capteur de son"),
-      line("a servo motor", "un servomotor", "un servomoteur"),
-      line("a capacitive sensor", "un sensor capacitivo", "un capteur capacitif"),
-      line("projection", "proyección", "projection"),
-      line("vectors", "vectores", "vecteurs"),
-      line("3D modelling", "modelado 3D", "modélisation 3D"),
-    ],
     explores: [
       line("opposites", "opuestos", "contraires"),
       line("chance", "azar", "hasard"),
@@ -69,14 +53,29 @@ const DECK = {
   },
 } as const;
 
+/** Completes "make something that...." Not a machine name. */
+const BEEN = [
+  line("cut", "cortado", "coupé"),
+  line("printed", "impreso", "imprimé"),
+  line("scanned", "escaneado", "scanné"),
+  line("coded", "codificado", "codé"),
+  line("modeled", "modelado", "modelé"),
+  line("projected", "proyectado", "projeté"),
+  line("layered", "en capas", "en couches"),
+  line("embroidered", "bordado", "brodé"),
+  line("folded", "doblado", "plié"),
+  line("cooked", "cocinado", "cuit"),
+  line("animated", "animado", "animé"),
+] as const;
+
 type Group = keyof typeof DECK;
-type Column = "includes" | "uses" | "explores";
+type MaterialColumn = "includes" | "explores";
 
 export type SlotPick = { group: Group; index: number };
 
 export type PromptPick = {
   includes: SlotPick;
-  uses: SlotPick;
+  uses: number;
   explores: SlotPick;
 };
 
@@ -86,38 +85,45 @@ function pickIndex(length: number): number {
   return Math.floor(Math.random() * length);
 }
 
-function slot(group: Group, column: Column): SlotPick {
+function slot(group: Group, column: MaterialColumn): SlotPick {
   return { group, index: pickIndex(DECK[group][column].length) };
 }
 
-/** One finished draw. Every column comes from the same grouping. */
+/** One finished draw. Includes and Explores share a grouping. Uses is open. */
 export function drawHand(): PromptPick {
   const group = GROUPS[pickIndex(GROUPS.length)];
   return {
     includes: slot(group, "includes"),
-    uses: slot(group, "uses"),
+    uses: pickIndex(BEEN.length),
     explores: slot(group, "explores"),
   };
 }
 
 /** A flicker frame. Columns are mixed so the landing is not given away. */
 export function scrambleHand(): PromptPick {
-  const mixed = (column: Column): SlotPick => slot(GROUPS[pickIndex(GROUPS.length)], column);
+  const mixed = (column: MaterialColumn): SlotPick =>
+    slot(GROUPS[pickIndex(GROUPS.length)], column);
   return {
     includes: mixed("includes"),
-    uses: mixed("uses"),
+    uses: pickIndex(BEEN.length),
     explores: mixed("explores"),
   };
 }
 
 /** The words for a draw in the visitor's language. */
-export function phrase(pick: SlotPick, column: Column, locale: Locale): string {
-  return DECK[pick.group][column][pick.index][locale];
+export function phrase(
+  pick: SlotPick | number,
+  column: "includes" | "uses" | "explores",
+  locale: Locale,
+): string {
+  if (column === "uses") return BEEN[pick as number][locale];
+  const slotPick = pick as SlotPick;
+  return DECK[slotPick.group][column][slotPick.index][locale];
 }
 
-/** Shown when the visitor has asked the browser to skip animation. Cardboard, a printer, support. */
+/** Shown when the visitor has asked the browser to skip animation. Cardboard, printed, support. */
 export const STILL_HAND: PromptPick = {
   includes: { group: "physical", index: 1 },
-  uses: { group: "physical", index: 1 },
+  uses: 1,
   explores: { group: "physical", index: 1 },
 };

@@ -212,8 +212,9 @@
 /* The draw sits under the first photo pile, on the page wash. No card. Black type. See DESIGN_DECISIONS.md. */
 .prompt-draw {
   width: min(46rem, 88vw);
-  margin: 0 auto;
-  padding: clamp(2rem, 5vh, 3.2rem) 0 clamp(2.4rem, 6vh, 3.6rem);
+  /* The pile's box is taller than the discs. Pull the words up into that empty band. See DESIGN_DECISIONS.md. */
+  margin: calc(min(46rem, 88vw) * -0.3) auto 0;
+  padding: 0 0 clamp(2.4rem, 6vh, 3.6rem);
   color: #0e0d0c;
   text-align: center;
 }
@@ -259,6 +260,7 @@
 
 @media (max-width: 700px) {
   .prompt-draw {
+    margin-top: calc(min(22rem, 92vw) * -0.12);
     text-align: left;
   }
 
