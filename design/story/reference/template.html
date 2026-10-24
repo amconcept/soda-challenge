@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOD+A Story reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+<!--
+  SOD+A STORY — reference page
+  Open this file in a browser. It mocks the site hero closely enough to judge the
+  hand-off: the logo-first balloon reveal on load, "Watch the story", and the film
+  ending in the same reveal, popping into the site's own lockup, which then floats.
+
+  It is a reference, not production code. Cursor rebuilds the page side in the
+  site's React hero; the engine itself (components/story/engine/) ships as is.
+  Bundled engine below = components/story/engine/*.js, built with esbuild.
+-->
+<style>
+  :root {
+    --page-bg: hsl(160 18% 90%);   /* the site's ScrollHue wash, animated below */
+    --hero-line: #0e0d0c;
+    --stroke-weight: 5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--page-bg); color: var(--hero-line); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  button { font: inherit; color: inherit; }
+
+  /* ---------- hero (simplified from components/hero/hero.css) ---------- */
+  .hero { position: relative; width: 100%; height: 92vh; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6vh; padding: 2vh 0 4vh; overflow: hidden; }
+  .hero-play { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1 1 auto; min-height: 0; width: 100%; height: 100%; gap: inherit; transition: opacity .4s ease; }
+  .hero-stage { position: relative; flex: 1 1 auto; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+  .hero-mark { width: min(70%, 920px); height: 100%; }
+  /* width and height 100% + the viewBox: the lockup letterboxes inside the stage instead of overflowing it */
+  .hero-lockup { width: 100%; height: 100%; overflow: visible; color: var(--hero-line); display: block; }
+  .hero-lockup .strokes { stroke-width: var(--stroke-weight); }
+
+  /* ---------- the reveal hand-off ----------
+     Hidden parts keep their layout, so the balloons can aim at real positions.
+     A pop shows the part with the same overshoot test 04 used (0.8 → 1, back-out, 0.3s),
+     then the site's own float loops take over. Nothing floats before it has landed. */
+  [data-reveal]:not(.is-in) { opacity: 0; }
+  [data-reveal].is-in { animation: revealPop .3s cubic-bezier(.34, 1.56, .64, 1) both; transform-box: fill-box; transform-origin: center; }
+  [data-reveal].is-in.instant { animation: none; }
+  @keyframes revealPop { from { opacity: 0; transform: scale(.8); } 27% { opacity: 1; } to { opacity: 1; transform: scale(1); } }
+
+  .float-box, .dot, .glyph { transform-box: fill-box; transform-origin: center; }
+  .is-in .float-a { animation: floatA var(--float-dur, 6.4s) ease-in-out .3s infinite; }
+  .is-in .float-b { animation: floatB var(--float-dur, 7.6s) ease-in-out .3s infinite; }
+  .is-in .float-c { animation: floatC var(--float-dur, 6.9s) ease-in-out .3s infinite; }
+  .is-in .float-d { animation: floatD var(--float-dur, 6.2s) ease-in-out .3s infinite; }
+  @keyframes floatA { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+  @keyframes floatB { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(14px) rotate(.4deg); } }
+  @keyframes floatC { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+  @keyframes floatD { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(8px) rotate(-.3deg); } }
+
+  /* partner row: the fourth balloon's pop lands the stickers, staggered like the site */
+  .hero-partners { --sticker-size: clamp(68px, 12.5vh, 104px); display: flex; flex-direction: column; align-items: center; gap: 5vh; margin-top: -4vh; z-index: 2; }
+  .hero-partners[data-reveal]:not(.is-in) { opacity: 1; }
+  .hero-partners-label { display: flex; align-items: center; gap: 14px; opacity: 0; }
+  .hero-rule { width: 46px; height: 1px; background: currentColor; opacity: .45; }
+  .hero-partners-label span { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; opacity: .7; }
+  .hero-stickers { display: flex; align-items: center; justify-content: center; gap: clamp(24px, 4vw, 52px); flex-wrap: wrap; min-height: var(--sticker-size); }
+  .sticker { height: var(--sticker-size); width: auto; opacity: 0; }
+  .sticker img { height: 100%; width: auto; display: block; }
+  .sticker-invite { width: clamp(52px, 9.5vh, 72px); height: clamp(52px, 9.5vh, 72px); border-radius: 50%; background: #f7f2ea; box-shadow: inset 0 0 0 2px #111; color: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: clamp(6px, .9vh, 8px); letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; padding: 8px; }
+  .hero-partners.is-in { animation: none; }
+  .hero-partners.is-in .hero-partners-label { animation: fadeIn .6s ease-out both; }
+  .hero-partners.is-in .sticker { animation: stickerIn .8s cubic-bezier(.2, 1.3, .4, 1) var(--d, 0s) both, floatC var(--float-dur, 7s) ease-in-out calc(var(--d, 0s) + .8s) infinite; }
+  .hero-partners.is-in.instant .hero-partners-label, .hero-partners.is-in.instant .sticker { animation: none; opacity: 1; }
+  @keyframes stickerIn { from { opacity: 0; transform: translateY(26px) scale(.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ---------- buttons: same pill recipe as DISCOVER ---------- */
+  .hero-actions { display: flex; gap: 14px; margin-top: 5vh; opacity: 0; pointer-events: none; transition: opacity .8s ease-out; z-index: 2; flex-wrap: wrap; justify-content: center; }
+  .hero[data-mode="rest"] .hero-actions { opacity: 1; pointer-events: auto; }
+  .pill { display: inline-flex; align-items: center; gap: 12px; background: transparent; border: 1px solid currentColor; font-size: 12px; letter-spacing: .26em; text-transform: uppercase; padding: 13px 26px 13px 28px; border-radius: 999px; cursor: pointer; }
+  .pill:hover, .pill:focus-visible { outline: none; background: color-mix(in srgb, var(--hero-line) 6%, transparent); }
+  .pill svg { flex: none; }
+
+  /* ---------- the story layer ---------- */
+  .story-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+  .hero[data-mode="story"] .hero-play { opacity: 0; pointer-events: none; }
+  .hero[data-mode="story"][data-chapter="reveal"] .hero-play { opacity: 1; }
+  /* bottom right, out of the way of the action, where people look for Skip on any video */
+  .story-controls { position: absolute; right: 18px; bottom: 18px; z-index: 4; display: flex; justify-content: flex-end; gap: 10px; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  .hero[data-mode="story"] .story-controls { opacity: 1; pointer-events: auto; }
+  .story-controls .pill { padding: 9px 18px; font-size: 11px; letter-spacing: .18em; background: color-mix(in srgb, var(--page-bg) 70%, transparent); }
+  .story-progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; transform-origin: left; transform: scaleX(var(--p, 0)); background: var(--hero-line); opacity: .35; z-index: 4; }
+  .hero:not([data-mode="story"]) .story-progress { opacity: 0; }
+
+  /* Fullscreen on phones: the film is 16:9, so it gets the whole screen. */
+  .hero:fullscreen { height: 100vh; background: var(--page-bg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal].is-in, .is-in .float-a, .is-in .float-b, .is-in .float-c, .is-in .float-d, .hero-partners.is-in .sticker, .hero-partners.is-in .hero-partners-label { animation: none !important; opacity: 1; }
+  }
+
+  /* ---------- review panel (reference only, not for the site) ---------- */
+  .review { position: fixed; left: 16px; bottom: 16px; z-index: 20; font-size: 11px; }
+  .review > summary { list-style: none; cursor: pointer; border: 1px solid currentColor; border-radius: 999px; padding: 8px 14px; letter-spacing: .14em; text-transform: uppercase; background: color-mix(in srgb, var(--page-bg) 80%, white); }
+  .review > summary::-webkit-details-marker { display: none; }
+  .review .box { position: absolute; left: 0; bottom: 44px; width: min(360px, calc(100vw - 32px)); background: #fbfaf7; color: #141414; border: 1px solid #141414; border-radius: 14px; padding: 14px; display: grid; gap: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .12); }
+  .review .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .review label { display: grid; grid-template-columns: 70px 1fr 44px; align-items: center; gap: 8px; }
+  .review input[type=range] { width: 100%; accent-color: #141414; }
+  .review .mini { border: 1px solid #141414; border-radius: 999px; background: none; padding: 5px 10px; cursor: pointer; font-size: 11px; }
+  .review .mini[aria-pressed="true"] { background: #141414; color: #fbfaf7; }
+  .review .scrub { position: relative; }
+  .review .beats { position: relative; height: 16px; }
+  .review .beats span { position: absolute; transform: translateX(-2px); font-size: 9px; opacity: .65; white-space: nowrap; }
+  .review .note { opacity: .7; line-height: 1.4; }
+  .review output { text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero" data-mode="intro" aria-label="SOD+A CHALLENGE">
+  <canvas class="story-canvas" id="story" aria-hidden="true"></canvas>
+
+  <div class="hero-play">
+    <div class="hero-stage">
+      <div class="hero-mark">%%LOCKUP%%</div>
+    </div>
+
+    <div class="hero-partners" data-reveal="3">
+      <div class="hero-partners-label"><div class="hero-rule"></div><span>In Collaboration With</span><div class="hero-rule"></div></div>
+      <div class="hero-stickers" data-reveal-target="3">
+        <span class="sticker" style="--d: 0s; --float-dur: 6.4s"><img src="%%S17%%" alt="Fab Lab Barcelona"></span>
+        <span class="sticker" style="--d: .2s; --float-dur: 7.2s"><img src="%%S16%%" alt="OCAD University"></span>
+        <span class="sticker" style="--d: .3s; --float-dur: 6.9s"><img src="%%S18%%" alt="LCC Fab Lab"></span>
+        <span class="sticker sticker-invite" style="--d: .4s; --float-dur: 7.8s"><span>Become a</span><span>Partner</span></span>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <button type="button" class="pill" id="watch">
+        Watch the story
+        <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1.5 1.5 L10.5 7 L1.5 12.5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="pill" id="discover">
+        Discover
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><polyline points="1 1 9 11 17 1"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="story-controls" role="group" aria-label="Story">
+    <button type="button" class="pill" id="pause" aria-pressed="false">Pause</button>
+    <button type="button" class="pill" id="skip">Skip</button>
+  </div>
+  <div class="story-progress" id="progress"></div>
+</section>
+
+<details class="review" id="review">
+  <summary>Review</summary>
+  <div class="box">
+    <div class="row">
+      <button class="mini" id="r-reveal" type="button">Replay logo reveal</button>
+      <button class="mini" id="r-story" type="button">Play story</button>
+      <button class="mini" id="r-pause" type="button">Pause</button>
+    </div>
+    <div class="scrub">
+      <input type="range" id="r-scrub" min="0" max="1000" value="0" aria-label="Scrub">
+      <div class="beats" id="r-beats"></div>
+    </div>
+    <div class="row">
+      <button class="mini" id="r-tag" type="button" aria-pressed="false">Closing line</button>
+      <button class="mini" id="r-wash" type="button" aria-pressed="true">Live page wash</button>
+    </div>
+    <label>wobble <input type="range" id="r-wob" min="0" max="4" step=".1" value="1.4"><output id="r-wob-v">1.4</output></label>
+    <label>weight <input type="range" id="r-wt" min="2" max="8" step=".1" value="4.5"><output id="r-wt-v">4.5</output></label>
+    <label>speed <input type="range" id="r-spd" min=".25" max="2" step=".05" value="1"><output id="r-spd-v">1×</output></label>
+    <div class="row">fps
+      <button class="mini" data-fps="12" type="button" aria-pressed="true">12</button>
+      <button class="mini" data-fps="24" type="button" aria-pressed="false">24</button>
+      <button class="mini" data-fps="60" type="button" aria-pressed="false">60</button>
+    </div>
+    <p class="note" style="margin:0">Space pauses, Esc skips. Closing line writes "From discovery to action" under CHALLENGE before the partners land; it is off by default on the site.</p>
+  </div>
+</details>
+
+<script>
+/* ===== engine: components/story/engine (bundled) ===== */
+%%ENGINE%%
+</script>
+<script>
+(() => {
+  /* ---------- the site's page wash (components/ScrollHue.tsx, idle cycle only) ---------- */
+  const STOPS = [{ t: 0, h: 160, s: 18, l: 90 }, { t: .34, h: 50, s: 42, l: 90 }, { t: .64, h: 22, s: 46, l: 90 }, { t: 1, h: 338, s: 32, l: 91 }];
+  const lerp = (a, b, t) => a + (b - a) * t, lerpHue = (a, b, t) => (a + (((b - a + 540) % 360) - 180) * t + 360) % 360;
+  function colorAt(p) { let i = 0; while (i < STOPS.length - 2 && p > STOPS[i + 1].t) i++; const a = STOPS[i], b = STOPS[i + 1], u = (p - a.t) / (b.t - a.t || 1); return `hsl(${lerpHue(a.h, b.h, u).toFixed(1)} ${lerp(a.s, b.s, u).toFixed(1)}% ${lerp(a.l, b.l, u).toFixed(1)}%)`; }
+  let wash = true; const t0 = performance.now(), root = document.documentElement;
+  (function paint(now) { const c = (((now - t0) / 20000) % 1), p = c < .5 ? c * 2 : 2 - c * 2; const col = wash ? colorAt(p) : '#ffffff'; root.style.setProperty('--page-bg', col); requestAnimationFrame(paint); })(t0);
+
+  /* ---------- wiring: what the site's Hero component will do ---------- */
+  const hero = document.getElementById('hero'), canvas = document.getElementById('story');
+  const parts = [0, 1, 2, 3].map(i => hero.querySelector(`[data-reveal="${i}"]`));
+  const aim = [0, 1, 2].map(i => parts[i]).concat([hero.querySelector('[data-reveal-target="3"]')]);
+  const css = name => getComputedStyle(root).getPropertyValue(name).trim();
+  let tagline = null;
+
+  const story = SodaStory.createStory(canvas, {
+    ink: () => css('--hero-line') || '#0e0d0c',
+    paper: () => css('--page-bg') || '#ffffff',          // knockouts match the live wash
+    tagline: () => tagline,
+    targets: () => { const c = canvas.getBoundingClientRect(); return aim.map(el => { const r = el.getBoundingClientRect(); return { x: r.left - c.left, y: r.top - c.top, width: r.width, height: r.height }; }); },
+    onCue(name, d) {
+      if (name === 'reset') parts.forEach(p => p.classList.remove('is-in', 'instant'));
+      if (name === 'pop') parts[d.i].classList.add('is-in', ...(d.instant ? ['instant'] : []));
+      if (name === 'chapter') hero.dataset.chapter = d.chapter;
+      if (name === 'state') {
+        if (d.state === 'story' || d.state === 'loading') hero.dataset.mode = 'story';
+        if (d.state === 'done') { hero.dataset.mode = 'rest'; exitFullscreen(); }
+        if (d.state === 'reveal' && hero.dataset.mode !== 'story') hero.dataset.mode = 'intro';
+      }
+      if (name === 'done') { parts.forEach(p => p.classList.add('is-in')); hero.dataset.mode = 'rest'; }
+    },
+  });
+
+  // Phones in portrait: the film is 16:9, so give it the whole screen while it plays.
+  const small = matchMedia('(max-width: 700px) and (orientation: portrait)');
+  async function enterFullscreen() { if (!small.matches || !hero.requestFullscreen) return; try { await hero.requestFullscreen(); await screen.orientation?.lock?.('landscape'); } catch (e) { /* not supported: plays inline */ } }
+  function exitFullscreen() { if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); }
+
+  document.getElementById('watch').addEventListener('pointerenter', () => story.preload(), { once: true });
+  document.getElementById('watch').addEventListener('click', () => { enterFullscreen(); story.playStory(); });
+  document.getElementById('skip').addEventListener('click', () => story.skip());
+  const pauseBtn = document.getElementById('pause');
+  pauseBtn.addEventListener('click', () => { story.paused ? story.resume() : story.pause(); pauseBtn.textContent = story.paused ? 'Play' : 'Pause'; pauseBtn.setAttribute('aria-pressed', String(story.paused)); });
+  document.getElementById('discover').addEventListener('click', () => window.scrollTo({ top: innerHeight, behavior: 'smooth' }));
+  document.addEventListener('keydown', e => {
+    if (hero.dataset.mode !== 'story' || e.target.closest('input')) return;
+    if (e.key === 'Escape') story.skip();
+    if (e.code === 'Space') { e.preventDefault(); pauseBtn.click(); }
+  });
+
+  /* ---------- progress line ---------- */
+  const prog = document.getElementById('progress');
+  (function p() { if (story.duration) prog.style.setProperty('--p', (story.time / story.duration).toFixed(4)); requestAnimationFrame(p); })();
+
+  /* ---------- page load: logo first ---------- */
+  const go = () => story.playReveal({ firstPop: 1.6 });
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(go));
+
+  /* ---------- review panel ---------- */
+  const $ = id => document.getElementById(id), CFG = SodaStory.CFG, scrub = $('r-scrub');
+  $('r-reveal').onclick = () => { hero.dataset.mode = 'intro'; story.playReveal({ firstPop: 1.6 }); };
+  $('r-story').onclick = () => story.playStory().then(beats);
+  $('r-pause').onclick = () => { story.paused ? story.resume() : story.pause(); };
+  $('r-tag').onclick = e => { tagline = tagline ? null : { text: 'From discovery to action' }; e.target.setAttribute('aria-pressed', String(!!tagline)); };
+  $('r-wash').onclick = e => { wash = !wash; e.target.setAttribute('aria-pressed', String(wash)); };
+  [['r-wob', 'wobble', v => v.toFixed(1)], ['r-wt', 'weight', v => v.toFixed(1)], ['r-spd', 'speed', v => v + '×']].forEach(([id, k, f]) => {
+    $(id).addEventListener('input', e => { CFG[k] = +e.target.value; $(id + '-v').textContent = f(CFG[k]); story.redraw(); });
+  });
+  document.querySelectorAll('[data-fps]').forEach(b => b.onclick = () => { CFG.fps = +b.dataset.fps; document.querySelectorAll('[data-fps]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+  scrub.addEventListener('input', () => { story.pause(); story.seek(scrub.value / 1000 * story.duration); });
+  (function sync() { if (document.activeElement !== scrub && story.duration) scrub.value = Math.round(story.time / story.duration * 1000); requestAnimationFrame(sync); })();
+  function beats() { const el = $('r-beats'); el.innerHTML = ''; story.chapters.forEach(c => { const s = document.createElement('span'); s.textContent = c.name; s.style.left = (c.t / story.duration * 100) + '%'; el.appendChild(s); }); }
+  window.__story = story;
+})();
+</script>
+</body>
+</html>

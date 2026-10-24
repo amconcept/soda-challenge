@@ -1,0 +1,23 @@
+---
+description: SOD+A story film and balloon reveal in the hero
+globs: ["**/hero/**", "**/Hero*", "**/story/**"]
+alwaysApply: false
+---
+
+# SOD+A story + balloon reveal
+
+Spec: `design/story/STORY_SPEC.md`. Reference: `design/story/SODA Story.reference.html`
+(open in a browser, Review panel bottom left). Read both before touching hero or story code.
+
+## Non-negotiables
+- `components/story/engine/` ships as is. Do not rewrite, reformat or "convert to TS".
+  Chapter files are verified pixel identical to the approved animatics.
+- The canvas never draws the logo. `HeroLockup.tsx` path data stays verbatim; only regroup
+  it into `data-reveal` parts 0 to 3.
+- Canvas stays transparent. Pass `paper: () => --page-bg` and `ink: () => --hero-line`.
+- Drive reveal state through refs (classList, dataset) from `onCue`. No React state that
+  re-renders the hero.
+- Nothing floats before its pop lands.
+- Visible copy goes in `lib/copy.ts` (en, es, fr). No colons or long dashes in visible copy.
+  Mark es/fr as machine drafts.
+- Log every choice not in the spec in `DESIGN_DECISIONS.md`.

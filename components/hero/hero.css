@@ -641,6 +641,208 @@
   }
 }
 
+/* Balloon reveal and the story film. The string-in draw stays in the file and is turned off here.
+   See DESIGN_DECISIONS.md. */
+.hero--balloons .hero-mark {
+  animation: none;
+  transform: none;
+}
+
+.hero--balloons .stroke-draw,
+.hero--balloons .glyph,
+.hero--balloons .dot {
+  stroke-dashoffset: 0;
+  fill-opacity: 1;
+  animation: none;
+}
+
+.hero--balloons .float-box.float-a,
+.hero--balloons .float-box.float-b,
+.hero--balloons .float-box.float-c,
+.hero--balloons .float-box.float-d,
+.hero--balloons .glyph.float-a,
+.hero--balloons .glyph.float-b,
+.hero--balloons .glyph.float-c,
+.hero--balloons .glyph.float-d,
+.hero--balloons .dot.float-b,
+.hero--balloons .dot.float-c,
+.hero--balloons .dot.float-d {
+  animation: none;
+}
+
+.hero--balloons [data-reveal]:not(.is-in) {
+  opacity: 0;
+}
+
+.hero--balloons [data-reveal].is-in {
+  animation: revealPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hero--balloons [data-reveal].is-in.instant {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes revealPop {
+  from { opacity: 0; transform: scale(0.8); }
+  27% { opacity: 1; }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.hero--balloons .is-in .float-a { animation: floatA var(--float-dur, 6.4s) ease-in-out 0.3s infinite; }
+.hero--balloons .is-in .float-b { animation: floatB var(--float-dur, 7.6s) ease-in-out 0.3s infinite; }
+.hero--balloons .is-in .float-c { animation: floatC var(--float-dur, 6.9s) ease-in-out 0.3s infinite; }
+.hero--balloons .is-in .float-d { animation: floatD var(--float-dur, 6.2s) ease-in-out 0.3s infinite; }
+
+.hero--balloons .hero-partners[data-reveal]:not(.is-in) {
+  opacity: 1;
+}
+
+.hero--balloons .hero-partners-label,
+.hero--balloons .sticker {
+  animation: none;
+  opacity: 0;
+}
+
+.hero--balloons .hero-partners.is-in {
+  animation: none;
+}
+
+.hero--balloons .hero-partners.is-in .hero-partners-label {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+.hero--balloons .hero-partners.is-in .sticker:nth-child(1) { --d: 0s; }
+.hero--balloons .hero-partners.is-in .sticker:nth-child(2) { --d: 0.2s; }
+.hero--balloons .hero-partners.is-in .sticker:nth-child(3) { --d: 0.3s; }
+.hero--balloons .hero-partners.is-in .sticker:nth-child(4) { --d: 0.4s; }
+
+.hero--balloons .hero-partners.is-in .sticker.float-a,
+.hero--balloons .hero-partners.is-in .sticker.float-b,
+.hero--balloons .hero-partners.is-in .sticker.float-c {
+  animation-duration: 0.8s, var(--float-dur, 7s);
+  animation-timing-function: cubic-bezier(0.2, 1.3, 0.4, 1), ease-in-out;
+  animation-delay: var(--d, 0s), calc(var(--d, 0s) + 0.8s);
+  animation-fill-mode: both, none;
+  animation-iteration-count: 1, infinite;
+}
+
+.hero--balloons .hero-partners.is-in .sticker.float-a { animation-name: stickerIn, floatA; }
+.hero--balloons .hero-partners.is-in .sticker.float-b { animation-name: stickerIn, floatB; }
+.hero--balloons .hero-partners.is-in .sticker.float-c { animation-name: stickerIn, floatC; }
+
+.hero--balloons .hero-partners.is-in.instant .hero-partners-label,
+.hero--balloons .hero-partners.is-in.instant .sticker {
+  animation: none;
+  opacity: 1;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 5vh;
+  z-index: 2;
+}
+
+.hero--balloons .hero-season,
+.hero--balloons .hero-actions {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero--balloons .hero-actions .hero-discover {
+  margin-top: 0;
+  animation: none;
+  opacity: 1;
+}
+
+.hero--balloons[data-mode="rest"] .hero-season,
+.hero--balloons[data-mode="rest"] .hero-actions {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.8s ease-out;
+}
+
+.story-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero--balloons[data-mode="story"] .hero-play,
+.hero--balloons[data-mode="story"] .hero-hook,
+.hero--balloons[data-mode="story"] .hero-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero--balloons[data-mode="story"][data-chapter="reveal"] .hero-play,
+.hero--balloons[data-mode="story"][data-chapter="reveal"] .hero-hook {
+  opacity: 1;
+}
+
+.story-controls {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero--balloons[data-mode="story"] .story-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.story-controls .story-pill {
+  margin-top: 0;
+  padding: 9px 18px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  background: color-mix(in srgb, var(--page-bg, #dfe9e6) 70%, transparent);
+  opacity: 1;
+  animation: none;
+}
+
+.story-controls [aria-pressed="false"] .story-when-paused,
+.story-controls [aria-pressed="true"] .story-when-playing {
+  display: none;
+}
+
+.story-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  background: var(--hero-line);
+  opacity: 0.35;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero--balloons:not([data-mode="story"]) .story-progress {
+  opacity: 0;
+}
+
+.hero:fullscreen {
+  height: 100vh;
+  background: var(--page-bg, #dfe9e6);
+}
+
 @media (max-width: 640px) {
   .hero {
     padding-top: 2vh;

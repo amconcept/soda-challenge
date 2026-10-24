@@ -2,7 +2,8 @@ import { cssVars } from "./cssVars";
 
 /**
  * One SVG lockup (viewBox 300 110 1330 870). Path data matches
- * design/assets/SODA_logo_source.svg; timings match design/SPEC.md.
+ * design/assets/SODA_logo_source.svg. Balloon parts match
+ * design/story/reference/lockup-reveal.svg. See DESIGN_DECISIONS.md.
  */
 export default function HeroLockup() {
   return (
@@ -14,6 +15,8 @@ export default function HeroLockup() {
       role="img"
     >
       <title id="hero-title">SOD+A CHALLENGE</title>
+      {/* S.o. pops first. Path data is unchanged. See DESIGN_DECISIONS.md. */}
+      <g data-reveal="0">
       <g className="strokes" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         {/* S — 4 arcs, 0.85s each, 0.06s stagger from t=0.15 */}
         <g
@@ -86,7 +89,40 @@ export default function HeroLockup() {
             d="M743.66,533.1c-40.58,0-73.59-33.01-73.59-73.59s33.01-73.59,73.59-73.59,73.59,33.01,73.59,73.59-33.01,73.59-73.59,73.59Z"
           />
         </g>
+        <g fill="currentColor" strokeWidth="2" fillOpacity={0}>
+          <circle
+            pathLength="1"
+            cx="614.55"
+            cy="560.03"
+            r="15.87"
+            className="dot float-c"
+            style={cssVars({
+              "--delay": "2.9s",
+              "--fill-delay": "3.2s",
+              "--float-dur": "5.4s",
+              "--float-delay": "6.29s",
+            })}
+          />
+          <circle
+            pathLength="1"
+            cx="865.45"
+            cy="560.03"
+            r="15.87"
+            className="dot float-b"
+            style={cssVars({
+              "--delay": "2.98s",
+              "--fill-delay": "3.28s",
+              "--float-dur": "6.2s",
+              "--float-delay": "6.31s",
+            })}
+          />
+        </g>
+      </g>
+      </g>
 
+      {/* d+a. pops second. */}
+      <g data-reveal="1">
+      <g className="strokes" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         {/* D — 8 strokes from t=1.35 */}
         <g
           className="float-box float-c"
@@ -195,35 +231,7 @@ export default function HeroLockup() {
             d="M1396.87,575.51c-15.97,7.7-33.88,12.01-52.8,12.01-67.26,0-121.78-54.52-121.78-121.78s54.52-121.78,121.78-121.78,121.78,54.52,121.78,121.78l.66,35.6"
           />
         </g>
-
-        {/* Separator dots */}
         <g fill="currentColor" strokeWidth="2" fillOpacity={0}>
-          <circle
-            pathLength="1"
-            cx="614.55"
-            cy="560.03"
-            r="15.87"
-            className="dot float-c"
-            style={cssVars({
-              "--delay": "2.9s",
-              "--fill-delay": "3.2s",
-              "--float-dur": "5.4s",
-              "--float-delay": "6.29s",
-            })}
-          />
-          <circle
-            pathLength="1"
-            cx="865.45"
-            cy="560.03"
-            r="15.87"
-            className="dot float-b"
-            style={cssVars({
-              "--delay": "2.98s",
-              "--fill-delay": "3.28s",
-              "--float-dur": "6.2s",
-              "--float-delay": "6.31s",
-            })}
-          />
           <circle
             pathLength="1"
             cx="1515.24"
@@ -238,7 +246,11 @@ export default function HeroLockup() {
             })}
           />
         </g>
+      </g>
+      </g>
 
+      {/* CHALLENGE pops third. */}
+      <g data-reveal="2">
         {/* CHALLENGE wordmark — 9 glyphs, 0.6s draw + 0.45s fill, 0.07s stagger from t=3.50 */}
         <g fill="currentColor" strokeWidth="1.6" fillOpacity={0}>
           <path
@@ -341,7 +353,9 @@ export default function HeroLockup() {
             d="M1346,770.66v-128.94c0-1.73,1.16-2.89,2.89-2.89h69.47c1.73,0,2.89,1.15,2.89,2.89v21.17c0,1.73-1.16,2.89-2.89,2.89h-41.95v26.37h39.45c1.73,0,2.89,1.15,2.89,2.89v21.17c0,1.73-1.16,2.89-2.89,2.89h-39.45v27.52h41.76c1.73,0,3.08,1.15,3.08,2.89v21.17c0,1.73-1.35,2.89-3.08,2.89h-69.28c-1.73,0-2.89-1.16-2.89-2.89Z"
           />
         </g>
+      </g>
 
+      <g className="strokes" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         {/* CAD construction layer — dashed radii, dash-dot axes, 29px centre marks.
             Axes wipe on first; SOD+A strokes follow (--hero-guide). Invisible
             rects give each clip group a real bounding box (bare lines have none). */}
