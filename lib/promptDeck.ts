@@ -63,6 +63,7 @@ const BEEN = [
   line("projected", "proyectado", "projeté"),
   line("layered", "en capas", "en couches"),
   line("embroidered", "bordado", "brodé"),
+  line("soldered", "soldado", "soudé"),
   line("folded", "doblado", "plié"),
   line("cooked", "cocinado", "cuit"),
   line("animated", "animado", "animé"),
