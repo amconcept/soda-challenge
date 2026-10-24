@@ -5,6 +5,7 @@ import Bubbles from "./Bubbles";
 import Ask from "./Ask";
 import Schedule from "./Schedule";
 import SiteActions from "./SiteActions";
+import PromptDraw from "./PromptDraw";
 import StudentBoards from "./StudentBoards";
 import { useLanguage } from "./LanguageProvider";
 import "./brief.css";
@@ -88,6 +89,9 @@ export default function Brief({ images }: { images: string[] }) {
 
       {/* A photo pile between each section. Slots pick different photos. See DESIGN_DECISIONS.md. */}
       <Bubbles images={photos} variant="b" slot={0} />
+
+      {/* The draw sits under the first photo pile. See DESIGN_DECISIONS.md. */}
+      <PromptDraw />
 
       <section id="challenge" className="brief-section">
         <p className="brief-kicker">{t.challenge.kicker}</p>
