@@ -294,8 +294,10 @@
   margin-top: clamp(4.5rem, 10vh, 7rem);
 }
 
-/* How to Participate is its own section now, so the section padding is the gap. */
-.brief-section > .involve:first-child {
+/* How to Participate is its own section now, so the section padding is the gap.
+   Inside a fold, the heading already supplies that gap. */
+.brief-section > .involve:first-child,
+.brief-fold-panel .involve {
   margin-top: 0;
 }
 
@@ -588,5 +590,116 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Middle sections stay as headings until someone opens one.
+   A plus becomes a minus. Opening one closes the others. See DESIGN_DECISIONS.md. */
+.brief-fold {
+  padding-top: 1.2vh;
+  padding-bottom: 0.2vh;
+}
+
+.brief-fold h2 {
+  max-width: none;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: normal;
+  line-height: inherit;
+}
+
+.brief-fold-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.85rem 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.brief-fold-toggle:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 6px;
+}
+
+/* The short name, such as How to Participate. The plus sits beside it. */
+.brief-fold-label {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+.brief-fold-title {
+  display: block;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  max-width: 16em;
+  margin: 0.2rem 0 1.2rem;
+}
+
+.brief-fold-mark {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 0;
+}
+
+.brief-fold-mark::before,
+.brief-fold-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.brief-fold-mark::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+}
+
+.brief-fold-mark::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+}
+
+.brief-fold.is-open .brief-fold-mark::after {
+  display: none;
+}
+
+.brief-fold-panel {
+  padding-top: 1.4rem;
+}
+
+/* Photo piles inside a fold use the same width as the piles between sections. */
+/* The bigger picture brings its own padding. Inside a fold the section already has it. */
+.brief-fold-panel .ask {
+  padding: 0;
+}
+
+.brief-fold-panel .bubbles {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  /* A long title can wrap. Keep that second line clear of the menu button. */
+  .brief-fold-toggle {
+    padding-right: 2.4rem;
+  }
 }
 

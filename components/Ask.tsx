@@ -137,12 +137,11 @@ export default function Ask() {
   const block = t.ask;
 
   return (
-    <section className="ask" id="ask">
-      <p className="ask-kicker">{block.kicker}</p>
+    <div className="ask">
       {block.paragraphs.map((paragraph) => (
         <p key={paragraph}>{paragraph}</p>
       ))}
       <ReachMap />
-    </section>
+    </div>
   );
 }

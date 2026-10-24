@@ -105,12 +105,31 @@ function SiteNav() {
         </button>
       </div>
       <div id="site-nav-panel" className="site-nav-panel" hidden={!open}>
-        <Link href="/#criteria" className="site-btn" onClick={() => setOpen(false)}>
-          {t.navCriteria}
-        </Link>
-        <Link href="/#schedule" className="site-btn" onClick={() => setOpen(false)}>
-          {t.navSchedule}
-        </Link>
+        {/* Section titles, same words as the page. A closed section opens from here. */}
+        {(
+          [
+            ["intro", t.soda.kicker],
+            ["challenge", t.challenge.kicker],
+            ["participate", t.involve.kicker],
+            ["who", t.who.kicker],
+            ["why", t.why.kicker],
+            ["criteria", t.criteria.kicker],
+            ["schedule", t.schedule.kicker],
+            ["ask", t.ask.kicker],
+          ] as const
+        ).map(([id, label]) => (
+          <Link
+            key={id}
+            href={`/#${id}`}
+            className="site-btn"
+            onClick={() => {
+              setOpen(false);
+              window.dispatchEvent(new CustomEvent("soda-fold", { detail: id }));
+            }}
+          >
+            {label}
+          </Link>
+        ))}
         <ActionLinks />
       </div>
     </nav>

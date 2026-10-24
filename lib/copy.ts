@@ -25,7 +25,7 @@ export const copy = {
     hook: ["Creativity", "Curiosity", "Collaboration"],
     collaboration: "In Collaboration With",
     discover: "Discover",
-    watchStory: "Watch the story",
+    watchStory: "Watch the animation",
     skip: "Skip",
     pause: "Pause",
     play: "Play",
@@ -213,7 +213,7 @@ export const copy = {
     collaboration: "En collaboration avec",
     discover: "Découvrir",
     // Machine draft, needs human review.
-    watchStory: "Voir l'histoire",
+    watchStory: "Voir l'animation",
     skip: "Passer",
     pause: "Pause",
     play: "Lecture",
@@ -407,7 +407,7 @@ export const copy = {
     collaboration: "En colaboración con",
     discover: "Descubre",
     // Machine draft, needs human review.
-    watchStory: "Ver la historia",
+    watchStory: "Ver la animación",
     skip: "Saltar",
     pause: "Pausa",
     play: "Reproducir",
