@@ -106,9 +106,9 @@ export const copy = {
       closeAfter: " to see what to aim for...",
       // Objective and column names from the Design challenge draw. See DESIGN_DECISIONS.md.
       draw: {
-        objective: "Try a tool you have never used before and make an object that...",
+        objective: "Try a tool you have never used before and make something that....",
         includes: "Includes",
-        uses: "Uses",
+        uses: "Has been",
         explores: "Explores",
       },
     },
@@ -292,9 +292,9 @@ export const copy = {
       closeAfter: " pour voir quoi viser...",
       // Machine draft, needs human review.
       draw: {
-        objective: "Essayez un outil que vous n'avez jamais utilisé et fabriquez un objet qui...",
+        objective: "Essayez un outil que vous n'avez jamais utilisé et fabriquez quelque chose qui....",
         includes: "Inclut",
-        uses: "Utilise",
+        uses: "A été",
         explores: "Explore",
       },
     },
@@ -481,9 +481,9 @@ export const copy = {
       closeAfter: " para ver hacia dónde apuntar...",
       // Machine draft, needs human review.
       draw: {
-        objective: "Prueba una herramienta que nunca hayas usado y haz un objeto que...",
+        objective: "Prueba una herramienta que nunca hayas usado y haz algo que....",
         includes: "Incluye",
-        uses: "Usa",
+        uses: "Ha sido",
         explores: "Explora",
       },
     },
