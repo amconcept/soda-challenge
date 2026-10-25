@@ -219,3 +219,5 @@ Challenge criteria no longer keeps the extra space that used to sit under it for
 ## 2026-10-25 balloon pops on load
 
 The soundtrack on the film was replaced with the updated recording. Its pops still land just after 71 seconds, so the film sound still starts with the picture. The balloons that rise into the logo when the page loads now play the short clip, the one with the pops and no music after them. That clip's first pop is a little after 3 seconds, and the page's first pop is at 2.2 seconds, so the clip begins about a second in. The film plays at about two fifths of full volume, nudged ahead so its pops land on the ending balloons. The opening pops play louder than that, so they can be heard on their own. Skip still uses the film's own ending, not the short clip. People who skip animation hear neither.
+
+On a phone the soundtrack was waiting on the whole file before the first sound, because the index sat at the end, and every small timing correction started that wait again. Both recordings are now smaller, the index is at the front, and a phone only jumps the playhead when that moment is already downloaded.
