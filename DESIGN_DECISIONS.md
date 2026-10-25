@@ -210,6 +210,12 @@ What is SOD+A and What is the challenge stay open. How to Participate, Who is it
 
 The button beside Discover now says Watch the animation. Its edge is a green hand-drawn line, the same green as the button in the film, so it reads as something to press. Discover keeps the thin black outline. French and Spanish for the new label are machine drafts.
 
-The four closed sections now show the section title, such as How to Participate, with the plus beside those words. The longer heading, such as Connecting Students to the Challenge, appears when the section opens. The animation button is a white pill with a black hand-drawn outline. Each logo balloon plays a short pop, and the confetti that falls with it plays a crackle. Both are made in the browser. A browser stays quiet until the first click, so the opening balloons are silent unless someone has already clicked. Pressing Watch the animation unlocks the sound for the balloons at the end of the film. People who skip animation hear neither.
+The four closed sections now show the section title, such as How to Participate, with the plus beside those words. The longer heading, such as Connecting Students to the Challenge, appears when the section opens. The animation button is a white pill with a black hand-drawn outline. The film plays the supplied soundtrack, the one made against the silent export. That track's balloon pops land on the film's balloons, just after 71 seconds, so the sound starts with the picture. The opening logo balloons stay quiet. Skip jumps the soundtrack to those same balloons. People who skip animation hear neither.
 
 Schedule and The bigger picture fold the same way. Opening one section closes the others. The schedule's photo pile opens with it. The menu lists every section, in page order, and choosing a closed one opens it. Join the challenge stays at the bottom of the menu.
+
+Challenge criteria no longer keeps the extra space that used to sit under it for the photo pile. That pile opens inside the section, so the closed heading sits as close to Schedule as the other headings sit to each other.
+
+## 2026-10-25 balloon pops on load
+
+The soundtrack on the film was replaced with the updated recording. Its pops still land just after 71 seconds, so the film sound still starts with the picture. The balloons that rise into the logo when the page loads now play the short clip, the one with the pops and no music after them. That clip's first pop is a little after 3 seconds, and the page's first pop is at 2.2 seconds, so the clip begins about a second in. The opening pops and the film both play at about two fifths of full volume. Skip still uses the film's own ending, not the short clip. People who skip animation hear neither.
