@@ -10,12 +10,18 @@
 
 const FILM = "/story/soda-animation.m4a";
 const POPS = "/story/balloon-pops.m4a";
-/** Where the film hands to the balloons. Skip jumps the picture there. */
-const BALLOON_REVEAL = 69.8;
 /** Clip time when the on-load reveal clock is at 0. Lines the pops up. */
 const INTRO_HEAD = 1.02;
-/** Opening pops and the film. 1 is full volume. */
-const STORY_VOLUME = 0.4;
+/** The film stays quieter. The opening pops stay louder so they read. */
+const FILM_VOLUME = 0.4;
+const OPEN_VOLUME = 0.85;
+/**
+ * The pops in the file sit 0.08s after the balloons, and the player
+ * runs a little behind the picture. Aiming this far ahead lands the pops.
+ */
+const FILM_AHEAD = 0.15;
+/** Skip's first balloon is at 1s. The matching pop in the file is at 71.18s. */
+const SKIP_AT = 71.18 - 1 - FILM_AHEAD;
 
 let film: HTMLAudioElement | null = null;
 let pops: HTMLAudioElement | null = null;
@@ -29,6 +35,7 @@ let filmOrigin = 0;
 let sawFilm = -1;
 let sawIntro = -1;
 let unlockBound = false;
+let seekAt = 0;
 
 function basePath(): string {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -48,7 +55,7 @@ function filmTrack(): HTMLAudioElement {
     film = new Audio(`${basePath()}${FILM}`);
     film.preload = "auto";
   }
-  film.volume = STORY_VOLUME;
+  film.volume = FILM_VOLUME;
   return mount(film);
 }
 
@@ -57,11 +64,14 @@ function popTrack(): HTMLAudioElement {
     pops = new Audio(`${basePath()}${POPS}`);
     pops.preload = "auto";
   }
-  pops.volume = STORY_VOLUME;
+  pops.volume = OPEN_VOLUME;
   return mount(pops);
 }
 
-function seek(sound: HTMLAudioElement, time: number) {
+function seek(sound: HTMLAudioElement, time: number, force = false) {
+  const now = performance.now();
+  if (!force && now - seekAt < 200) return;
+  seekAt = now;
   try {
     sound.currentTime = time;
   } catch {
@@ -69,9 +79,18 @@ function seek(sound: HTMLAudioElement, time: number) {
   }
 }
 
+/** A browser only blocks sound that has not been allowed. A seek is not that. */
+function playSound(sound: HTMLAudioElement, markBlocked: () => void) {
+  const pending = sound.play();
+  pending?.catch((err: { name?: string }) => {
+    if (err?.name === "NotAllowedError") markBlocked();
+  });
+}
+
 /** Warm the short clip during the wait before the logo balloons rise. */
 export function preloadIntroPops() {
   popTrack();
+  bindUnlock();
 }
 
 /**
@@ -84,9 +103,9 @@ export function startIntroPops() {
   popsOn = true;
   introLive = true;
   sawIntro = -1;
-  seek(sound, INTRO_HEAD);
+  seek(sound, INTRO_HEAD, true);
   introBlocked = false;
-  sound.play().catch(() => {
+  playSound(sound, () => {
     introBlocked = true;
   });
   bindUnlock();
@@ -96,11 +115,19 @@ function bindUnlock() {
   if (unlockBound || typeof document === "undefined") return;
   unlockBound = true;
   const go = (event: Event) => {
-    if (!popsOn || !introLive || filmOn || !pops || !pops.paused) return;
+    if (filmOn || !pops) return;
     const target = event.target;
     if (target instanceof Element && target.closest(".hero-watch")) return;
+    // A click before the balloons lets the later play through.
+    if (!introLive) {
+      const pending = pops.play();
+      pops.pause();
+      pending?.catch(() => {});
+      return;
+    }
+    if (!popsOn || !pops.paused) return;
     introBlocked = false;
-    pops.play().catch(() => {
+    playSound(pops, () => {
       introBlocked = true;
     });
   };
@@ -126,9 +153,9 @@ export function followIntroPops(time: number, paused: boolean, ended: boolean) {
     return;
   }
   const target = time + INTRO_HEAD;
-  if (Math.abs(pops.currentTime - target) > 0.25) seek(pops, target);
+  if (Math.abs(pops.currentTime - target) > 0.05) seek(pops, target);
   if (pops.paused && !introBlocked) {
-    pops.play().catch(() => {
+    playSound(pops, () => {
       introBlocked = true;
     });
   }
@@ -171,10 +198,10 @@ export function startStoryTrack() {
 /** The picture jumped to the balloons. Move the film track to that same moment. */
 export function skipStoryTrackToBalloons() {
   if (!filmOn) return;
-  filmOrigin = BALLOON_REVEAL;
+  filmOrigin = SKIP_AT;
   sawFilm = -1;
   const sound = filmTrack();
-  seek(sound, BALLOON_REVEAL);
+  seek(sound, SKIP_AT + FILM_AHEAD, true);
   sound.play().catch(() => {});
 }
 
@@ -197,8 +224,8 @@ export function followStoryTrack(time: number, paused: boolean, ended: boolean) 
     if (!film.paused) film.pause();
     return;
   }
-  const target = time + filmOrigin;
-  if (Math.abs(film.currentTime - target) > 0.25) seek(film, target);
+  const target = time + filmOrigin + FILM_AHEAD;
+  if (Math.abs(film.currentTime - target) > 0.05) seek(film, target);
   if (film.paused) film.play().catch(() => {});
 }
 
