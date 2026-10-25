@@ -68,9 +68,28 @@ function popTrack(): HTMLAudioElement {
   return mount(pops);
 }
 
+/** A phone treats every jump as a new download. Only jump when that moment is already in hand. */
+function phoneSync() {
+  return window.matchMedia("(pointer: coarse), (max-width: 900px)").matches;
+}
+
+function hasReach(sound: HTMLAudioElement, time: number) {
+  if (sound.readyState < 1) return false;
+  try {
+    const ranges = sound.buffered;
+    for (let i = 0; i < ranges.length; i++) {
+      if (time >= ranges.start(i) - 0.05 && time <= ranges.end(i) + 0.4) return true;
+    }
+  } catch {
+    /* The length is not known yet. */
+  }
+  return false;
+}
+
 function seek(sound: HTMLAudioElement, time: number, force = false) {
   const now = performance.now();
-  if (!force && now - seekAt < 200) return;
+  if (!force && now - seekAt < (phoneSync() ? 1200 : 200)) return;
+  if (!force && !hasReach(sound, time)) return;
   seekAt = now;
   try {
     sound.currentTime = time;
@@ -153,7 +172,8 @@ export function followIntroPops(time: number, paused: boolean, ended: boolean) {
     return;
   }
   const target = time + INTRO_HEAD;
-  if (Math.abs(pops.currentTime - target) > 0.05) seek(pops, target);
+  const limit = phoneSync() ? 0.6 : 0.05;
+  if (Math.abs(pops.currentTime - target) > limit) seek(pops, target);
   if (pops.paused && !introBlocked) {
     playSound(pops, () => {
       introBlocked = true;
@@ -225,7 +245,8 @@ export function followStoryTrack(time: number, paused: boolean, ended: boolean) 
     return;
   }
   const target = time + filmOrigin + FILM_AHEAD;
-  if (Math.abs(film.currentTime - target) > 0.05) seek(film, target);
+  const limit = phoneSync() ? 0.6 : 0.05;
+  if (Math.abs(film.currentTime - target) > limit) seek(film, target);
   if (film.paused) film.play().catch(() => {});
 }
 
