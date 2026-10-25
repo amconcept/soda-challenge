@@ -10,7 +10,16 @@ import {
 } from "react";
 import { createStory, type Story } from "@/components/story/engine/index.js";
 import { useLanguage } from "@/components/LanguageProvider";
-import { playBalloonPop, unlockStorySound } from "@/components/story/storySound";
+import {
+  armStoryTrack,
+  followIntroPops,
+  followStoryTrack,
+  preloadIntroPops,
+  skipStoryTrackToBalloons,
+  startIntroPops,
+  startStoryTrack,
+  stopStoryTrack,
+} from "@/components/story/storyTrack";
 
 type StoryApi = {
   preload: () => void;
@@ -86,17 +95,26 @@ export default function StoryLayer({
         }
         if (name === "pop" && detail.i != null) {
           parts[detail.i]?.classList.add("is-in", ...(detail.instant ? ["instant"] : []));
-          if (!detail.instant) playBalloonPop(detail.i);
         }
         if (name === "chapter" && detail.chapter) {
           hero.dataset.chapter = detail.chapter;
         }
         if (name === "state") {
-          if (detail.state === "story" || detail.state === "loading") {
+          if (detail.state === "story") {
             hero.dataset.mode = "story";
+            startStoryTrack();
+          }
+          if (detail.state === "loading") {
+            hero.dataset.mode = "story";
+          }
+          // Skip leaves the full film and jumps to the balloons. The track jumps with it.
+          if (detail.state === "reveal" && hero.dataset.mode === "story") {
+            skipStoryTrackToBalloons();
           }
           if (detail.state === "reveal" && hero.dataset.mode !== "story") {
             hero.dataset.mode = "intro";
+            // The short clip, lined up with these rising balloons. Reduced motion stays quiet.
+            if (!reduced) startIntroPops();
           }
           if (detail.state === "done") {
             hero.dataset.mode = "rest";
@@ -125,7 +143,7 @@ export default function StoryLayer({
       story.preload();
     };
     apiRef.current.play = () => {
-      unlockStorySound();
+      armStoryTrack();
       const small = window.matchMedia("(max-width: 700px) and (orientation: portrait)");
       if (small.matches && hero.requestFullscreen) {
         hero.requestFullscreen().then(() => {
@@ -139,6 +157,7 @@ export default function StoryLayer({
       pauseRef.current?.focus();
     };
 
+    preloadIntroPops();
     const startId = window.setTimeout(
       () => story.playReveal({ firstPop: 2.2 }),
       reduced ? 0 : 1700,
@@ -150,6 +169,9 @@ export default function StoryLayer({
       if (story.duration && progressRef.current) {
         progressRef.current.style.setProperty("--p", String(story.time / story.duration));
       }
+      const ended = story.state === "done";
+      followStoryTrack(story.time, story.paused, ended);
+      followIntroPops(story.time, story.paused, ended);
     };
     frame = window.requestAnimationFrame(paintProgress);
 
@@ -164,15 +186,14 @@ export default function StoryLayer({
       }
     }
     document.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", unlockStorySound);
     pauseRef.current?.addEventListener("click", togglePause);
 
     return () => {
       window.clearTimeout(startId);
       window.cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", unlockStorySound);
       pauseRef.current?.removeEventListener("click", togglePause);
+      stopStoryTrack();
       story.destroy();
       storyRef.current = null;
     };

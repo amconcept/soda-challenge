@@ -551,7 +551,8 @@
 }
 
 #criteria {
-  padding-bottom: 8vh;
+  /* The photo pile now opens inside this section, so it no longer needs
+     extra room under the closed heading. See DESIGN_DECISIONS.md. */
   scroll-margin-top: 4.5rem;
 }
 
