@@ -560,7 +560,33 @@
   height: calc(100% + 14px);
   pointer-events: none;
   overflow: visible;
-  animation: none;
+  transform-origin: center;
+  /* A small living wobble. The two lines trade places. See DESIGN_DECISIONS.md. */
+  animation: watch-warble-shift 3.4s ease-in-out infinite;
+}
+
+.hero-watch-line-a,
+.hero-watch-line-b {
+  transform-origin: center;
+}
+
+.hero-watch-line-a {
+  animation: watch-warble-fade 3.4s ease-in-out infinite;
+}
+
+.hero-watch-line-b {
+  /* Half a cycle behind the first line, so one edge is always the stronger one. */
+  animation: watch-warble-fade 3.4s ease-in-out -1.7s infinite;
+}
+
+@keyframes watch-warble-shift {
+  0%, 100% { transform: rotate(-0.6deg) scale(1, 1); }
+  50% { transform: rotate(0.7deg) scale(1.02, 0.98); }
+}
+
+@keyframes watch-warble-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
 }
 
 .hero-actions .hero-watch:hover,
@@ -800,6 +826,18 @@
   pointer-events: none;
 }
 
+/* Same box as the film. Behind-lines go under the drawings. The rest sit on top. */
+.story-captions {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.story-captions-behind {
+  z-index: 1;
+}
+
 .hero--balloons[data-mode="story"] .hero-play,
 .hero--balloons[data-mode="story"] .hero-hook,
 .hero--balloons[data-mode="story"] .hero-actions {
@@ -826,6 +864,150 @@
 .hero--balloons[data-mode="story"] .story-controls {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Behind the transparent film, so the drawings cross the words. See DESIGN_DECISIONS.md. */
+.story-notes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.story-note {
+  position: absolute;
+  left: 50%;
+  /* Just under the cards, above the students. */
+  top: 42%;
+  width: min(86%, 46rem);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--hero-line, #0e0d0c);
+  /* The prompt machine's face, so the line belongs to the draw. See DESIGN_DECISIONS.md. */
+  font-family: var(--font-rando), ui-monospace, monospace;
+  opacity: 0;
+}
+
+.hero--balloons[data-mode="story"] .story-note.is-on,
+.hero--balloons[data-mode="story"] .story-note.is-erasing {
+  opacity: 1;
+}
+
+.story-note[data-curve="planet"],
+.story-note[data-curve="ground"] {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.story-arc {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.story-arc text {
+  fill: currentColor;
+  font-family: inherit;
+  font-size: 34px;
+}
+
+.story-note-pop {
+  display: block;
+  transform-origin: center center;
+}
+
+/* Each word is a reel. It spins, then clunks onto the real word. The next sentence plays this same roll again. */
+.story-reel {
+  display: inline-block;
+  position: relative;
+  height: 1.05em;
+  margin-right: 0.22em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.story-reel:last-child {
+  margin-right: 0;
+}
+
+.story-reel-sizer {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.story-reel-strip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.story-reel-strip > span {
+  height: 1.05em;
+  line-height: 1.05em;
+  white-space: nowrap;
+}
+
+.story-note.is-on .story-reel-strip {
+  animation: story-roll var(--roll, 0.55s) cubic-bezier(0.12, 0.7, 0.18, 1) forwards;
+}
+
+.story-note.is-erasing .story-note-pop {
+  animation: story-erase 0.42s ease-in forwards;
+}
+
+@keyframes story-roll {
+  0% { transform: translateY(0); }
+  74% { transform: translateY(calc(-100% + 0.9em)); }
+  100% { transform: translateY(calc(-100% + 1.05em)); }
+}
+
+@keyframes story-erase {
+  0% { opacity: 1; clip-path: inset(0 0 0 0); transform: scale(1); }
+  100% { opacity: 0; clip-path: inset(0 0 0 100%); transform: scale(0.96) rotate(1deg); }
+}
+
+.story-reel-read {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.story-note-title,
+.story-note-line {
+  display: block;
+  font-weight: 400;
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.story-note-line {
+  margin-top: 0.2em;
+  font-size: clamp(28px, 3.2vw, 46px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-note.is-on .story-reel-strip,
+  .story-note.is-erasing .story-note-pop {
+    animation: none !important;
+  }
+
+  .story-reel-strip > span:not(:last-child) {
+    display: none;
+  }
 }
 
 .story-controls .story-pill {

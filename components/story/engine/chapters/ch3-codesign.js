@@ -8,7 +8,7 @@
    the shared math and ink now come from ../core.js, the player UI is gone,
    and render() draws onto a transparent canvas wherever the player puts the frame.
    ========================================================================= */
-import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync } from '../core.js';
+import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync, hand, handT } from '../core.js';
 
 export const DUR = 34.5;
 let INK = '#141414', PAPER = '#ffffff';   // set by the player every frame: line colour, and the page colour used for knockouts
@@ -706,7 +706,8 @@ function drawBursts(t) {
     for (let j = 0; j < b.n; j++) { const a = lerp(b.a0, b.a1, (j + .5) / b.n), c = Math.cos(a), s = Math.sin(a); segs([[b.x + c * b.rx * inner, b.y + s * b.ry * inner], [b.x + c * b.rx * outer, b.y + s * b.ry * outer]], b.sid * 10 + j, { w: .9, wob: .5 }); }
   }
 }
-function drawPlanet() { const pts = []; for (let i = 0; i <= 200; i++) { const a = -1.45 + i / 200 * 2.9; pts.push([PLANET.x + Math.sin(a) * PLANET.r, PLANET.y - Math.cos(a) * PLANET.r]); } curve(pts, 20, { w: .95, wob: .8 }); }
+function drawPlanet() { const pts = []; for (let i = 0; i <= 240; i++) { const a = -1.75 + i / 240 * 3.5;   // past the sides of the planet, so the earth always runs off the frame's edges
+    pts.push([PLANET.x + Math.sin(a) * PLANET.r, PLANET.y - Math.cos(a) * PLANET.r]); } curve(pts, 20, { w: .95, wob: .8 }); }
 
 /* ---------- camera: [time, zoom, x, y, rotation]
    To look at the park group upright, the camera turns with the planet. ---------- */
@@ -731,17 +732,17 @@ export function render(c, t, view) {
   const k = view.s, ox = view.ox, oy = view.oy;   // device px per frame unit, and where the frame sits
   // no background fill: the canvas stays transparent so the page colour shows through
   const cam = camAt(t); ZOOM = cam[0]; ZP = Math.pow(ZOOM, .65);
-  sync(ctx, BS, ZP, 1, INK);
+  sync(ctx, BS, ZP, 1, INK, t);
   ctx.setTransform(k, 0, 0, k, ox, oy); ctx.translate(W / 2, H / 2); ctx.scale(ZOOM, ZOOM); ctx.rotate(cam[3]); ctx.translate(-cam[1], -cam[2]);
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   drawPlanet();
   drawBoard(t);
-  const poses = FIGS.map(f => poseAt(f, t));
+  const poses = FIGS.map(f => poseAt(f, handT(t)));   // figures on twos
   for (let ci = 0; ci < 3; ci++) {
     drawSite(ci, t);
     const items = [];
     poses.filter(q => q.f.ci === ci && t >= hiddenUntil(q.f)).forEach(q => items.push({ z: q.z, fn: () => {
-      enterAt(ci, q.x); drawFigure(q); drawKidQ(q, t); ctx.restore();
+      enterAt(ci, q.x); hand(true); drawFigure(q); drawKidQ(q, handT(t)); hand(false); ctx.restore();
       if (q.f.obj) { const op = objPos(q.f, t, q); if (op[2]) { enterAt(ci, q.x); drawThing(q.f.obj.type, q.f.obj.col, op[0], op[1], op[3], t, 5000 + q.f.id * 40); ctx.restore(); } }
     } }));
     poses.filter(q => q.f.ci === ci && q.f.obj).forEach(q => { const op = objPos(q.f, t, q); if (!op[2] && op[3] > .02) items.push({ z: .49, fn: () => { enterAt(ci, op[0]); drawThing(q.f.obj.type, q.f.obj.col, op[0], op[1], op[3], t, 5000 + q.f.id * 40); ctx.restore(); } }); });
@@ -765,4 +766,12 @@ export function heroBalloons(t) {
     const p = balloonPos(b, t), dx = p[0] - cam[1], dy = p[1] - cam[2];
     return { x: W / 2 + z * (dx * c - dy * s), y: H / 2 + z * (dx * s + dy * c), rx: 22 * z, ry: 28 * z, len: b.len * .8 * z, col: b.col };
   });
+}
+
+/* ---------- the ground, as the viewer sees it ----------
+   Centre and radius of the planet on screen (16:9 frame units) at time t, so the
+   on-screen text can curve along the same circle as the ground under it. */
+export function groundArc(t) {
+  const cam = camAt(t), z = cam[0], rot = cam[3] || 0, c = Math.cos(rot), s = Math.sin(rot), dx = PLANET.x - cam[1], dy = PLANET.y - cam[2];
+  return { cx: W / 2 + z * (dx * c - dy * s), cy: H / 2 + z * (dx * s + dy * c), r: PLANET.r * z };
 }

@@ -7,7 +7,7 @@
    the shared math and ink now come from ../core.js, the player UI is gone,
    and render() draws onto a transparent canvas wherever the player puts the frame.
    ========================================================================= */
-import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync } from '../core.js';
+import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync, hand, handT } from '../core.js';
 
 export const DUR = 18.8;
 let INK = '#141414', PAPER = '#ffffff';   // set by the player every frame: line colour, and the page colour used for knockouts
@@ -473,7 +473,8 @@ function drawBursts(t) {
   }
 }
 function drawPlanet() {
-  const pts = []; for (let i = 0; i <= 200; i++) { const a = -1.45 + i / 200 * 2.9; pts.push([PLANET.x + Math.sin(a) * PLANET.r, PLANET.y - Math.cos(a) * PLANET.r]); }
+  const pts = []; for (let i = 0; i <= 240; i++) { const a = -1.75 + i / 240 * 3.5;   // past the sides of the planet, so the earth always runs off the frame's edges
+    pts.push([PLANET.x + Math.sin(a) * PLANET.r, PLANET.y - Math.cos(a) * PLANET.r]); }
   curve(pts, 20, { w: .95, wob: .8 });
 }
 // Night over the left group, day over the right: the quickest way to say
@@ -505,16 +506,16 @@ export function render(c, t, view) {
   const k = view.s, ox = view.ox, oy = view.oy;   // device px per frame unit, and where the frame sits
   // no background fill: the canvas stays transparent so the page colour shows through
   const cam = camAt(t); ZOOM = cam[0]; ZP = Math.pow(ZOOM, .65);
-  sync(ctx, BS, ZP, 1, INK);
+  sync(ctx, BS, ZP, 1, INK, t);
   ctx.setTransform(k * ZOOM, 0, 0, k * ZOOM, ox + k * (W / 2 - cam[1] * ZOOM), oy + k * (H / 2 - cam[2] * ZOOM));
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   drawPlanet();
-  const poses = FIGS.map(f => poseAt(f, t));
+  const poses = FIGS.map(f => poseAt(f, handT(t)));   // figures on twos
   for (let ci = 0; ci < 3; ci++) {
     if (ci > 0 && ZOOM > 1.1) continue;   // the far groups are off screen in the close-up
     poses.filter(q => q.f.ci === ci).forEach(q => {
       enterAt(ci, q.f.x);
-      drawFigure(q);
+      hand(true); drawFigure(q); hand(false);
       if (ZOOM > .9 && q.building) {   // little work lines at the hand
         const h = handLocal(q), fl = Math.floor(t * 8) % 2 ? 1 : -1, sid = 8500 + q.f.id * 4;
         segs([[h[0] + 9 * fl, h[1] - 9], [h[0] + 15 * fl, h[1] - 15]], sid, { w: .7, wob: .4 });
@@ -525,11 +526,21 @@ export function render(c, t, view) {
     drawTable(ci);
     FIGS.filter(f => f.ci === ci).forEach(f => { enterAt(ci, f.obj.x); drawObject(f, t); ctx.restore(); });
   }
-  for (let i = 0; i < 5; i++) { enterAt(0, FIGS[i].x); drawIdea(i, t, poses[i]); ctx.restore(); }
-  TALKS.forEach(T => { enterAt(0, FIGS[T.fig].x); drawTalk(T, t, poses[T.fig]); ctx.restore(); });
+  hand(true);   // thought and talk bubbles: hand
+  for (let i = 0; i < 5; i++) { enterAt(0, FIGS[i].x); drawIdea(i, handT(t), poses[i]); ctx.restore(); }
+  TALKS.forEach(T => { enterAt(0, FIGS[T.fig].x); drawTalk(T, handT(t), poses[T.fig]); ctx.restore(); });
+  hand(false);
   drawPiece(t);
   drawBoard(t);
   XFERS.forEach(X => drawXfer(X, t));
   TOSSES.forEach(K => drawToss(K, t));
   drawBursts(t);
+}
+
+/* ---------- the ground, as the viewer sees it ----------
+   Centre and radius of the planet on screen (16:9 frame units) at time t, so the
+   on-screen text can curve along the same circle as the ground under it. */
+export function groundArc(t) {
+  const cam = camAt(t), z = cam[0], rot = cam[3] || 0, c = Math.cos(rot), s = Math.sin(rot), dx = PLANET.x - cam[1], dy = PLANET.y - cam[2];
+  return { cx: W / 2 + z * (dx * c - dy * s), cy: H / 2 + z * (dx * s + dy * c), r: PLANET.r * z };
 }
