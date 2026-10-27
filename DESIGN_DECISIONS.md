@@ -202,7 +202,7 @@ Under Discover, a short loop shows a Rando Calrissian draw. The words are the De
 
 ## 2026-10-24 story film
 
-The hero plays the story film on a transparent canvas. On load, the hook line still draws, then four balloons pop the site's own logo into place: S.o., then d+a., then CHALLENGE, then the partner row. The logo keeps floating. It does not fade and replay. The construction lines stay hidden. The film's ink is the hero's own black. A Watch the story button beside Discover plays the full film, about 74 seconds, and it ends in the same balloons. The closing line "From discovery to action" stays off, because it would sit on the hook and on the partner row. The fourth balloon reveals the partner logos that are on the site today. The press-fit blocks are not in this lockup. French and Spanish for Watch the story, Skip, Pause, and Play are machine drafts.
+The hero plays the story film on a transparent canvas. On load, the hook line still draws, then four balloons pop the site's own logo into place: S.o., then d+a., then CHALLENGE, then the partner row. The logo keeps floating. It does not fade and replay. The construction lines stay hidden. The film's ink is the hero's own black. A Watch the story button beside Discover plays the full film, about 74 seconds, and it ends in the same balloons. The closing line "From discovery to action" stays off, because it would sit on the hook and on the partner row. The fourth balloon reveals the partner logos that are on the site today. The press-fit blocks sit at the right end of CHALLENGE and come in with that word. French and Spanish for Watch the story, Skip, Pause, and Play are machine drafts.
 
 ## 2026-10-24 sections open on request
 
