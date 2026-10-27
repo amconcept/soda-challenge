@@ -59,6 +59,12 @@ export type Story = {
   resume(): void;
   readonly paused: boolean;
   seek(t: number): void;
+  /** The planet's circle on screen at film time t (default now), in 16:9 frame units (1600 x 900), or null. */
+  groundArc(t?: number): { cx: number; cy: number; r: number } | null;
+  /** Drawing size now: the story's drawings are scaled by k toward the frame's centre, y of its height down (1 outside the story). */
+  stage(): { k: number; y: number };
+  /** The film's paper grain on screen now: 0 outside the story, up to CFG.grain while it plays. */
+  grainLevel(): number;
   redraw(): void;
   readonly chapters: Array<{ name: string; t: number }>;
   readonly time: number;
@@ -71,7 +77,7 @@ export type Story = {
 export function createStory(canvas: HTMLCanvasElement, options?: StoryOptions): Story;
 
 /** Live tuning (same knobs as the test panels): wobble, boil, fps, weight, speed. */
-export const CFG: { wobble: number; boil: number; fps: number; weight: number; speed: number; shadows: boolean };
+export const CFG: { wobble: number; boil: number; fps: number; weight: number; speed: number; shadows: boolean; grain: number; stage: number };
 export const CFG0: Readonly<typeof CFG>;
 export const SEAMS: { wipe: number; dissolve: number };
 export const CHAPTERS: readonly ['button', 'sharing', 'co-design', 'reveal'];

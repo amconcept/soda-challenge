@@ -162,7 +162,7 @@ export function render(ctx, t, view) {
   const BS = Math.floor(t * CFG.boil + 1e-6);
   ctx.setTransform(view.s, 0, 0, view.s, view.ox, view.oy);
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  sync(ctx, BS, 1, 1, view.ink);
+  sync(ctx, BS, 1, 1, view.ink, t);
   P.balloons.forEach(b => drawBalloon(b, t));
   drawPuffs(ctx, t);
   drawBursts(t);

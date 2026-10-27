@@ -7,7 +7,7 @@
    the shared math and ink now come from ../core.js, the player UI is gone,
    and render() draws onto a transparent canvas wherever the player puts the frame.
    ========================================================================= */
-import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync } from '../core.js';
+import { W, H, GY, COL, CFG, clamp, lerp, L2, add, sstep, eInOut, eOut, eOutQ, eOutBack, trap, trapV, hash, jit, lw, segs, curve, finish, dot, circlePts, ellipsePts, circ, rectP, gearP, partial, plen, fillPoly, sync, hand, handT } from '../core.js';
 
 export const DUR = 16.5;
 let INK = '#141414', PAPER = '#ffffff';   // set by the player every frame: line colour, and the page colour used for knockouts
@@ -365,12 +365,14 @@ function drawPrompts(t, poses) {
     const flyDur = pr.f1 - pr.f0;
     // thought bubble draws itself while the cards fly in
     if (t >= pr.f0) {
+      hand(true);   // the thought bubble is drawn by hand; the flying cards are machine
       const prog = clamp((t - pr.f0) / flyDur * 1.25);
       [[B.top[1] - 9 * sb, 3.2 * sb, 0], [B.top[1] - 21 * sb, 5.4 * sb, .15]].forEach(([cy, r, st], i) => {
         const pr2 = clamp((prog - st) / .25); if (pr2 > 0) curve(partial(circlePts(B.top[0], cy, r, sidB + i, 12, .2), pr2), sidB + i, { w: .8, wob: .5, fill: pr2 >= 1 ? PAPER : null });
       });
       const cp = cloudPts(B, pr.seed), cprog = clamp((prog - .2) / .8);
       if (cprog > 0) curve(partial(cp, cprog), sidB + 5, { w: .9, fill: cprog >= 1 ? PAPER : null });
+      hand(false);
     }
     // overhead plus signs, fading as the cards leave
     if (t < pr.f0 + .15) {
@@ -390,7 +392,8 @@ function drawPrompts(t, poses) {
       if (fu >= 1 && t >= pr.q + .4) continue;   // handed over to the thinking shuffle below
       drawCard(pr, i, t, cx, cy, k);
     }
-    if (landed && t >= pr.q + .4) drawShuffle(pr, t, B);
+    hand(true);   // bubble contents and the question mark: hand
+    if (landed && t >= pr.q + .4) drawShuffle(pr, handT(t), B);
     if (landed) { plus(B.c[0] - 23 * sb, B.c[1] + 2 * sb, 4.5 * sb, sidB + 34, 1, .6); plus(B.c[0] + 23 * sb, B.c[1] + 2 * sb, 4.5 * sb, sidB + 36, 1, .6); }
     // the question mark writes itself once they start scratching
     if (t >= pr.q) {
@@ -399,6 +402,7 @@ function drawPrompts(t, poses) {
       curve(partial(QPTS.map(p => [qx + p[0] * s0, qy + p[1] * s0]), qp), sidB + 20, { w: 1.05 });
       if (qp >= 1) dot(qx + .03 * s0, qy + .25 * s0, 2.6 * sb, sidB + 21);
     }
+    hand(false);
   }
 }
 function drawBursts(t) {
@@ -422,12 +426,12 @@ export function render(c, t, view) {
   const k = view.s, ox = view.ox, oy = view.oy;   // device px per frame unit, and where the frame sits
   // no background fill: the canvas stays transparent so the page colour shows through
   const cam = camAt(t); ZOOM = cam[0];
-  sync(ctx, BS, ZOOM, 5 / 4.5, INK);   // this chapter was tuned at weight 5 with lines scaled by the full zoom
+  sync(ctx, BS, ZOOM, 5 / 4.5, INK, t);   // this chapter was tuned at weight 5 with lines scaled by the full zoom
   const sh = shakeAt(t);
   ctx.setTransform(k * ZOOM, 0, 0, k * ZOOM, ox + k * (W / 2 - cam[1] * ZOOM + sh[0]), oy + k * (H / 2 - cam[2] * ZOOM + sh[1]));
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  const poses = FIGS.map(f => poseAt(f, t));
-  const items = poses.map(q => ({ z: q.z, fn: () => drawFigure(q) }));
+  const poses = FIGS.map(f => poseAt(f, handT(t)));   // figures on twos
+  const items = poses.map(q => ({ z: q.z, fn: () => { hand(true); drawFigure(q); hand(false); } }));
   items.push({ z: .501, fn: () => drawPedestal(t) });   // just behind whoever is pressing
   items.sort((a, b) => b.z - a.z).forEach(i => i.fn());  // back to front
   drawBursts(t);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { VT323 } from "next/font/google";
+import { Caveat, VT323 } from "next/font/google";
 import Providers from "@/components/Providers";
 import "./globals.css";
 
@@ -11,6 +11,13 @@ const rando = VT323({
   variable: "--font-rando",
 });
 
+/* Handwriting for the section lines behind the film. The story engine already names this face. */
+const storyHand = Caveat({
+  weight: ["500", "600"],
+  subsets: ["latin"],
+  variable: "--font-story",
+});
+
 export const metadata: Metadata = {
   title: "SOD+A CHALLENGE",
   description:
@@ -20,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={rando.variable}>
+    <html lang="en" className={`${rando.variable} ${storyHand.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>

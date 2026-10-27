@@ -9,14 +9,12 @@ import {
   type RefObject,
 } from "react";
 import { createStory, type Story } from "@/components/story/engine/index.js";
+import { createCaptions } from "@/components/story/captions/index.js";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
   armStoryTrack,
-  followIntroPops,
   followStoryTrack,
-  preloadIntroPops,
   skipStoryTrackToBalloons,
-  startIntroPops,
   startStoryTrack,
   stopStoryTrack,
 } from "@/components/story/storyTrack";
@@ -50,6 +48,8 @@ export default function StoryLayer({
   const pauseRef = useRef<HTMLButtonElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<Story | null>(null);
+  const captionsRef = useRef<HTMLDivElement>(null);
+  const behindRef = useRef<HTMLDivElement>(null);
   const apiRef = useRef<StoryApi>({ preload() {}, play() {} });
 
   useEffect(() => {
@@ -113,8 +113,6 @@ export default function StoryLayer({
           }
           if (detail.state === "reveal" && hero.dataset.mode !== "story") {
             hero.dataset.mode = "intro";
-            // The short clip, lined up with these rising balloons. Reduced motion stays quiet.
-            if (!reduced) startIntroPops();
           }
           if (detail.state === "done") {
             hero.dataset.mode = "rest";
@@ -130,6 +128,22 @@ export default function StoryLayer({
       },
     });
     storyRef.current = story;
+
+    const captions = captionsRef.current
+      ? createCaptions(captionsRef.current, {
+          behindHost: behindRef.current,
+          getTime: () => (story.state === "story" ? story.time : null),
+          getArc: () => story.groundArc(),
+          getStage: () => story.stage(),
+          getGrain: () => story.grainLevel(),
+          ink: cssVar("--hero-line") || "#0e0d0c",
+          locale: "en",
+          font: "ui-monospace, SFMono-Regular, Menlo, monospace",
+          fontScale: 0.72,
+          fontWeight: 600,
+        })
+      : null;
+    captions?.start();
 
     function togglePause() {
       const button = pauseRef.current;
@@ -157,7 +171,6 @@ export default function StoryLayer({
       pauseRef.current?.focus();
     };
 
-    preloadIntroPops();
     const startId = window.setTimeout(
       () => story.playReveal({ firstPop: 2.2 }),
       reduced ? 0 : 1700,
@@ -169,9 +182,7 @@ export default function StoryLayer({
       if (story.duration && progressRef.current) {
         progressRef.current.style.setProperty("--p", String(story.time / story.duration));
       }
-      const ended = story.state === "done";
-      followStoryTrack(story.time, story.paused, ended);
-      followIntroPops(story.time, story.paused, ended);
+      followStoryTrack(story.time, story.paused, story.state === "done");
     };
     frame = window.requestAnimationFrame(paintProgress);
 
@@ -194,6 +205,7 @@ export default function StoryLayer({
       document.removeEventListener("keydown", onKey);
       pauseRef.current?.removeEventListener("click", togglePause);
       stopStoryTrack();
+      captions?.destroy();
       story.destroy();
       storyRef.current = null;
     };
@@ -201,7 +213,10 @@ export default function StoryLayer({
 
   return (
     <StoryContext.Provider value={apiRef.current}>
+      {/* Lines marked behind sit under the drawings. The rest sit over the film. */}
+      <div ref={behindRef} className="story-captions story-captions-behind" />
       <canvas ref={canvasRef} className="story-canvas" aria-hidden="true" />
+      <div ref={captionsRef} className="story-captions" />
       {children}
       <div className="story-controls">
         <button
@@ -244,8 +259,19 @@ export function WatchStoryButton() {
       {/* Black pen line around a white pill. See DESIGN_DECISIONS.md. */}
       <svg className="hero-watch-ring" viewBox="0 0 300 86" preserveAspectRatio="none" aria-hidden="true">
         <path
+          className="hero-watch-line hero-watch-line-a"
           vectorEffect="non-scaling-stroke"
           d="M48 16C28 9 14 24 16 42C18 58 30 70 52 66C96 74 148 58 196 68C236 76 274 62 276 42C278 22 258 8 220 14C168 6 92 20 48 16Z"
+          fill="none"
+          stroke="#0e0d0c"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          className="hero-watch-line hero-watch-line-b"
+          vectorEffect="non-scaling-stroke"
+          d="M46 18C32 8 12 28 18 40C22 56 26 72 56 64C100 72 144 60 200 66C240 78 270 58 274 44C280 24 254 6 216 16C164 8 88 22 46 18Z"
           fill="none"
           stroke="#0e0d0c"
           strokeWidth="2.6"
