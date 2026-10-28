@@ -29,6 +29,8 @@
   position: relative;
   overflow: hidden;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Height changes with the film. Ease it, so the page moves instead of popping. */
+  transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-cycle {
@@ -843,6 +845,20 @@
 .hero--balloons[data-mode="story"] .hero-actions {
   opacity: 0;
   pointer-events: none;
+}
+
+/* The resting hero leaves a sliver of the next section as a scroll hint.
+   While the film plays, fill the screen so "What is SOD+A?" sits below the fold.
+   The height eases, so that section moves instead of popping. */
+.hero--balloons[data-mode="story"] {
+  height: 100vh;
+  height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    transition: none;
+  }
 }
 
 .hero--balloons[data-mode="story"][data-chapter="reveal"] .hero-play,
