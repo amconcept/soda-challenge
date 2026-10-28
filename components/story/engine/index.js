@@ -189,7 +189,8 @@ export function createStory(canvas, options = {}) {
   function tick(now) {
     raf = 0;
     if (!playing || !onscreen || pageHidden) { last = now; return; }
-    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    // One film frame. A slow frame waits, instead of skipping the picture ahead.
+    const dt = Math.min(1 / CFG.fps, (now - last) / 1000); last = now;
     T = Math.min(dur, T + dt * CFG.speed);
     const tq = Math.floor(T * CFG.fps + 1e-6) / CFG.fps;
     if (tq !== lastKey || dirty) { draw(tq); lastKey = tq; dirty = false; }
