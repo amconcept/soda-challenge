@@ -43,13 +43,16 @@ export default function StoryLayer({
   ready: boolean;
   children: ReactNode;
 }) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const localeRef = useRef(locale);
+  localeRef.current = locale;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pauseRef = useRef<HTMLButtonElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<Story | null>(null);
   const captionsRef = useRef<HTMLDivElement>(null);
   const behindRef = useRef<HTMLDivElement>(null);
+  const captionsApi = useRef<{ setLocale: (locale: string) => void } | null>(null);
   const apiRef = useRef<StoryApi>({ preload() {}, play() {} });
 
   useEffect(() => {
@@ -137,13 +140,14 @@ export default function StoryLayer({
           getStage: () => story.stage(),
           getGrain: () => story.grainLevel(),
           ink: cssVar("--hero-line") || "#0e0d0c",
-          locale: "en",
+          locale: localeRef.current,
           font: "ui-monospace, SFMono-Regular, Menlo, monospace",
           fontScale: 0.72,
           fontWeight: 600,
         })
       : null;
     captions?.start();
+    captionsApi.current = captions;
 
     function togglePause() {
       const button = pauseRef.current;
@@ -205,11 +209,16 @@ export default function StoryLayer({
       document.removeEventListener("keydown", onKey);
       pauseRef.current?.removeEventListener("click", togglePause);
       stopStoryTrack();
+      captionsApi.current = null;
       captions?.destroy();
       story.destroy();
       storyRef.current = null;
     };
   }, [ready, heroRef]);
+
+  useEffect(() => {
+    captionsApi.current?.setLocale(locale);
+  }, [locale]);
 
   return (
     <StoryContext.Provider value={apiRef.current}>
