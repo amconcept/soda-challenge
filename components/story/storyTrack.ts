@@ -63,6 +63,8 @@ function hasReach(sound: HTMLAudioElement, time: number) {
 
 function seek(sound: HTMLAudioElement, time: number, force = false) {
   const now = performance.now();
+  // A jump that is still settling must finish. Another jump on top of it clicks.
+  if (!force && sound.seeking) return;
   if (!force && now - seekAt < (phoneSync() ? 1200 : 200)) return;
   if (!force && !hasReach(sound, time)) return;
   seekAt = now;
@@ -92,6 +94,7 @@ export function startStoryTrack() {
   filmOn = true;
   filmOrigin = 0;
   sawFilm = -1;
+  sound.playbackRate = 1;
   seek(sound, 0, true);
   sound.play().catch(() => {});
 }
@@ -103,6 +106,7 @@ export function skipStoryTrackToBalloons() {
   sawFilm = -1;
   const sound = filmTrack();
   seek(sound, SKIP_AT + FILM_AHEAD, true);
+  sound.playbackRate = 1;
   sound.play().catch(() => {});
 }
 
@@ -116,6 +120,7 @@ export function followStoryTrack(time: number, paused: boolean, ended: boolean) 
   if (ended) return;
   if (paused) {
     if (!film.paused) film.pause();
+    film.playbackRate = 1;
     sawFilm = time;
     return;
   }
@@ -123,11 +128,19 @@ export function followStoryTrack(time: number, paused: boolean, ended: boolean) 
   sawFilm = time;
   if (stalled) {
     if (!film.paused) film.pause();
+    film.playbackRate = 1;
     return;
   }
   const target = time + filmOrigin + FILM_AHEAD;
-  const limit = phoneSync() ? 0.6 : 0.05;
-  if (Math.abs(film.currentTime - target) > limit) seek(film, target);
+  const drift = target - film.currentTime;
+  // A little fast or slow closes a small gap without a jump. A jump is
+  // only for a real hole, and only forward: rewinding is what clicks.
+  if (!film.seeking) {
+    const rate = drift > 0.05 ? 1.02 : drift < -0.05 ? 0.98 : 1;
+    if (Math.abs(film.playbackRate - rate) > 0.001) film.playbackRate = rate;
+  }
+  const limit = phoneSync() ? 0.6 : 0.45;
+  if (drift > limit) seek(film, target);
   if (film.paused) film.play().catch(() => {});
 }
 
@@ -137,5 +150,6 @@ export function stopStoryTrack() {
   sawFilm = -1;
   if (!film) return;
   film.pause();
+  film.playbackRate = 1;
   seek(film, 0, true);
 }
