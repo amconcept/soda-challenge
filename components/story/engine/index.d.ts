@@ -49,8 +49,11 @@ export type ChapterModule = {
 export type Story = {
   /** Logo first: balloons rise and pop into the lockup. firstPop = seconds until the first pop (default 2.2). */
   playReveal(options?: { firstPop?: number }): void;
-  /** The whole film (about 74 s), ending in the same reveal. */
-  playStory(): Promise<void>;
+  /** The whole film (about 74 s), ending in the same reveal.
+      When hold is true, the first frame is drawn and the clock waits for begin(). */
+  playStory(hold?: boolean): Promise<void>;
+  /** Start a film that was opened with playStory(true). offset matches a soundtrack that already moved. */
+  begin(offset?: number): void;
   /** Start downloading chapters 1–3 early, e.g. on hover of the Watch button. */
   preload(): Promise<unknown>;
   /** During the story: jump straight to the balloon reveal. */

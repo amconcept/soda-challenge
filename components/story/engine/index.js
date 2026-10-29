@@ -210,7 +210,7 @@ export function createStory(canvas, options = {}) {
     playing = false; fireCues(Infinity); setKind('done');
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
-  function start(k) {
+  function start(k, hold) {
     T = 0; lastKey = -1; dirty = true; cueAt = 0; timeline.forEach(s => { s.aimed = false; });
     emit('reset');
     // Kind is set before the draw so the first frame has the film's own size.
@@ -220,6 +220,21 @@ export function createStory(canvas, options = {}) {
     draw(0);
     lastKey = 0;
     emit('state', { state: k });
+    // A held start draws that frame and waits. The page starts the clock
+    // with begin(), once the soundtrack is actually playing.
+    playing = !hold;
+    if (!hold) loop();
+  }
+  function begin(offset) {
+    if (kind !== 'story' && kind !== 'reveal') return;
+    const ahead = Math.max(0, +offset || 0);
+    if (ahead > 0.001) {
+      T = Math.min(dur, ahead);
+      const tq = Math.floor(T * CFG.fps + 1e-6) / CFG.fps;
+      draw(tq);
+      lastKey = tq;
+      fireCues(T);
+    }
     playing = true;
     loop();
   }
@@ -247,12 +262,15 @@ export function createStory(canvas, options = {}) {
       if (o.reducedMotion) { setKind('reveal'); cueAt = 0; emit('reset'); fireCues(Infinity, true); setKind('done'); return; }
       start('reveal');
     },
-    /** The whole film, ending in the same reveal. Loads chapters 1–3 on first use. */
-    async playStory() {
+    /** The whole film, ending in the same reveal. Loads chapters 1–3 on first use.
+        hold: draw the first frame and wait. begin() starts the clock. */
+    async playStory(hold = false) {
       setKind('loading');
       await ensureChapters();
-      setStoryTimeline(); start('story');
+      setStoryTimeline(); start('story', hold);
     },
+    /** Start a held film. offset is how far the soundtrack already is, in seconds. */
+    begin(offset) { begin(offset); },
     /** Warm the chapter download early (e.g. on hover or focus of the Watch button). */
     preload() { return ensureChapters(); },
     /** From the story: go straight to the balloons rising into the logo. */
