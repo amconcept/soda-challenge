@@ -19,11 +19,8 @@ let film: HTMLAudioElement | null = null;
 let filmOn = false;
 let filmOrigin = 0;
 let sawFilm = -1;
-/** How fast the picture has been moving, measured over a short span. */
-let pictureRate = 1;
-let spanAt = 0;
-let spanTime = 0;
-let ratedAt = 0;
+/** When the picture clock last looked stopped. A single repeat is not a stop. */
+let stillAt = 0;
 
 function basePath(): string {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -51,53 +48,13 @@ function filmTrack(): HTMLAudioElement {
   return mount(film);
 }
 
-function clamp(n: number, lo: number, hi: number) {
-  return Math.max(lo, Math.min(hi, n));
-}
-
-/** A jump is only for the start, Skip, and stopping. Catching up never jumps. */
+/** A jump is only for the start, Skip, and stopping. */
 function seek(sound: HTMLAudioElement, time: number) {
   try {
     sound.currentTime = time;
   } catch {
     /* The file may not have its length yet. The next start tries again. */
   }
-}
-
-function resetPace() {
-  pictureRate = 1;
-  spanAt = 0;
-  spanTime = 0;
-  ratedAt = 0;
-}
-
-/**
- * Match the soundtrack to the picture without moving the playhead.
- * The rate eases, so a late frame does not click.
- */
-function easeRate(sound: HTMLAudioElement, rate: number) {
-  const next = clamp(rate, 0.84, 1.16);
-  const now = performance.now();
-  if (Math.abs(sound.playbackRate - next) < 0.01) return;
-  if (now - ratedAt < 160) return;
-  ratedAt = now;
-  sound.playbackRate = next;
-}
-
-/** Picture speed over the last half second. One frame is too noisy to follow. */
-function notePicture(time: number) {
-  const now = performance.now();
-  if (!spanAt) {
-    spanAt = now;
-    spanTime = time;
-    return;
-  }
-  const wall = (now - spanAt) / 1000;
-  if (wall < 0.45) return;
-  const moved = time - spanTime;
-  if (moved >= 0) pictureRate = clamp(moved / wall, 0.84, 1.08);
-  spanAt = now;
-  spanTime = time;
 }
 
 /** Call from the button click, so the browser will allow the film. */
@@ -115,7 +72,7 @@ export function startStoryTrack() {
   filmOn = true;
   filmOrigin = 0;
   sawFilm = -1;
-  resetPace();
+  stillAt = 0;
   sound.playbackRate = 1;
   seek(sound, FILM_AHEAD);
   sound.play().catch(() => {});
@@ -126,7 +83,7 @@ export function skipStoryTrackToBalloons() {
   if (!filmOn) return;
   filmOrigin = SKIP_AT;
   sawFilm = -1;
-  resetPace();
+  stillAt = 0;
   const sound = filmTrack();
   sound.playbackRate = 1;
   seek(sound, SKIP_AT + FILM_AHEAD);
@@ -134,35 +91,30 @@ export function skipStoryTrackToBalloons() {
 }
 
 /**
- * Keep the film track on the picture clock.
- * A stalled clock means the hero scrolled away or the tab is hidden.
- * After the film ends, the short tail is allowed to finish.
+ * Keep the film track with the picture.
+ * The picture already follows real time, so the sound stays at one speed.
+ * Changing speed is what the ear hears as a check. A stalled clock means the
+ * hero scrolled away or the tab is hidden. After the film ends, the tail finishes.
  */
 export function followStoryTrack(time: number, paused: boolean, ended: boolean) {
   if (!filmOn || !film) return;
   if (ended) return;
   if (paused) {
     if (!film.paused) film.pause();
-    film.playbackRate = 1;
     sawFilm = time;
-    resetPace();
+    stillAt = 0;
     return;
   }
-  const stalled = time > 0.05 && Math.abs(time - sawFilm) < 0.0005;
+  const still = time > 0.05 && Math.abs(time - sawFilm) < 0.0005;
   sawFilm = time;
-  if (stalled) {
+  if (still) {
+    if (!stillAt) stillAt = performance.now();
+    // The two clocks sometimes meet for one frame. That is not a stop.
+    if (performance.now() - stillAt < 200) return;
     if (!film.paused) film.pause();
-    film.playbackRate = 1;
-    resetPace();
     return;
   }
-  notePicture(time);
-  const target = time + filmOrigin + FILM_AHEAD;
-  const drift = target - film.currentTime;
-  // A few frames either way is finer than the ear. Past that, speed
-  // follows the picture and eases toward it. The playhead stays put.
-  const nudge = Math.abs(drift) < 0.04 ? 0 : clamp(drift * 0.45, -0.12, 0.14);
-  if (!film.seeking) easeRate(film, pictureRate + nudge);
+  stillAt = 0;
   if (film.paused) film.play().catch(() => {});
 }
 
@@ -170,7 +122,7 @@ export function stopStoryTrack() {
   filmOn = false;
   filmOrigin = 0;
   sawFilm = -1;
-  resetPace();
+  stillAt = 0;
   if (!film) return;
   film.pause();
   film.playbackRate = 1;

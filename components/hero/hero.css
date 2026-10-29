@@ -855,6 +855,18 @@
   height: 100dvh;
 }
 
+/* The page eases taller. The film stays one size, so its bitmap is not
+   thrown away and redrawn on every frame of that ease. */
+.hero--balloons[data-mode="story"] .story-canvas,
+.hero--balloons[data-mode="story"] .story-captions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero {
     transition: none;
