@@ -70,7 +70,12 @@ export function createStory(canvas, options = {}) {
     const r = canvas.getBoundingClientRect();
     dpr = Math.min(o.maxDpr, (typeof devicePixelRatio === 'number' && devicePixelRatio) || 1);
     const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; dirty = true; }
+    if (canvas.width === w && canvas.height === h) return;
+    // A new bitmap starts blank. Draw again in this same turn, before the browser paints.
+    canvas.width = w;
+    canvas.height = h;
+    dirty = true;
+    if (kind !== 'idle' && kind !== 'done') draw(Math.floor(T * CFG.fps + 1e-6) / CFG.fps);
   }
   /* Drawing size. In the story the drawings sit a little smaller than the 16:9 frame (CFG.stage),
      shrinking toward a point centred a quarter of the way down, so the earth line rises and the text
@@ -207,12 +212,21 @@ export function createStory(canvas, options = {}) {
   }
   function start(k) {
     T = 0; lastKey = -1; dirty = true; cueAt = 0; timeline.forEach(s => { s.aimed = false; });
-    emit('reset'); setKind(k); playing = true; loop();
+    emit('reset');
+    // Kind is set before the draw so the first frame has the film's own size.
+    // The page is told after, so the logo steps aside onto a picture that is already there.
+    kind = k;
+    size();
+    draw(0);
+    lastKey = 0;
+    emit('state', { state: k });
+    playing = true;
+    loop();
   }
 
   /* ---------- page awareness ----------
      Pause when the hero scrolls away or the tab is hidden; carry on where it was. */
-  const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); if (!playing && kind !== 'idle' && kind !== 'done') draw(Math.floor(T * CFG.fps) / CFG.fps); }) : null;
+  const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); }) : null;
   ro && ro.observe(canvas);
   const io = typeof IntersectionObserver === 'function' ? new IntersectionObserver(es => { onscreen = es[es.length - 1].isIntersecting; loop(); }, { threshold: .2 }) : null;
   io && io.observe(canvas);
