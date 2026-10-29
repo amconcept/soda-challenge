@@ -17,6 +17,7 @@ import {
   skipStoryTrackToBalloons,
   startStoryTrack,
   stopStoryTrack,
+  warmStoryTrack,
 } from "@/components/story/storyTrack";
 
 type StoryApi = {
@@ -28,6 +29,65 @@ const StoryContext = createContext<StoryApi | null>(null);
 
 function cssVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function wait(ms: number) {
+  return new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+}
+
+/**
+ * A phone in portrait is turned before the film starts, so the first frame
+ * is already landscape. The request itself stays in the click.
+ * If the turn is slow, the film starts anyway after a third of a second.
+ */
+function settlePhone(hero: HTMLElement): Promise<void> {
+  const small = window.matchMedia("(max-width: 700px) and (orientation: portrait)").matches;
+  if (!small || !hero.requestFullscreen) return Promise.resolve();
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      document.removeEventListener("fullscreenchange", onFull);
+      window.clearTimeout(timer);
+      resolve();
+    };
+    const onFull = () => {
+      const orientation = screen.orientation as ScreenOrientation & {
+        lock?: (value: string) => Promise<void>;
+      };
+      const pending = orientation.lock?.("landscape");
+      if (pending) pending.then(finish, finish);
+      else finish();
+    };
+    document.addEventListener("fullscreenchange", onFull);
+    const timer = window.setTimeout(finish, 320);
+    hero.requestFullscreen().catch(finish);
+  });
+}
+
+/** First frame, then sound, then the clock. The picture starts where the sound already is. */
+async function openFilm(
+  story: Story,
+  layout: Promise<void>,
+  warm: Promise<void>,
+  alive: () => boolean,
+) {
+  try {
+    story.preload();
+    await Promise.race([Promise.all([layout, warm]), wait(320)]);
+    if (!alive()) return;
+    await story.playStory(true);
+    if (!alive()) return;
+    const lead = await startStoryTrack();
+    if (!alive()) {
+      stopStoryTrack();
+      return;
+    }
+    story.begin(lead);
+  } catch {
+    if (alive()) story.begin(0);
+  }
 }
 
 /**
@@ -105,7 +165,6 @@ export default function StoryLayer({
         if (name === "state") {
           if (detail.state === "story") {
             hero.dataset.mode = "story";
-            startStoryTrack();
           }
           if (detail.state === "loading") {
             hero.dataset.mode = "story";
@@ -160,19 +219,18 @@ export default function StoryLayer({
     apiRef.current.preload = () => {
       story.preload();
     };
+    let opening = false;
+    let alive = true;
     apiRef.current.play = () => {
+      if (opening) return;
+      opening = true;
       armStoryTrack();
-      const small = window.matchMedia("(max-width: 700px) and (orientation: portrait)");
-      if (small.matches && hero.requestFullscreen) {
-        hero.requestFullscreen().then(() => {
-          const orientation = screen.orientation as ScreenOrientation & {
-            lock?: (value: string) => Promise<void>;
-          };
-          orientation.lock?.("landscape").catch(() => {});
-        }).catch(() => {});
-      }
-      story.playStory();
+      const layout = settlePhone(hero);
+      const warm = warmStoryTrack();
       pauseRef.current?.focus();
+      void openFilm(story, layout, warm, () => alive).finally(() => {
+        opening = false;
+      });
     };
 
     const startId = window.setTimeout(
@@ -204,6 +262,7 @@ export default function StoryLayer({
     pauseRef.current?.addEventListener("click", togglePause);
 
     return () => {
+      alive = false;
       window.clearTimeout(startId);
       window.cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKey);

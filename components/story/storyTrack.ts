@@ -21,6 +21,12 @@ let filmOrigin = 0;
 let sawFilm = -1;
 /** When the picture clock last looked stopped. A single repeat is not a stop. */
 let stillAt = 0;
+/** Sound is starting and the picture is waiting. Don't pause it during that beat. */
+let arming = false;
+
+/** How long the picture will wait for the file, and then for sound to actually start. */
+const READY_WAIT = 320;
+const PLAY_WAIT = 240;
 
 function basePath(): string {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -57,6 +63,25 @@ function seek(sound: HTMLAudioElement, time: number) {
   }
 }
 
+/**
+ * Let the file become seekable before the picture moves.
+ * A phone often ignores a seek that happens in the same moment as play.
+ * Resolves as soon as it can, and never waits longer than a third of a second.
+ */
+export function warmStoryTrack(): Promise<void> {
+  const sound = filmTrack();
+  if (sound.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return Promise.resolve();
+  return new Promise((resolve) => {
+    const done = () => {
+      sound.removeEventListener("canplay", done);
+      window.clearTimeout(timer);
+      resolve();
+    };
+    sound.addEventListener("canplay", done);
+    const timer = window.setTimeout(done, READY_WAIT);
+  });
+}
+
 /** Call from the button click, so the browser will allow the film. */
 export function armStoryTrack() {
   const sound = filmTrack();
@@ -66,16 +91,37 @@ export function armStoryTrack() {
   pending.catch(() => {});
 }
 
-/** The full film has started. Play from the top, already aimed at the pops. */
-export function startStoryTrack() {
+/**
+ * The full film has started. Play from the top, already aimed at the pops.
+ * Resolves with how far the sound moved while the picture was waiting,
+ * so the picture can begin on that same moment.
+ */
+export function startStoryTrack(): Promise<number> {
   const sound = filmTrack();
   filmOn = true;
   filmOrigin = 0;
   sawFilm = -1;
   stillAt = 0;
+  arming = true;
   sound.playbackRate = 1;
   seek(sound, FILM_AHEAD);
-  sound.play().catch(() => {});
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      sound.removeEventListener("playing", finish);
+      window.clearTimeout(timer);
+      // Stay armed until the picture clock is running. Otherwise the
+      // one frame between this and begin() looks like a pause and stops the sound.
+      const ahead = sound.currentTime - FILM_AHEAD;
+      // A leftover playhead from an earlier run is not a head start.
+      resolve(ahead > 0 && ahead < 0.3 ? ahead : 0);
+    };
+    sound.addEventListener("playing", finish);
+    const timer = window.setTimeout(finish, PLAY_WAIT);
+    sound.play().catch(() => finish());
+  });
 }
 
 /** The picture jumped to the balloons. Move the film track to that same moment. */
@@ -98,6 +144,10 @@ export function skipStoryTrackToBalloons() {
  */
 export function followStoryTrack(time: number, paused: boolean, ended: boolean) {
   if (!filmOn || !film) return;
+  if (arming) {
+    if (paused) return;
+    arming = false;
+  }
   if (ended) return;
   if (paused) {
     if (!film.paused) film.pause();
@@ -123,6 +173,7 @@ export function stopStoryTrack() {
   filmOrigin = 0;
   sawFilm = -1;
   stillAt = 0;
+  arming = false;
   if (!film) return;
   film.pause();
   film.playbackRate = 1;
